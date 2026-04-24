@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mapa Interativo - Infraestrutura do Brasil</title>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>"/>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+body { margin:0; font-family:Arial, sans-serif; display:flex; height:100vh;}
+.sidebar { width:300px; background:#0f172a; color:white; padding:16px; overflow-y:auto;}
+.sidebar::-webkit-scrollbar { width:6px;}
+.sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.2); border-radius:10px;}
+#map { flex:1; }
+
+.chip { background:#1e293b; color:white; border:none; padding:8px 12px; margin:4px; border-radius:20px; cursor:pointer;}
+.chip.active { background:#df6d43;}
+
+.toast {
+ position:absolute; top:20px; right:20px;
+ background:#10233a; color:white;
+ padding:10px 14px; border-radius:10px;
+ opacity:0; transform:translateY(-10px);
+ transition:.3s;
+ z-index:9999;
+}
+.toast.show { opacity:1; transform:translateY(0); }
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<h2>Mapa</h2>
+<button class="chip active">Brasil inteiro</button>
+<button class="chip">Eólicos</button>
+<button class="chip">Cabos</button>
+<input id="searchInput" placeholder="Buscar..." style="width:100%;padding:8px;margin-top:10px;"/>
+</div>
+
+<div id="map"></div>
+<div id="toast" class="toast"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+const map = L.map('map').setView([-15,-55],4);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+ maxZoom:19
+}).addTo(map);
+
+// PINHAL FIX
+const PINHAL = [-30.2469, -50.2336];
+
+const WIND_FARMS = [
+{name:"Farroupilha",lat:PINHAL[0],lon:PINHAL[1]},
+{name:"Honda Energy",lat:PINHAL[0],lon:PINHAL[1]},
+{name:"Osório",lat:PINHAL[0],lon:PINHAL[1]}
+];
+
+// OFFSET
+function createOffsetData(items){
+ const map=new Map();
+ return items.map(item=>{
+  const key=item.lat+","+item.lon;
+  const index=map.get(key)||0;
+  map.set(key,index+1);
+  const angle=index*2;
+  const radius=0.03;
+  return {
+   ...item,
+   lat:item.lat + Math.sin(angle)*radius,
+   lon:item.lon + Math.cos(angle)*radius
+  }
+ })
+}
+
+createOffsetData(WIND_FARMS).forEach(w=>{
+ L.marker([w.lat,w.lon]).addTo(map)
+ .bindPopup(w.name);
+});
+
+// CABOS
+const LANDING_POINTS = {
+ "Balneário Pinhal (RS)": [-30.2469,-50.2336],
+ "Rio de Janeiro (RJ)": [-22.9,-43.2],
+ "Las Toninas (Argentina)": [-36.48,-56.7]
+};
+
+const SUBMARINE_CABLES = [{
+ name:"Malbec",
+ landing_points:"Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)"
+}];
+
+SUBMARINE_CABLES.forEach(c=>{
+ const pts=c.landing_points.split(",").map(p=>LANDING_POINTS[p.trim()]);
+ L.polyline(pts,{color:"blue"}).addTo(map);
+});
+
+// TOAST
+function showToast(msg){
+ const el=document.getElementById("toast");
+ el.textContent=msg;
+ el.classList.add("show");
+ setTimeout(()=>el.classList.remove("show"),3000);
+}
+
+// GEO
+if(!navigator.geolocation){
+ showToast("Geolocalização não suportada");
+}
+
+// DEBOUNCE
+function debounce(fn,delay){
+ let t;
+ return (...args)=>{
+  clearTimeout(t);
+  t=setTimeout(()=>fn(...args),delay);
+ }
+}
+
+document.getElementById("searchInput")
+.addEventListener("input", debounce((e)=>{
+ console.log(e.target.value);
+},200));
+
+// CHIP ACTIVE
+document.querySelectorAll(".chip").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  document.querySelectorAll(".chip").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+ });
+});
+
+</script>
+
+</body>
+</html>
