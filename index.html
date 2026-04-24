@@ -1,237 +1,276 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infraestrutura Digital e Energética do Brasil</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='20'>🗺️</text></svg>">
+<title>Mapa Energético do Brasil</title>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<!-- Favicon -->
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><text y="32" font-size="32">⚡</text></svg>'>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+ integrity="sha256-sA+4psJ1LQ+g8z8zQ8zWv2v4s46HoPazTAp3GzF0XwY=" crossorigin=""/>
 
 <style>
-:root{
- --bg:#0f172a;
- --panel:#111827;
- --accent:#df6d43;
- --text:#fff;
+:root {
+  --bg:#0f172a;
+  --card:#111827;
+  --accent:#22c55e;
+  --text:#e5e7eb;
 }
 
-body{
- margin:0;
- display:grid;
- grid-template-columns:320px 1fr;
- height:100vh;
- font-family:Arial;
+body {
+  margin:0;
+  font-family:sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
-.sidebar{
- background:var(--bg);
- color:var(--text);
- padding:16px;
- overflow-y:auto;
+.app {
+  display:grid;
+  grid-template-columns:320px 1fr;
+  height:100vh;
 }
 
-.sidebar::-webkit-scrollbar{width:6px;}
-.sidebar::-webkit-scrollbar-thumb{background:#ffffff33;border-radius:10px;}
-
-#map{height:100%;}
-
-.chip{
- background:#1e293b;
- border:none;
- color:white;
- padding:8px 12px;
- margin:4px;
- border-radius:20px;
- cursor:pointer;
-}
-.chip.active{background:var(--accent);}
-
-.selection-card{
- background:var(--panel);
- padding:12px;
- margin-top:16px;
- border-radius:12px;
+.sidebar {
+  background:var(--card);
+  padding:16px;
+  overflow-y:auto;
 }
 
-.toast{
- position:absolute;
- top:20px;
- right:20px;
- background:#10233a;
- color:white;
- padding:10px;
- border-radius:10px;
- opacity:0;
- transition:.3s;
+/* Scroll custom */
+.sidebar::-webkit-scrollbar {
+  width:6px;
 }
-.toast.show{opacity:1;}
+.sidebar::-webkit-scrollbar-thumb {
+  background:#444;
+  border-radius:6px;
+}
 
-table{
- width:100%;
- font-size:12px;
+.map {
+  height:100%;
 }
+
+#map {
+  width:100%;
+  height:100%;
+}
+
+input {
+  width:100%;
+  padding:8px;
+  margin-bottom:10px;
+}
+
+.chips button {
+  margin:4px;
+  padding:6px 10px;
+  border:none;
+  cursor:pointer;
+  background:#1f2937;
+  color:white;
+}
+
+.chips button.active {
+  background:var(--accent);
+}
+
+.selection-card {
+  margin-top:16px;
+  padding:10px;
+  background:#1f2937;
+}
+
+/* Toast */
+.toast {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#111;
+  padding:10px 15px;
+  border-radius:6px;
+  display:none;
+}
+
+/* Botão cabos */
+.cable-btn {
+  position:absolute;
+  top:20px;
+  right:20px;
+  z-index:999;
+  padding:10px;
+  background:#22c55e;
+  border:none;
+  cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="app">
+
 <aside class="sidebar">
-<h2>Infraestrutura</h2>
+  <h2>Mapa Energético</h2>
 
-<button class="chip active">Brasil inteiro</button>
-<button class="chip">Eólicos</button>
-<button class="chip">Cabos</button>
+  <input id="search" placeholder="Buscar localização...">
 
-<input id="search" placeholder="Buscar localização..." style="width:100%;padding:8px;margin-top:10px;">
+  <div class="chips">
+    <button data-focus="all" class="active">Brasil inteiro</button>
+    <button data-focus="wind">Eólicos</button>
+  </div>
 
-<div class="selection-card" id="card">
-<strong>Painel rápido</strong>
-<p>Selecione um item do mapa</p>
-</div>
+  <article class="selection-card" id="selection">
+    <strong>Selecione um item do mapa</strong>
+  </article>
 </aside>
 
-<main id="map"></main>
-<div id="toast" class="toast"></div>
+<main class="map">
+  <div id="map"></div>
+</main>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</div>
+
+<button class="cable-btn" id="cableBtn">Cabos</button>
+<div class="toast" id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+ integrity="sha256-o9N1j7kCux1DPZWS9Vyuk3F7S3w7Dnk3a1JpN96CB2A=" crossorigin=""></script>
 
 <script>
-// MAPA
+
+// ===================== UTIL =====================
+function escapeHtml(str){
+  return str.replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  })[m]);
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.innerText = msg;
+  t.style.display = 'block';
+  setTimeout(()=>t.style.display='none',2500);
+}
+
+function debounce(fn,delay){
+  let t;
+  return (...args)=>{
+    clearTimeout(t);
+    t=setTimeout(()=>fn(...args),delay);
+  }
+}
+
+// ===================== MAP =====================
 const map = L.map('map').setView([-14,-52],4);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
- maxZoom:19
+  maxZoom:19
 }).addTo(map);
 
-// TOAST
-function toast(msg){
- const t=document.getElementById("toast");
- t.textContent=msg;
- t.classList.add("show");
- setTimeout(()=>t.classList.remove("show"),3000);
-}
-
-// DADOS
-const PINHAL=[-30.2469,-50.2336];
-
-const WIND_FARMS=[
-{name:"Farroupilha",lat:PINHAL[0],lon:PINHAL[1]},
-{name:"Honda Energy",lat:PINHAL[0],lon:PINHAL[1]},
-{name:"Osório",lat:PINHAL[0],lon:PINHAL[1]}
+// ===================== DATA =====================
+const WIND_FARMS = [
+  {name:"Parque RS", lat:-30.2469, lon:-50.2336}
 ];
 
-const LANDING={
-"Balneário Pinhal (RS)":PINHAL,
-"Rio de Janeiro (RJ)":[-22.9,-43.2],
-"Las Toninas (Argentina)":[-36.48,-56.7]
+const LANDING_POINTS = {
+  "Balneário Pinhal (RS)": [-30.2469,-50.2336],
+  "Rio de Janeiro (RJ)": [-22.9,-43.2],
+  "Las Toninas (Argentina)": [-36.5,-56.7]
 };
 
-const CABLES=[{
-name:"Malbec",
-landing_points:"Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)"
-}];
-
-// OFFSET
-function offset(data){
- let m={};
- return data.map(d=>{
-  let k=d.lat+","+d.lon;
-  let i=m[k]||0;
-  m[k]=i+1;
-  let r=0.03;
-  return {...d,
-   lat:d.lat+Math.sin(i)*r,
-   lon:d.lon+Math.cos(i)*r
+const SUBMARINE_CABLES = [
+  {
+    name:"Malbec",
+    landing_points:"Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)"
   }
- });
+];
+
+// ===================== OFFSET =====================
+function createOffsetData(data){
+  return data.map((d,i)=>({
+    ...d,
+    lat:d.lat+(Math.sin(i)*0.03),
+    lon:d.lon+(Math.cos(i)*0.03)
+  }));
 }
 
-// CARD
-function setCard(title,desc){
- document.getElementById("card").innerHTML=
- `<strong>${title}</strong><p>${desc}</p>`;
-}
+// ===================== MARKERS =====================
+const windLayer = L.layerGroup();
 
-// CAMADAS
-const windLayer=L.layerGroup();
-const cableLayer=L.layerGroup();
-
-// WIND
-offset(WIND_FARMS).forEach(w=>{
- L.marker([w.lat,w.lon])
- .bindPopup(w.name)
- .on("click",()=>setCard("Parque Eólico",w.name))
- .addTo(windLayer);
+createOffsetData(WIND_FARMS).forEach(w=>{
+  const m = L.marker([w.lat,w.lon])
+  .bindPopup(escapeHtml(w.name))
+  .on('click',()=>{
+    document.getElementById('selection').innerHTML =
+      `<strong>${escapeHtml(w.name)}</strong>`;
+  });
+  windLayer.addLayer(m);
 });
-
-// CABOS LINHA
-CABLES.forEach(c=>{
- const pts=c.landing_points.split(",").map(p=>LANDING[p.trim()]);
- L.polyline(pts,{color:"orange"})
- .on("click",()=>setCard("Cabo Submarino",c.name))
- .addTo(cableLayer);
-});
-
-// CONTROLE
-L.control.layers(null,{
-"Eólicos":windLayer,
-"Cabos":cableLayer
-}).addTo(map);
 
 windLayer.addTo(map);
+
+// ===================== CABOS LINHAS =====================
+const cableLayer = L.layerGroup();
+
+SUBMARINE_CABLES.forEach(c=>{
+  const pts = c.landing_points.split(',').map(p=>p.trim());
+  const latlngs = pts.map(p=>LANDING_POINTS[p]);
+  L.polyline(latlngs,{color:'cyan'}).addTo(cableLayer);
+});
+
 cableLayer.addTo(map);
 
-// TABELA CABOS
-function truncate(t,max=80){
- return t.length>max?t.slice(0,max)+"...":t;
+// ===================== TABELA =====================
+function buildCableTable(){
+  let html = "<table>";
+  SUBMARINE_CABLES.forEach(c=>{
+    let txt = c.landing_points;
+    let short = txt.length>80 ? txt.substring(0,80)+"..." : txt;
+    html += `<tr><td title="${escapeHtml(txt)}">${escapeHtml(short)}</td></tr>`;
+  });
+  html += "</table>";
+  return html;
 }
 
-function buildTable(){
- return `<table>
- ${CABLES.map(c=>`
- <tr>
- <td title="${c.landing_points}">
- ${truncate(c.landing_points)}
- </td>
- </tr>`).join("")}
- </table>`;
-}
+document.getElementById('cableBtn').onclick=()=>{
+  L.popup()
+    .setLatLng(map.getCenter())
+    .setContent(buildCableTable())
+    .openOn(map);
+};
 
-// BOTÃO TABELA
-const btn=L.control({position:"topright"});
-btn.onAdd=function(){
- const b=L.DomUtil.create("button","chip");
- b.innerText="Tabela de cabos";
- b.onclick=()=>{
-  L.popup().setLatLng(map.getCenter())
-  .setContent(buildTable()).openOn(map);
- };
- return b;
-}
-btn.addTo(map);
-
-// RESET
-map.on("popupclose",()=>{
- setCard("Painel rápido","Selecione um item do mapa");
-});
-
-// CHIP ACTIVE
-document.querySelectorAll(".chip").forEach(b=>{
- b.onclick=()=>{
-  document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
- }
-});
-
-// SEARCH
-function debounce(fn,d){let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),d)}}
-
-document.getElementById("search")
-.addEventListener("input",debounce(e=>{
- console.log(e.target.value);
+// ===================== SEARCH =====================
+document.getElementById('search')
+.addEventListener('input', debounce(e=>{
+  console.log(e.target.value);
 },200));
+
+// ===================== CHIPS =====================
+document.querySelectorAll('[data-focus]').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('[data-focus]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  };
+});
+
+// ===================== RESET CARD =====================
+map.on('popupclose',()=>{
+  document.getElementById('selection').innerHTML =
+    "<strong>Selecione um item do mapa</strong>";
+});
+
+// ===================== GEO =====================
+map.locate({setView:false});
+map.on('locationfound',()=>{
+  showToast("Localização detectada com sucesso");
+});
+map.on('locationerror',()=>{
+  showToast("Não foi possível obter sua localização");
+});
 
 </script>
 
