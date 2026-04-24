@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Infraestrutura Digital e Energética do Brasil</title>
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='20'>⚡</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='20'>🗺️</text></svg>">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
 :root{
  --bg:#0f172a;
- --card:#111827;
+ --panel:#111827;
  --accent:#df6d43;
  --text:#fff;
 }
@@ -20,7 +20,7 @@
 body{
  margin:0;
  display:grid;
- grid-template-columns:300px 1fr;
+ grid-template-columns:320px 1fr;
  height:100vh;
  font-family:Arial;
 }
@@ -39,8 +39,8 @@ body{
 
 .chip{
  background:#1e293b;
- color:white;
  border:none;
+ color:white;
  padding:8px 12px;
  margin:4px;
  border-radius:20px;
@@ -49,7 +49,7 @@ body{
 .chip.active{background:var(--accent);}
 
 .selection-card{
- background:var(--card);
+ background:var(--panel);
  padding:12px;
  margin-top:16px;
  border-radius:12px;
@@ -67,19 +67,24 @@ body{
  transition:.3s;
 }
 .toast.show{opacity:1;}
+
+table{
+ width:100%;
+ font-size:12px;
+}
 </style>
 </head>
 
 <body>
 
 <aside class="sidebar">
-<h2>Mapa</h2>
+<h2>Infraestrutura</h2>
 
 <button class="chip active">Brasil inteiro</button>
 <button class="chip">Eólicos</button>
 <button class="chip">Cabos</button>
 
-<input id="search" placeholder="Buscar..." style="width:100%;padding:8px;margin-top:10px;">
+<input id="search" placeholder="Buscar localização..." style="width:100%;padding:8px;margin-top:10px;">
 
 <div class="selection-card" id="card">
 <strong>Painel rápido</strong>
@@ -88,7 +93,6 @@ body{
 </aside>
 
 <main id="map"></main>
-
 <div id="toast" class="toast"></div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -103,16 +107,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 
 // TOAST
 function toast(msg){
- const el=document.getElementById("toast");
- el.textContent=msg;
- el.classList.add("show");
- setTimeout(()=>el.classList.remove("show"),3000);
+ const t=document.getElementById("toast");
+ t.textContent=msg;
+ t.classList.add("show");
+ setTimeout(()=>t.classList.remove("show"),3000);
 }
 
-// DATA
+// DADOS
 const PINHAL=[-30.2469,-50.2336];
 
-const WIND=[
+const WIND_FARMS=[
 {name:"Farroupilha",lat:PINHAL[0],lon:PINHAL[1]},
 {name:"Honda Energy",lat:PINHAL[0],lon:PINHAL[1]},
 {name:"Osório",lat:PINHAL[0],lon:PINHAL[1]}
@@ -124,9 +128,10 @@ const LANDING={
 "Las Toninas (Argentina)":[-36.48,-56.7]
 };
 
-const CABOS=[
-{name:"Malbec",points:["Balneário Pinhal (RS)","Rio de Janeiro (RJ)","Las Toninas (Argentina)"]}
-];
+const CABLES=[{
+name:"Malbec",
+landing_points:"Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)"
+}];
 
 // OFFSET
 function offset(data){
@@ -149,21 +154,65 @@ function setCard(title,desc){
  `<strong>${title}</strong><p>${desc}</p>`;
 }
 
+// CAMADAS
+const windLayer=L.layerGroup();
+const cableLayer=L.layerGroup();
+
 // WIND
-offset(WIND).forEach(w=>{
- L.marker([w.lat,w.lon]).addTo(map)
+offset(WIND_FARMS).forEach(w=>{
+ L.marker([w.lat,w.lon])
  .bindPopup(w.name)
- .on("click",()=>setCard("Eólico",w.name));
+ .on("click",()=>setCard("Parque Eólico",w.name))
+ .addTo(windLayer);
 });
 
-// CABOS
-CABOS.forEach(c=>{
- let coords=c.points.map(p=>LANDING[p]);
- L.polyline(coords,{color:"orange"}).addTo(map)
- .on("click",()=>setCard("Cabo",c.name));
+// CABOS LINHA
+CABLES.forEach(c=>{
+ const pts=c.landing_points.split(",").map(p=>LANDING[p.trim()]);
+ L.polyline(pts,{color:"orange"})
+ .on("click",()=>setCard("Cabo Submarino",c.name))
+ .addTo(cableLayer);
 });
 
-// RESET CARD
+// CONTROLE
+L.control.layers(null,{
+"Eólicos":windLayer,
+"Cabos":cableLayer
+}).addTo(map);
+
+windLayer.addTo(map);
+cableLayer.addTo(map);
+
+// TABELA CABOS
+function truncate(t,max=80){
+ return t.length>max?t.slice(0,max)+"...":t;
+}
+
+function buildTable(){
+ return `<table>
+ ${CABLES.map(c=>`
+ <tr>
+ <td title="${c.landing_points}">
+ ${truncate(c.landing_points)}
+ </td>
+ </tr>`).join("")}
+ </table>`;
+}
+
+// BOTÃO TABELA
+const btn=L.control({position:"topright"});
+btn.onAdd=function(){
+ const b=L.DomUtil.create("button","chip");
+ b.innerText="Tabela de cabos";
+ b.onclick=()=>{
+  L.popup().setLatLng(map.getCenter())
+  .setContent(buildTable()).openOn(map);
+ };
+ return b;
+}
+btn.addTo(map);
+
+// RESET
 map.on("popupclose",()=>{
  setCard("Painel rápido","Selecione um item do mapa");
 });
@@ -176,11 +225,8 @@ document.querySelectorAll(".chip").forEach(b=>{
  }
 });
 
-// DEBOUNCE
-function debounce(fn,delay){
- let t;
- return (...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),delay);}
-}
+// SEARCH
+function debounce(fn,d){let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),d)}}
 
 document.getElementById("search")
 .addEventListener("input",debounce(e=>{
