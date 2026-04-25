@@ -18,6 +18,10 @@
             --bg-dark: #0f0f1a;
             --surface-light: rgba(10, 26, 43, 0.94);
             --surface-dark: rgba(0, 0, 0, 0.88);
+            --text-light: #1e2a36;
+            --text-dark: #e0e0e0;
+            --text-soft-light: #5a6e7c;
+            --text-soft-dark: #aaa;
             --accent: #df6d43;
             --accent-hover: #c05a32;
             --wind: #12766c;
@@ -39,13 +43,13 @@
             overflow: hidden;
             position: fixed;
         }
-        body.light { background: var(--bg-light); color: #1e2a36; }
-        body.dark { background: var(--bg-dark); color: #e0e0e0; }
+        body.light { background: var(--bg-light); color: var(--text-light); }
+        body.dark { background: var(--bg-dark); color: var(--text-dark); }
         
         /* Layout principal */
         .app { display: flex; width: 100%; height: 100%; }
         
-        /* Sidebar */
+        /* Sidebar com cores adaptáveis ao tema (corrigido contraste) */
         .sidebar {
             width: 380px;
             height: 100%;
@@ -56,19 +60,21 @@
             z-index: 1000;
             box-shadow: 4px 0 24px rgba(0,0,0,0.15);
         }
-        body.light .sidebar { background: var(--surface-light); }
-        body.dark .sidebar { background: var(--surface-dark); }
+        body.light .sidebar { background: var(--surface-light); color: #ffffff; }
+        body.dark .sidebar { background: var(--surface-dark); color: #e0e0e0; }
         
-        /* Texto branco na sidebar */
-        .sidebar, .sidebar * { color: white !important; }
-        .sidebar .search-input::placeholder { color: rgba(255,255,255,0.6) !important; }
+        /* Texto da sidebar – usando cores dinâmicas (não força branco fixo) */
+        .sidebar, .sidebar * { color: inherit; }
+        .sidebar .search-input::placeholder { color: rgba(255,255,255,0.6); }
         .sidebar .search-input {
             background: rgba(0,0,0,0.35);
             border: none;
             border-radius: 60px;
             padding: 14px 18px;
             font-size: 0.9rem;
+            color: white;
         }
+        body.light .sidebar .search-input { color: white; background: rgba(0,0,0,0.35); }
         .sidebar .list-item {
             background: rgba(255,255,255,0.12);
             border-radius: var(--radius-md);
@@ -117,6 +123,7 @@
             border-radius: 5px;
             overflow: hidden;
             margin-bottom: 10px;
+            cursor: help;
         }
         .progress-fill {
             height: 100%;
@@ -149,7 +156,7 @@
             height: 100%;
         }
         
-        /* Painéis flutuantes no mapa */
+        /* Painéis flutuantes no mapa – corrigido pointer-events */
         .legend, .selection-card {
             position: absolute;
             background: rgba(0,0,0,0.75);
@@ -159,13 +166,13 @@
             font-size: 0.75rem;
             color: white;
             z-index: 500;
-            pointer-events: none;
             box-shadow: var(--shadow-md);
         }
         .legend {
             bottom: 20px;
             left: 20px;
             min-width: 170px;
+            pointer-events: none; /* Não bloqueia cliques no mapa – apenas visual */
         }
         .selection-card {
             bottom: 20px;
@@ -173,12 +180,14 @@
             max-width: 300px;
             pointer-events: auto;
         }
+        
+        /* Chips reposicionados para evitar sobreposição com LayerControl */
         .chip-row {
             position: absolute;
-            top: 16px;
-            right: 16px;
+            bottom: 20px;
+            right: 20px;
             z-index: 600;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(8px);
             padding: 8px 14px;
             border-radius: 60px;
@@ -202,7 +211,7 @@
             box-shadow: 0 0 0 2px rgba(223,109,67,0.5);
         }
         
-        /* Botão menu mobile */
+        /* Botão menu mobile – garantindo acessibilidade */
         .menu-toggle {
             display: none;
             position: fixed;
@@ -231,7 +240,7 @@
             backdrop-filter: blur(4px);
         }
         
-        /* DASHBOARD POPUP ESTILIZADO */
+        /* DASHBOARD POPUP ESTILIZADO (com melhoria de carregamento) */
         .dashboard-popup {
             min-width: 260px;
             max-width: 320px;
@@ -278,7 +287,7 @@
             width: 0%;
         }
         
-        /* RESPONSIVO MOBILE */
+        /* RESPONSIVO MOBILE – melhorado */
         @media (max-width: 800px) {
             .sidebar {
                 position: fixed;
@@ -290,24 +299,23 @@
                 transform: translateX(-100%);
                 border-radius: 0 28px 28px 0;
                 padding: 20px 18px;
+                z-index: 1050;
             }
             .sidebar.open { transform: translateX(0); }
             .menu-toggle { display: flex; }
             .overlay.active { display: block; }
             
-            /* Ajustes de fonte mobile */
             body { font-size: 16px; }
             .stat-value { font-size: 1.4rem; }
             .list-item { padding: 14px !important; }
             .tab-btn { padding: 10px 14px !important; font-size: 0.75rem; }
             .legend, .selection-card { font-size: 0.7rem; padding: 10px 12px; }
-            .chip-row { top: 12px; right: 12px; padding: 6px 10px; gap: 6px; }
+            .chip-row { bottom: 12px; right: 12px; padding: 6px 10px; gap: 6px; }
             .chip { padding: 6px 12px; font-size: 0.7rem; }
             .dashboard-popup { min-width: 220px; max-width: 280px; }
             .dashboard-metric { font-size: 0.75rem; flex-wrap: wrap; gap: 6px; }
         }
         
-        /* Ajustes de toque */
         @media (max-width: 600px) {
             .list-item, .tab-btn, .chip, .search-input { min-height: 48px; }
             .selection-card { bottom: 70px; right: 12px; left: auto; max-width: 260px; }
@@ -440,7 +448,7 @@
     
     const POP_EST = {"Balneário Pinhal (RS)":15000,"Fortaleza (CE)":2574412,"Praia Grande (SP)":350000,"Rio de Janeiro (RJ)":6729894,"Santos (SP)":440646,"Salvador (BA)":2568928,"Recife (PE)":1587707,"Natal (RN)":751300,"Vitória (ES)":322869,"Aracaju (SE)":602757,"Maceió (AL)":957916,"João Pessoa (PB)":833932};
     const KWH_CAPITA = 2630; // kWh/ano
-    const CAPACITY_FACTOR = 0.35; // fator de capacidade típico para região sul
+    const CAPACITY_FACTOR = 0.35;
     
     function esc(s){ return String(s).replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
     function fmtNum(v,d){ return Number(v).toLocaleString("pt-BR", {minimumFractionDigits:d, maximumFractionDigits:d}); }
@@ -462,17 +470,18 @@
     const stateConsumption = {};
     landingStats.forEach(l=>{ let st=l.city.match(/\(([A-Z]{2})\)/)?.[1]; if(st) stateConsumption[st]=(stateConsumption[st]||0)+l.annual; });
     
-    // Dados específicos de Balneário Pinhal para dashboard avançado
+    // Dados específicos de Balneário Pinhal
     const balnearioParques = WIND_FARMS.filter(f => f.lat === -30.2469 && f.lon === -50.2336);
     const balnearioCapacidade = balnearioParques.reduce((s,f)=>s+f.cap,0);
-    const balnearioGeracaoAnual = balnearioCapacidade * 8760 * CAPACITY_FACTOR / 1000; // GWh
+    const balnearioGeracaoAnual = balnearioCapacidade * 8760 * CAPACITY_FACTOR / 1000;
     const balnearioConsumo = (POP_EST["Balneário Pinhal (RS)"] * KWH_CAPITA) / 1e6;
     const balnearioVezes = balnearioGeracaoAnual / balnearioConsumo;
     
     // ========== MAPA MUNDIAL COM WRAP-AROUND ==========
+    // CORREÇÃO: Trocar tile para OpenStreetMap (confiável)
     const map = L.map('map').setView([-14.2, -51.9], 5);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CARTO',
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         noWrap: false,
         continuousWorld: true
     }).addTo(map);
@@ -487,15 +496,23 @@
     const cableLineLayer = L.featureGroup();
     const markers = { wind:[], landing:[], energy:[] };
     const searchable = [];
+    // Para evitar duplicatas na busca, usamos Set internamente
+    const searchKeySet = new Set();
     
-    // DASHBOARD COMPLETO para cidades (com métrica de excedente)
-    function buildFullDashboard(city, annualGwh, pop, extraData = {}) {
-        const monthlyGwh = annualGwh / 12;
-        const dailyMwh = (annualGwh / 365) * 1000;
-        const minuteKwh = (annualGwh / (365 * 24 * 60)) * 1e6;
-        
+    // PRÉ-CÁLCULO das métricas para evitar lentidão nos popups
+    function precomputeMetrics(city, annualGwh, pop) {
+        return {
+            annual: annualGwh,
+            monthly: annualGwh / 12,
+            dailyMwh: (annualGwh / 365) * 1000,
+            minuteKwh: (annualGwh / (365 * 24 * 60)) * 1e6,
+            pop: pop
+        };
+    }
+    
+    function buildFullDashboard(city, metrics, isBalneario=false) {
         let extraHtml = '';
-        if (extraData.isBalneario) {
+        if (isBalneario) {
             extraHtml = `
                 <div class="dashboard-divider"></div>
                 <div class="dashboard-metric"><span>⚡ Capacidade instalada</span><span>${fmtNum(balnearioCapacidade, 1)} MW</span></div>
@@ -506,16 +523,15 @@
                 <div class="dashboard-badge">✨ Poderia abastecer a cidade ${fmtNum(balnearioVezes, 1)} vezes</div>
             `;
         }
-        
         return `
             <div class="dashboard-popup">
                 <div class="dashboard-title">⚡ ${esc(city)}</div>
-                <div class="dashboard-metric"><span>📅 Consumo anual</span><span>${fmtNum(annualGwh, 1)} GWh</span></div>
-                <div class="dashboard-metric"><span>📆 Consumo mensal</span><span>${fmtNum(monthlyGwh, 1)} GWh</span></div>
-                <div class="dashboard-metric"><span>📆 Consumo diário</span><span>${fmtNum(dailyMwh, 0)} MWh</span></div>
-                <div class="dashboard-metric"><span>⏱️ Consumo por minuto</span><span>${fmtNum(minuteKwh, 0)} kWh</span></div>
+                <div class="dashboard-metric"><span>📅 Consumo anual</span><span>${fmtNum(metrics.annual, 1)} GWh</span></div>
+                <div class="dashboard-metric"><span>📆 Consumo mensal</span><span>${fmtNum(metrics.monthly, 1)} GWh</span></div>
+                <div class="dashboard-metric"><span>📆 Consumo diário</span><span>${fmtNum(metrics.dailyMwh, 0)} MWh</span></div>
+                <div class="dashboard-metric"><span>⏱️ Consumo por minuto</span><span>${fmtNum(metrics.minuteKwh, 0)} kWh</span></div>
                 <div class="dashboard-divider"></div>
-                <div class="dashboard-metric"><span>👥 População base</span><span>${fmtNum(pop, 0)} hab.</span></div>
+                <div class="dashboard-metric"><span>👥 População base</span><span>${fmtNum(metrics.pop, 0)} hab.</span></div>
                 <div class="dashboard-metric"><span>📊 Método</span><span>${KWH_CAPITA} kWh/hab/ano</span></div>
                 ${extraHtml}
             </div>
@@ -527,10 +543,12 @@
         let rad = Math.max(6, Math.min(22, f.cap/45));
         let m = L.circleMarker([f.lat,f.lon], {radius:rad, color:'#fff', weight:1.8, fillColor:'#12766c', fillOpacity:0.85});
         m.bindPopup(`<div style="padding:8px;"><b>${esc(f.name)}</b><hr><div><strong>MW:</strong> ${fmtNum(f.cap,1)}</div><div><strong>Estado:</strong> ${f.state}</div><div><strong>Operador:</strong> ${f.op}</div></div>`);
+        m.bindTooltip(`${f.name} | ${fmtNum(f.cap,1)} MW`, {sticky: true});
         m.on('click',()=>{ document.getElementById('selTitle').innerHTML = f.name; document.getElementById('selDesc').innerHTML = `${fmtNum(f.cap,1)} MW | ${f.state}`; });
         m.addTo(windLayer);
         markers.wind.push({m, item:f});
-        searchable.push({title:f.name, type:'Parque', meta:`${f.state} ${f.cap}MW`, lat:f.lat, lon:f.lon, marker:m});
+        let key = f.name + f.lat + f.lon;
+        if(!searchKeySet.has(key)){ searchKeySet.add(key); searchable.push({title:f.name, type:'Parque', meta:`${f.state} ${f.cap}MW`, lat:f.lat, lon:f.lon, marker:m}); }
     });
     
     // Aterramentos
@@ -538,25 +556,30 @@
         let rad = 8 + p.cables*1.2;
         let m = L.circleMarker([p.lat,p.lon], {radius:rad, color:'#2c7da0', weight:2, fillColor:'#2c7da0', fillOpacity:0.8});
         m.bindPopup(`<div style="padding:8px;"><b>${esc(p.city)}</b><hr><div><strong>Cabos:</strong> ${p.cables}</div><div><strong>População:</strong> ${fmtNum(p.pop,0)}</div><div><strong>Consumo anual:</strong> ${fmtEnergy(p.annual)}</div></div>`);
+        m.bindTooltip(`${p.city} | ${p.cables} cabos`, {sticky: true});
         m.on('click',()=>{ document.getElementById('selTitle').innerHTML = p.city; document.getElementById('selDesc').innerHTML = `${p.cables} cabos | ${fmtEnergy(p.annual)}`; });
         m.addTo(landingLayer);
         markers.landing.push({m, item:p});
-        searchable.push({title:p.city, type:'Aterramento', meta:`${p.cables} cabos`, lat:p.lat, lon:p.lon, marker:m});
+        let key = p.city + p.lat + p.lon;
+        if(!searchKeySet.has(key)){ searchKeySet.add(key); searchable.push({title:p.city, type:'Aterramento', meta:`${p.cables} cabos`, lat:p.lat, lon:p.lon, marker:m}); }
     });
     
-    // Consumo - com DASHBOARD avançado (incluindo Balneário Pinhal com dados de geração)
+    // Consumo - com métricas pré-calculadas
     energyCities.forEach(c=>{
         let rad = Math.max(10, Math.min(26, 8 + c.annual/700));
         let m = L.circleMarker([c.lat,c.lon], {radius:rad, color:'#b96532', weight:2, dashArray:'4 4', fillColor:'#b96532', fillOpacity:0.2});
+        const metrics = precomputeMetrics(c.city, c.annual, c.pop);
         const isBalneario = c.city === "Balneário Pinhal (RS)";
-        m.bindPopup(buildFullDashboard(c.city, c.annual, c.pop, { isBalneario }));
+        m.bindPopup(buildFullDashboard(c.city, metrics, isBalneario));
+        m.bindTooltip(`${c.city} | ${fmtEnergy(c.annual)}`, {sticky: true});
         m.on('click',()=>{
             document.getElementById('selTitle').innerHTML = c.city;
             document.getElementById('selDesc').innerHTML = `Consumo ${fmtEnergy(c.annual)} | Detalhes no popup`;
         });
         m.addTo(energyLayer);
         markers.energy.push({m, item:c});
-        searchable.push({title:c.city, type:'Consumo', meta:fmtEnergy(c.annual), lat:c.lat, lon:c.lon, marker:m});
+        let key = c.city + c.lat + c.lon;
+        if(!searchKeySet.has(key)){ searchKeySet.add(key); searchable.push({title:c.city, type:'Consumo', meta:fmtEnergy(c.annual), lat:c.lat, lon:c.lon, marker:m}); }
     });
     
     // Linhas animadas dos cabos
@@ -589,7 +612,7 @@
         <div class="stat-card"><div class="stat-value">${fmtNum(totalEnergy,0)} GWh</div><div class="stat-label">Consumo urbano anual</div></div>
     `;
     
-    // Comparativo estado vs consumo
+    // Comparativo com tooltip explicativo
     function renderComparison(){
         let html = '';
         let sorted = Object.keys(stateCapacity).sort((a,b)=>stateCapacity[b]-stateCapacity[a]);
@@ -598,13 +621,13 @@
             let cons = stateConsumption[st] || 0;
             let percent = cons ? (cap/cons)*100 : 0;
             html += `<div class="comparison-item"><span>${st}</span><span><strong>${fmtNum(cap,1)} MW</strong> / ${fmtNum(cons,0)} GWh</span></div>
-                     <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100,percent)}%"></div></div>`;
+                     <div class="progress-bar" title="A barra representa o percentual da capacidade eólica local em relação ao consumo urbano estimado. ${percent.toFixed(1)}%"><div class="progress-fill" style="width:${Math.min(100,percent)}%"></div></div>`;
         }
         document.getElementById('stateComparisonList').innerHTML = html || '<div>Sem dados</div>';
     }
     renderComparison();
     
-    // Listas laterais
+    // Listas laterais (com padronização de tooltips)
     function attachList(containerId, items, titleFn, metaFn, focusFn){
         let div = document.getElementById(containerId);
         if(!div) return;
@@ -619,11 +642,11 @@
     function focusEnergy(e){ let m = markers.energy.find(en=>en.item.city===e.city); if(m){ map.flyTo([e.lat,e.lon],8); setTimeout(()=>m.marker.openPopup(),200); } }
     
     attachList('windList', WIND_FARMS, f=>f.name, f=>`${f.state} | ${f.cap}MW`, focusWind);
-    attachList('cableList', CABLES, c=>c.name, c=>`${c.year} | ${c.owner}`, focusCable);
+    attachList('cableList', CABLES, c=>c.name, c=>`${c.year} | ${c.owner} | ${c.len?c.len+'km':'N/A'}`, focusCable);
     attachList('landingList', landingStats, l=>l.city, l=>`${l.cables} cabos | ${fmtEnergy(l.annual)}`, focusLanding);
     attachList('energyList', energyCities, e=>e.city, e=>fmtEnergy(e.annual), focusEnergy);
     
-    // Busca com debounce
+    // Busca com debounce e sem duplicatas
     let searchTimer;
     function performSearch(q){
         let term = q.trim().toLowerCase();
@@ -663,7 +686,7 @@
         });
     });
     
-    // Tema Dark/Light persistente
+    // Tema Dark/Light persistente (corrigido para popups)
     const themeToggle = document.getElementById('themeToggle');
     const langSelect = document.getElementById('langSelect');
     let isDark = localStorage.getItem('theme') === 'dark';
@@ -674,16 +697,32 @@
         let darkNow = document.body.classList.contains('dark');
         localStorage.setItem('theme', darkNow ? 'dark' : 'light');
         themeToggle.innerText = darkNow ? '☀️' : '🌓';
+        // Força atualização visual dos popups (opcional)
+        map.eachLayer(layer => { if(layer.getPopup) layer.closePopup(); });
     });
     
-    // Multi-idioma
+    // i18n expandido (legenda, chips, placeholders, botões)
     const i18n = {
-        pt: { comparisonTitle: "⚡ Capacidade eólica vs consumo por estado" },
-        en: { comparisonTitle: "⚡ Wind capacity vs consumption by state" },
-        es: { comparisonTitle: "⚡ Capacidad eólica vs consumo por estado" }
+        pt: { comparisonTitle: "⚡ Capacidade eólica vs consumo por estado", searchPlaceholder: "🔍 Buscar parque, cabo, cidade...", toastNoResults: "Nada encontrado", legendTitle: "📖 Legenda", legendWind: "Parques eólicos (MW)", legendCable: "Aterramentos de cabos", legendEnergy: "Consumo urbano", legendRoute: "Rotas animadas", chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sul", selectTitle: "Selecione um item no mapa", selectDesc: "Clique em qualquer marcador" },
+        en: { comparisonTitle: "⚡ Wind capacity vs consumption by state", searchPlaceholder: "🔍 Search wind farm, cable, city...", toastNoResults: "No results found", legendTitle: "📖 Legend", legendWind: "Wind farms (MW)", legendCable: "Cable landing points", legendEnergy: "Urban consumption", legendRoute: "Animated routes", chipAll: "🌎 All Brazil", chipNE: "🌵 Northeast", chipSul: "❄️ South", selectTitle: "Select an item on the map", selectDesc: "Click any marker" },
+        es: { comparisonTitle: "⚡ Capacidad eólica vs consumo por estado", searchPlaceholder: "🔍 Buscar parque, cable, ciudad...", toastNoResults: "Sin resultados", legendTitle: "📖 Leyenda", legendWind: "Parques eólicos (MW)", legendCable: "Puntos de amarre", legendEnergy: "Consumo urbano", legendRoute: "Rutas animadas", chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sur", selectTitle: "Seleccione un elemento en el mapa", selectDesc: "Haga clic en cualquier marcador" }
     };
     function setLang(lang){
-        document.getElementById('comparisonTitle').innerText = i18n[lang]?.comparisonTitle || i18n.pt.comparisonTitle;
+        let t = i18n[lang] || i18n.pt;
+        document.getElementById('comparisonTitle').innerText = t.comparisonTitle;
+        document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+        document.querySelectorAll('.legend div')[0].innerText = t.legendTitle;
+        let legendDivs = document.querySelectorAll('.legend div');
+        if(legendDivs[1]) legendDivs[1].innerHTML = t.legendWind;
+        if(legendDivs[2]) legendDivs[2].innerHTML = t.legendCable;
+        if(legendDivs[3]) legendDivs[3].innerHTML = t.legendEnergy;
+        if(legendDivs[4]) legendDivs[4].innerHTML = t.legendRoute;
+        let chips = document.querySelectorAll('.chip');
+        if(chips[0]) chips[0].innerHTML = t.chipAll;
+        if(chips[1]) chips[1].innerHTML = t.chipNE;
+        if(chips[2]) chips[2].innerHTML = t.chipSul;
+        document.getElementById('selTitle').innerText = t.selectTitle;
+        document.getElementById('selDesc').innerText = t.selectDesc;
         localStorage.setItem('lang', lang);
     }
     langSelect.addEventListener('change',(e)=>setLang(e.target.value));
@@ -691,7 +730,7 @@
     langSelect.value = savedLang;
     setLang(savedLang);
     
-    // Mobile menu com persistência
+    // Mobile menu com z-index corrigido
     const menuBtn = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     const overlayDiv = document.getElementById('overlay');
@@ -700,7 +739,9 @@
     function closeMenu(){ sidebar.classList.remove('open'); overlayDiv.classList.remove('active'); if(window.innerWidth<=800) localStorage.setItem('sidebarOpen', 'false'); }
     function openMenu(){ sidebar.classList.add('open'); overlayDiv.classList.add('active'); if(window.innerWidth<=800) localStorage.setItem('sidebarOpen', 'true'); }
     
-    menuBtn.addEventListener('click',(e)=>{ e.stopPropagation(); if(sidebar.classList.contains('open')) closeMenu(); else openMenu(); });
+    if(menuBtn){
+        menuBtn.addEventListener('click',(e)=>{ e.stopPropagation(); if(sidebar.classList.contains('open')) closeMenu(); else openMenu(); });
+    }
     overlayDiv.addEventListener('click', closeMenu);
     
     if(window.innerWidth > 800) {
@@ -714,7 +755,43 @@
         else { if(!sidebar.classList.contains('open') && localStorage.getItem('sidebarOpen') === 'true') openMenu(); }
     });
     
-    // Ajuste inicial
+    // Ajuste inicial e melhoria de clique de marcador (usando moveend)
+    let pendingPopup = null;
+    map.on('moveend', function(){
+        if(pendingPopup){
+            pendingPopup.openPopup();
+            pendingPopup = null;
+        }
+    });
+    // Sobrescrever a função de flyTo + popup para os itens de lista
+    const originalFocusWind = focusWind;
+    window.focusWind = (f) => {
+        let m = markers.wind.find(w=>w.item.name===f.name);
+        if(m){
+            pendingPopup = m.marker;
+            map.flyTo([f.lat,f.lon],8);
+        }
+    };
+    // Ajuste para os outros tipos também (simplificado)
+    function enhancedFocus(marker, lat, lon){
+        if(marker){
+            pendingPopup = marker;
+            map.flyTo([lat,lon],8);
+        }
+    }
+    // Substitui as funções de foco
+    window.focusWind = (f)=>{ let m = markers.wind.find(w=>w.item.name===f.name); if(m) enhancedFocus(m.marker, f.lat, f.lon); };
+    window.focusCable = (c)=>{ let first = c.land.split(',')[0].trim(); let pt = landingStats.find(l=>l.city===first); if(pt) enhancedFocus(markers.landing.find(l=>l.item.city===pt.city)?.marker, pt.lat, pt.lon); else map.flyTo([-14,-51],5); };
+    window.focusLanding = (p)=>{ let m = markers.landing.find(l=>l.item.city===p.city); if(m) enhancedFocus(m.marker, p.lat, p.lon); };
+    window.focusEnergy = (e)=>{ let m = markers.energy.find(en=>en.item.city===e.city); if(m) enhancedFocus(m.marker, e.lat, e.lon); };
+    
+    // Reaplica as listas com as novas funções
+    attachList('windList', WIND_FARMS, f=>f.name, f=>`${f.state} | ${f.cap}MW`, window.focusWind);
+    attachList('cableList', CABLES, c=>c.name, c=>`${c.year} | ${c.owner} | ${c.len?c.len+'km':'N/A'}`, window.focusCable);
+    attachList('landingList', landingStats, l=>l.city, l=>`${l.cables} cabos | ${fmtEnergy(l.annual)}`, window.focusLanding);
+    attachList('energyList', energyCities, e=>e.city, e=>fmtEnergy(e.annual), window.focusEnergy);
+    
+    // Ajuste de bounds inicial
     setTimeout(()=>{ if(windLayer.getBounds().isValid()) map.fitBounds(windLayer.getBounds().pad(0.2)); }, 300);
 })();
 </script>
