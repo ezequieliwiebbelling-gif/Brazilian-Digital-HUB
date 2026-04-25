@@ -1,74 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
-    <title>Infraestrutura Digital e Energética do Brasil</title>
-    <meta name="description" content="Mapa interativo com parques eólicos e cabos submarinos do Brasil." />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='0' y='20' font-size='20'%3E⚡%3C/text%3E%3C/svg%3E" />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>⚡ Infraestrutura Digital e Energética do Brasil</title>
+    <meta name="description" content="Mapa interativo com parques eólicos, cabos submarinos e consumo urbano – Balneário Pinhal como hub estratégico.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='0' y='20' font-size='20'%3E🌎%3C/text%3E%3C/svg%3E">
+    <!-- Fonte Montserrat Bold -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --bg-light: #e9e2d4;
-            --bg-dark: #0a0a12;
-            --panel-light: rgba(15, 25, 35, 0.92);
-            --panel-dark: rgba(0, 0, 0, 0.85);
-            --card-light: rgba(255, 250, 240, 0.96);
+            --bg-light: #f4efe7;
+            --bg-dark: #0f0f1a;
+            --surface-light: rgba(10, 26, 43, 0.92);
+            --surface-dark: rgba(0, 0, 0, 0.85);
+            --card-light: rgba(255, 250, 242, 0.96);
             --card-dark: #1e1e2a;
             --text-light: #1e2a36;
             --text-dark: #e0e0e0;
+            --text-soft-light: #5a6e7c;
+            --text-soft-dark: #aaa;
             --accent: #df6d43;
+            --accent-hover: #c05a32;
             --wind: #12766c;
             --cable: #2c7da0;
             --energy: #b96532;
+            --shadow: 0 8px 24px rgba(0,0,0,0.12);
+            --radius: 24px;
+            --transition: all 0.2s ease;
         }
+        
         body {
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 600; /* Bold em toda a página */
             transition: background 0.2s, color 0.2s;
-            overflow: hidden;
             height: 100vh;
             width: 100vw;
+            overflow: hidden;
             position: fixed;
         }
+        /* Ajuste de pesos específicos */
+        h1, h2, h3, button, .stat-value, .list-item, .tab-btn, .chip {
+            font-weight: 700;
+        }
+        .stat-label, .comparison-item, .legend, .selection-card {
+            font-weight: 600;
+        }
+        
         body.light { background: var(--bg-light); color: var(--text-light); }
         body.dark { background: var(--bg-dark); color: var(--text-dark); }
         
-        /* Layout principal */
-        .app-container {
+        .app {
             display: flex;
             width: 100%;
             height: 100%;
-            position: relative;
         }
-        /* Sidebar desktop fixa */
+        
+        /* Sidebar */
         .sidebar {
-            width: 340px;
+            width: 360px;
             height: 100%;
             overflow-y: auto;
             padding: 20px;
-            backdrop-filter: blur(12px);
-            transition: transform 0.3s ease;
+            backdrop-filter: blur(16px);
+            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             z-index: 1000;
             box-shadow: 4px 0 20px rgba(0,0,0,0.1);
         }
-        body.light .sidebar { background: var(--panel-light); color: white; }
-        body.dark .sidebar { background: var(--panel-dark); color: #ddd; }
+        body.light .sidebar { background: var(--surface-light); }
+        body.dark .sidebar { background: var(--surface-dark); }
         
-        /* Mapa ocupa o resto */
-        .map-wrapper {
+        /* Forçar texto BRANCO em toda a sidebar (conforme solicitado) */
+        .sidebar,
+        .sidebar *,
+        .sidebar .stat-card,
+        .sidebar .list-item,
+        .sidebar .comparison-panel,
+        .sidebar .tab-btn,
+        .sidebar .header-title,
+        .sidebar .search-input,
+        .sidebar .search-input::placeholder,
+        .sidebar .stat-value,
+        .sidebar .stat-label {
+            color: white !important;
+        }
+        .sidebar .search-input {
+            background: rgba(0,0,0,0.4);
+            border: none;
+        }
+        .sidebar .list-item {
+            background: rgba(255,255,255,0.1);
+        }
+        .sidebar .list-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .sidebar .tab-btn {
+            background: rgba(255,255,255,0.15);
+        }
+        .sidebar .tab-btn.active {
+            background: var(--accent);
+        }
+        
+        .map-container {
             flex: 1;
             position: relative;
-            background: #1a2a32;
+            background: #1a2a36;
         }
         #map {
             width: 100%;
             height: 100%;
         }
         
-        /* Botão flutuante mobile */
+        /* Mobile */
         .menu-toggle {
             display: none;
             position: fixed;
@@ -80,30 +127,135 @@
             border-radius: 50%;
             width: 52px;
             height: 52px;
-            font-size: 24px;
+            font-size: 26px;
             color: white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             cursor: pointer;
             align-items: center;
             justify-content: center;
         }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
         
-        /* Abas e listas */
+        @media (max-width: 800px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 85%;
+                max-width: 340px;
+                height: 100%;
+                transform: translateX(-100%);
+                border-radius: 0 28px 28px 0;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .overlay.active {
+                display: block;
+            }
+        }
+        
+        /* Scroll personalizado */
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 5px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 5px; }
+        
+        /* Componentes */
+        .header-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 1.6rem; letter-spacing: -0.02em; }
+        .theme-btn, .lang-select {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 40px;
+            padding: 6px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            color: white;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 40px;
+            background: rgba(0,0,0,0.3);
+            font-size: 14px;
+            margin-bottom: 16px;
+            color: white;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 12px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; }
+        
+        .comparison-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+        .comparison-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin: 8px 0 4px;
+        }
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--wind);
+            width: 0%;
+        }
+        
         .tabs {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin: 16px 0 12px;
+            margin-bottom: 16px;
         }
         .tab-btn {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.15);
             border: none;
             border-radius: 40px;
             padding: 8px 16px;
-            font-weight: 600;
-            font-size: 13px;
+            font-weight: 700;
+            font-size: 0.8rem;
             cursor: pointer;
-            color: inherit;
+            transition: var(--transition);
         }
         .tab-btn.active {
             background: var(--accent);
@@ -111,6 +263,8 @@
         }
         .tab-panel {
             display: none;
+            max-height: 280px;
+            overflow-y: auto;
         }
         .tab-panel.active {
             display: block;
@@ -119,75 +273,27 @@
             display: block;
             width: 100%;
             text-align: left;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.1);
             border: none;
             border-radius: 14px;
             padding: 12px;
             margin-bottom: 8px;
             cursor: pointer;
-            color: inherit;
+            transition: var(--transition);
         }
-        .search-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.3);
-            color: inherit;
-            margin-bottom: 12px;
+        .list-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(4px);
         }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin: 16px 0;
-        }
-        .stat-card {
-            background: rgba(0,0,0,0.2);
-            border-radius: 16px;
-            padding: 10px;
-        }
-        /* Mobile: sidebar oculta, aparece com botão */
-        @media (max-width: 800px) {
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-                width: 85%;
-                max-width: 320px;
-                height: 100%;
-                transform: translateX(-100%);
-                z-index: 1050;
-                border-radius: 0 24px 24px 0;
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .menu-toggle {
-                display: flex;
-            }
-            .map-wrapper {
-                width: 100%;
-            }
-            .overlay {
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.5);
-                z-index: 1040;
-                display: none;
-            }
-            .overlay.active {
-                display: block;
-            }
-        }
-        /* Outros estilos */
+        
+        /* Painéis flutuantes no mapa */
         .legend, .selection-card {
             position: absolute;
             background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
-            padding: 10px 14px;
-            font-size: 12px;
+            padding: 12px 16px;
+            font-size: 0.75rem;
             color: white;
             z-index: 500;
             pointer-events: none;
@@ -195,28 +301,34 @@
         .legend {
             bottom: 16px;
             left: 16px;
+            min-width: 160px;
         }
         .selection-card {
             bottom: 16px;
             right: 16px;
-            max-width: 260px;
+            max-width: 280px;
             pointer-events: auto;
         }
         .chip-row {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
-            margin-top: 8px;
+            margin-top: 12px;
         }
         .chip {
             background: rgba(0,0,0,0.6);
             border: none;
             border-radius: 40px;
             padding: 6px 12px;
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             color: white;
             cursor: pointer;
+            transition: 0.1s;
+        }
+        .chip.active {
+            background: var(--accent);
+            box-shadow: 0 0 0 2px rgba(223,109,67,0.5);
         }
         .toast {
             position: fixed;
@@ -225,28 +337,70 @@
             transform: translateX(-50%);
             background: #1e2a36;
             color: white;
-            padding: 8px 16px;
+            padding: 8px 20px;
             border-radius: 40px;
-            font-size: 12px;
+            font-size: 0.8rem;
             z-index: 2000;
             opacity: 0;
-            transition: 0.2s;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        
+        /* Popup dashboard */
+        .dashboard-popup {
+            min-width: 260px;
+            padding: 4px;
+        }
+        .dashboard-title {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+        .dashboard-metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 0.8rem;
+        }
+        .dashboard-metric span:first-child {
+            font-weight: 700;
+            opacity: 0.8;
+        }
+        .dashboard-metric span:last-child {
+            font-weight: 800;
+            font-family: monospace;
+        }
+        hr {
+            margin: 8px 0;
+            border-color: rgba(255,255,255,0.2);
         }
     </style>
 </head>
 <body class="light">
-<div class="app-container">
+<div class="app">
     <aside id="sidebar" class="sidebar">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h2 style="font-size: 1.4rem;">⚡ Infra.BR</h2>
+        <div class="header-title">
+            <h1>⚡ Infra.BR</h1>
             <div>
-                <button id="themeBtn" style="background:none; border:none; font-size:20px; cursor:pointer;">🌓</button>
+                <button id="themeToggle" class="theme-btn" aria-label="Alternar tema">🌓</button>
+                <select id="langSelect" class="lang-select" aria-label="Idioma">
+                    <option value="pt">🇧🇷 PT</option>
+                    <option value="en">🇺🇸 EN</option>
+                    <option value="es">🇪🇸 ES</option>
+                </select>
             </div>
         </div>
-        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar parque, cabo, cidade..." />
-        <div id="searchResults" style="max-height: 180px; overflow-y: auto; margin-bottom: 12px;"></div>
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar parque, cabo, cidade..." autocomplete="off">
+        <div id="searchResults" style="max-height: 160px; overflow-y: auto; margin-bottom: 12px;"></div>
         
         <div id="statsGrid" class="stats-grid"></div>
+        
+        <div class="comparison-panel">
+            <div id="comparisonTitle" style="font-weight: 700; margin-bottom: 8px;">⚡ Capacidade eólica vs consumo por estado</div>
+            <div id="stateComparisonList"></div>
+        </div>
         
         <div class="tabs">
             <button class="tab-btn active" data-tab="wind">🌬️ Parques</button>
@@ -259,56 +413,62 @@
         <div id="tab-landing" class="tab-panel"><div id="landingList"></div></div>
         <div id="tab-energy" class="tab-panel"><div id="energyList"></div></div>
     </aside>
-    <div class="map-wrapper">
+    <div class="map-container">
         <div id="map"></div>
         <div class="legend">
-            <div style="font-weight:bold;">Legenda</div>
-            <div>🟢 Parques eólicos</div>
-            <div>🔵 Aterramentos</div>
-            <div>🟠 Consumo urbano</div>
-            <div>✨ Cabos submarinos</div>
+            <div style="font-weight: 700;">📖 Legenda</div>
+            <div>🟢 Parques eólicos (MW)</div>
+            <div>🔵 Aterramentos de cabos</div>
+            <div>🟠 Consumo urbano estimado</div>
+            <div>✨ Rotas submarinas animadas</div>
         </div>
         <div id="selectionCard" class="selection-card">
-            <div style="font-weight:bold;">📌 Painel rápido</div>
+            <div style="font-weight: 700;">📌 Painel rápido</div>
             <div id="selTitle">Selecione um item no mapa</div>
-            <div id="selDesc" style="font-size:11px;">Clique em um marcador para ver detalhes</div>
+            <div id="selDesc" style="font-size: 0.7rem; opacity: 0.8;">Clique em qualquer marcador</div>
+        </div>
+        <div class="chip-row" style="position: absolute; top: 16px; right: 16px; z-index: 600; background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 60px;">
+            <button class="chip" data-focus="all">🌎 Todo Brasil</button>
+            <button class="chip" data-focus="nordeste">🌵 Nordeste</button>
+            <button class="chip" data-focus="sul">❄️ Sul</button>
         </div>
     </div>
 </div>
-<button id="menuToggle" class="menu-toggle">☰</button>
+<button id="menuToggle" class="menu-toggle" aria-label="Abrir menu">☰</button>
 <div id="overlay" class="overlay"></div>
-<div id="toast" class="toast"></div>
+<div id="toastMsg" class="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
 <script>
 (function(){
-    // DADOS (corrigidos com Balneário Pinhal)
-    const BRAZIL_BOUNDS = [[-35, -75], [5, -34]]; // limites para não repetir mapa
+    // ======================== DADOS CORRIGIDOS ========================
     const WIND_FARMS = [
-        {name:"Lagoa dos Ventos", state:"PI", lat:-8.8531, lon:-41.5597, cap:716.5, op:"Enel"},
-        {name:"Complexo Chuí", state:"RS", lat:-33.1233, lon:-53.4458, cap:582.8, op:"Omega"},
-        {name:"Campo Largo", state:"BA", lat:-9.7629, lon:-41.3014, cap:687.9, op:"Engie"},
-        {name:"Oitis", state:"PI/BA", lat:-8.8737, lon:-41.6339, cap:517, op:"Neoenergia"},
-        {name:"Rio do Vento", state:"RN", lat:-5.7014, lon:-35.8522, cap:504, op:"Casa Ventos"},
-        {name:"Chafariz", state:"PB", lat:-6.8444, lon:-36.0141, cap:471.2, op:"Neoenergia"},
-        {name:"Chapada Piauí", state:"PI", lat:-7.6348, lon:-40.9627, cap:438, op:"ContourGlobal"},
-        {name:"Alto Sertão", state:"BA", lat:-13.8317, lon:-42.2387, cap:438, op:"Renova"},
-        {name:"Delta Maranhão", state:"MA", lat:-2.8087, lon:-42.8599, cap:426, op:"Omega"},
-        {name:"Ventos São Roque", state:"PI", lat:-8.8531, lon:-41.5597, cap:396, op:"Enel"},
-        {name:"Farroupilha", state:"RS", lat:-30.2469, lon:-50.2336, cap:570.6, op:"Sete Geração"},
-        {name:"Honda Energy", state:"RS", lat:-30.2469, lon:-50.2336, cap:31.7, op:"Honda"},
-        {name:"Osório", state:"RS", lat:-30.2469, lon:-50.2336, cap:150, op:"AES Brasil"}
+        {name:"Lagoa dos Ventos", state:"PI", lat:-8.8531, lon:-41.5597, cap:716.5, op:"Enel Green Power", status:"Operação"},
+        {name:"Complexo Chuí", state:"RS", lat:-33.1233, lon:-53.4458, cap:582.8, op:"Omega Energia", status:"Operação"},
+        {name:"Complexo Campo Largo", state:"BA", lat:-9.7629, lon:-41.3014, cap:687.9, op:"Engie", status:"Operação"},
+        {name:"Complexo Oitis", state:"PI/BA", lat:-8.8737, lon:-41.6339, cap:517, op:"Neoenergia", status:"Operação"},
+        {name:"Complexo Rio do Vento", state:"RN", lat:-5.7014, lon:-35.8522, cap:504, op:"Casa dos Ventos", status:"Operação"},
+        {name:"Complexo Chafariz", state:"PB", lat:-6.8444, lon:-36.0141, cap:471.2, op:"Neoenergia", status:"Operação"},
+        {name:"Complexo Chapada do Piauí", state:"PI", lat:-7.6348, lon:-40.9627, cap:438, op:"ContourGlobal", status:"Operação"},
+        {name:"Complexo Alto Sertão", state:"BA", lat:-13.8317, lon:-42.2387, cap:438, op:"Renova Energia", status:"Operação"},
+        {name:"Complexo Delta do Maranhão", state:"MA", lat:-2.8087, lon:-42.8599, cap:426, op:"Omega Energia", status:"Operação"},
+        {name:"Complexo Ventos de São Roque", state:"PI", lat:-8.8531, lon:-41.5597, cap:396, op:"Enel Green Power", status:"Operação"},
+        {name:"Complexo Eólico Farroupilha", state:"RS", lat:-30.2469, lon:-50.2336, cap:570.6, op:"Sete Geração", status:"Operação"},
+        {name:"Parque Eólico Honda Energy", state:"RS", lat:-30.2469, lon:-50.2336, cap:31.7, op:"Honda", status:"Operação"},
+        {name:"Complexo Eólico Osório", state:"RS", lat:-30.2469, lon:-50.2336, cap:150, op:"AES Brasil", status:"Operação"}
     ];
+    
     const CABLES = [
-        {name:"Malbec", land:"Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas", len:2880, year:2021, owner:"Meta"},
-        {name:"EllaLink", land:"Fortaleza (CE), Sines (Portugal)", len:5900, year:2021, owner:"EllaLink"},
-        {name:"Monet", land:"Santos (SP), Fortaleza (CE), Boca Raton", len:10000, year:2017, owner:"Google/Algar"},
-        {name:"Seabras-1", land:"Praia Grande (SP), EUA", len:10000, year:2017, owner:"Seaborn"},
-        {name:"AMX-1", land:"Fortaleza (CE), Rio de Janeiro (RJ), EUA", len:null, year:2001, owner:"AMX"},
-        {name:"GlobeNet", land:"Rio de Janeiro (RJ), Fortaleza (CE), EUA", len:23500, year:2000, owner:"GlobeNet"},
-        {name:"Brazilian Festoon", land:"Praia Grande (SP), Rio, Salvador, Recife, Natal", len:2552, year:1996, owner:"Embratel"}
+        {name:"Malbec", land:"Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)", len:2880, year:2021, owner:"GlobeNet / Meta"},
+        {name:"EllaLink", land:"Fortaleza (CE), Sines (Portugal)", len:5900, year:2021, owner:"EllaLink Group"},
+        {name:"Monet", land:"Santos (SP), Fortaleza (CE), Boca Raton (EUA)", len:10000, year:2017, owner:"Google / Algar"},
+        {name:"Seabras-1", land:"Praia Grande (SP), Wall Township (EUA)", len:10000, year:2017, owner:"Seaborn Networks"},
+        {name:"AMX-1", land:"Fortaleza (CE), Rio de Janeiro (RJ), San Juan (Porto Rico)", len:null, year:2001, owner:"AMX"},
+        {name:"GlobeNet", land:"Rio de Janeiro (RJ), Fortaleza (CE), Tuckerton (EUA)", len:23500, year:2000, owner:"GlobeNet"},
+        {name:"Brazilian Festoon", land:"Praia Grande (SP), Rio de Janeiro (RJ), Salvador (BA), Recife (PE), Natal (RN)", len:2552, year:1996, owner:"Embratel"}
     ];
+    
     const LANDING_POINTS = {
         "Balneário Pinhal (RS)":[-30.2469,-50.2336],
         "Fortaleza (CE)":[-3.7319,-38.5267],
@@ -323,76 +483,111 @@
         "Maceió (AL)":[-9.6656,-35.7355],
         "João Pessoa (PB)":[-7.1195,-34.845]
     };
-    const POP = {"Balneário Pinhal (RS)":15000,"Fortaleza (CE)":2574412,"Praia Grande (SP)":350000,"Rio de Janeiro (RJ)":6729894,"Santos (SP)":440646,"Salvador (BA)":2568928,"Recife (PE)":1587707,"Natal (RN)":751300,"Vitória (ES)":322869,"Aracaju (SE)":602757,"Maceió (AL)":957916,"João Pessoa (PB)":833932};
-    const KWH_PER_CAP = 2630;
     
-    // Helper
-    function escape(s){ return String(s).replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
-    function fmtNum(v,d){ return Number(v).toLocaleString("pt-BR", {minFractionDigits:d,maxFractionDigits:d}); }
+    const POP_EST = {"Balneário Pinhal (RS)":15000,"Fortaleza (CE)":2574412,"Praia Grande (SP)":350000,"Rio de Janeiro (RJ)":6729894,"Santos (SP)":440646,"Salvador (BA)":2568928,"Recife (PE)":1587707,"Natal (RN)":751300,"Vitória (ES)":322869,"Aracaju (SE)":602757,"Maceió (AL)":957916,"João Pessoa (PB)":833932};
+    const KWH_CAPITA = 2630;
+    
+    function esc(s){ return String(s).replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
+    function fmtNum(v,d){ return Number(v).toLocaleString("pt-BR", {minimumFractionDigits:d, maximumFractionDigits:d}); }
     function fmtEnergy(gwh){ return fmtNum(gwh,0)+" GWh/ano"; }
+    function toast(msg){ let t=document.getElementById("toastMsg"); t.innerText=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2500); }
     
-    // Preparar dados
-    let landingStats = Object.entries(LANDING_POINTS).map(([city,coords])=>{
+    // Preparar dados de consumo
+    const landingStats = Object.entries(LANDING_POINTS).map(([city,coords])=>{
         let cableCount = CABLES.filter(c=>c.land.includes(city)).length;
-        let pop = POP[city]||50000;
-        let annual = pop * KWH_PER_CAP / 1e6;
+        let pop = POP_EST[city]||50000;
+        let annual = pop * KWH_CAPITA / 1e6;
         return {city, lat:coords[0], lon:coords[1], cables:cableCount, pop, annual};
     });
-    let energyCities = [...landingStats].sort((a,b)=>b.annual-a.annual);
+    const energyCities = [...landingStats].sort((a,b)=>b.annual-a.annual);
     
-    // Mapa - CORREÇÃO: sem repetição horizontal
+    // Capacidade por estado e consumo por estado
+    const stateCapacity = {};
+    WIND_FARMS.forEach(f=>{ let st=f.state.split('/')[0]; stateCapacity[st]=(stateCapacity[st]||0)+f.cap; });
+    const stateConsumption = {};
+    landingStats.forEach(l=>{ let st=l.city.match(/\(([A-Z]{2})\)/)?.[1]; if(st) stateConsumption[st]=(stateConsumption[st]||0)+l.annual; });
+    
+    // ========== MAPA MUNDIAL COM WRAP-AROUND (sem restrições) ==========
     const map = L.map('map').setView([-14.2, -51.9], 5);
+    // TileLayer sem noWrap e sem bounds máximos -> permite rolagem infinita horizontal
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
-        noWrap: true,   // IMPEDE REPETIÇÃO HORIZONTAL
-        bounds: [[-60, -85], [15, -30]]  // restringe ao continente
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CARTO',
+        noWrap: false,   // permitir repetição horizontal (volta ao mundo)
+        continuousWorld: true
     }).addTo(map);
-    map.setMaxBounds([[ -60, -85 ], [ 15, -30 ]]);
-    map.setMinZoom(4);
+    // Remove qualquer restrição de bounds para permitir arrastar além dos limites
+    map.setMaxBounds(null);
+    map.setMinZoom(3);
+    map.setMaxZoom(18);
     
     // Camadas
-    let windLayer = L.featureGroup();
-    let landingLayer = L.featureGroup();
-    let energyLayer = L.featureGroup();
-    let cableLineLayer = L.featureGroup();
-    let markers = { wind: [], landing: [], energy: [] };
-    let searchItems = [];
+    const windLayer = L.featureGroup();
+    const landingLayer = L.featureGroup();
+    const energyLayer = L.featureGroup();
+    const cableLineLayer = L.featureGroup();
+    const markers = { wind:[], landing:[], energy:[] };
+    const searchable = [];
     
-    // Função popup
-    function popupHtml(title, items, type){
-        let color = {wind:'#12766c', landing:'#2c7da0', energy:'#b96532'}[type];
-        return `<div style="padding:8px;"><b>${escape(title)}</b><hr style="margin:6px 0">${items.map(i=>`<div><strong>${i[0]}</strong> ${escape(i[1])}</div>`).join('')}</div>`;
+    // Popup genérico para parques e aterramentos
+    function buildPopup(type, title, pairs){
+        return `<div style="padding:8px; min-width:200px;"><b>${esc(title)}</b><hr style="margin:6px 0">${pairs.map(p=>`<div><strong>${p[0]}:</strong> ${esc(p[1])}</div>`).join('')}</div>`;
     }
     
-    // Parques
+    // DASHBOARD INTERATIVO PARA CIDADES (consumo mensal/diário/minuto)
+    function buildEnergyDashboard(city, annualGwh){
+        const monthlyGwh = annualGwh / 12;
+        const dailyGwh = annualGwh / 365;
+        const dailyMwh = dailyGwh * 1000;
+        const minuteGwh = annualGwh / (365 * 24 * 60);
+        const minuteKwh = minuteGwh * 1e6;
+        
+        return `
+            <div class="dashboard-popup">
+                <div class="dashboard-title">⚡ ${esc(city)}</div>
+                <div class="dashboard-metric"><span>📅 Consumo anual</span><span>${fmtNum(annualGwh, 1)} GWh</span></div>
+                <div class="dashboard-metric"><span>📆 Consumo mensal</span><span>${fmtNum(monthlyGwh, 1)} GWh</span></div>
+                <div class="dashboard-metric"><span>📆 Consumo diário</span><span>${fmtNum(dailyMwh, 0)} MWh</span></div>
+                <div class="dashboard-metric"><span>⏱️ Consumo por minuto</span><span>${fmtNum(minuteKwh, 0)} kWh</span></div>
+                <hr>
+                <div class="dashboard-metric"><span>👥 População base</span><span>${fmtNum(POP_EST[city] || 0, 0)} hab.</span></div>
+                <div class="dashboard-metric"><span>📊 Método</span><span>${KWH_CAPITA} kWh/hab/ano</span></div>
+            </div>
+        `;
+    }
+    
+    // Adicionar parques
     WIND_FARMS.forEach(f=>{
         let rad = Math.max(6, Math.min(22, f.cap/45));
-        let m = L.circleMarker([f.lat, f.lon], {radius:rad, color:'#fff', weight:1.5, fillColor:'#12766c', fillOpacity:0.85});
-        m.bindPopup(popupHtml(f.name, [['MW:', fmtNum(f.cap,1)], ['Estado:', f.state], ['Operador:', f.op]], 'wind'));
-        m.on('click',()=>{ document.getElementById('selTitle').innerText = f.name; document.getElementById('selDesc').innerHTML = `${fmtNum(f.cap,1)} MW | ${f.state}`; });
+        let m = L.circleMarker([f.lat,f.lon], {radius:rad, color:'#fff', weight:1.5, fillColor:'#12766c', fillOpacity:0.85});
+        m.bindPopup(buildPopup('wind', f.name, [['MW', fmtNum(f.cap,1)], ['Estado', f.state], ['Operador', f.op]]));
+        m.on('click',()=>{ document.getElementById('selTitle').innerHTML = f.name; document.getElementById('selDesc').innerHTML = `${fmtNum(f.cap,1)} MW | ${f.state}`; });
         m.addTo(windLayer);
         markers.wind.push({m, item:f});
-        searchItems.push({title:f.name, type:'Parque', meta:`${f.state} ${f.cap}MW`, lat:f.lat, lon:f.lon, marker:m});
+        searchable.push({title:f.name, type:'Parque', meta:`${f.state} ${f.cap}MW`, lat:f.lat, lon:f.lon, marker:m});
     });
     // Aterramentos
     landingStats.forEach(p=>{
         let rad = 8 + p.cables*1.2;
-        let m = L.circleMarker([p.lat, p.lon], {radius:rad, color:'#2c7da0', weight:2, fillColor:'#2c7da0', fillOpacity:0.8});
-        m.bindPopup(popupHtml(p.city, [['Cabos:', p.cables], ['População:', fmtNum(p.pop,0)], ['Consumo anual:', fmtEnergy(p.annual)]], 'landing'));
-        m.on('click',()=>{ document.getElementById('selTitle').innerText = p.city; document.getElementById('selDesc').innerHTML = `${p.cables} cabos | consumo ${fmtEnergy(p.annual)}`; });
+        let m = L.circleMarker([p.lat,p.lon], {radius:rad, color:'#2c7da0', weight:2, fillColor:'#2c7da0', fillOpacity:0.8});
+        m.bindPopup(buildPopup('landing', p.city, [['Cabos', p.cables], ['População', fmtNum(p.pop,0)], ['Consumo anual', fmtEnergy(p.annual)]]));
+        m.on('click',()=>{ document.getElementById('selTitle').innerHTML = p.city; document.getElementById('selDesc').innerHTML = `${p.cables} cabos | ${fmtEnergy(p.annual)}`; });
         m.addTo(landingLayer);
         markers.landing.push({m, item:p});
-        searchItems.push({title:p.city, type:'Aterramento', meta:`${p.cables} cabos`, lat:p.lat, lon:p.lon, marker:m});
+        searchable.push({title:p.city, type:'Aterramento', meta:`${p.cables} cabos`, lat:p.lat, lon:p.lon, marker:m});
     });
-    // Consumo
+    // Consumo - com DASHBOARD completo
     energyCities.forEach(c=>{
         let rad = Math.max(10, Math.min(26, 8 + c.annual/700));
-        let m = L.circleMarker([c.lat, c.lon], {radius:rad, color:'#b96532', weight:2, dashArray:'4 4', fillColor:'#b96532', fillOpacity:0.2});
-        m.bindPopup(popupHtml(c.city, [['Consumo anual:', fmtEnergy(c.annual)], ['Média mensal:', fmtNum(c.annual/12,0)+' GWh']], 'energy'));
-        m.on('click',()=>{ document.getElementById('selTitle').innerText = c.city; document.getElementById('selDesc').innerHTML = `Consumo ${fmtEnergy(c.annual)}`; });
+        let m = L.circleMarker([c.lat,c.lon], {radius:rad, color:'#b96532', weight:2, dashArray:'4 4', fillColor:'#b96532', fillOpacity:0.2});
+        // Usa o dashboard interativo
+        m.bindPopup(buildEnergyDashboard(c.city, c.annual));
+        m.on('click',()=>{
+            document.getElementById('selTitle').innerHTML = c.city;
+            document.getElementById('selDesc').innerHTML = `Consumo anual ${fmtEnergy(c.annual)} | Detalhes no popup`;
+        });
         m.addTo(energyLayer);
         markers.energy.push({m, item:c});
-        searchItems.push({title:c.city, type:'Consumo', meta:fmtEnergy(c.annual), lat:c.lat, lon:c.lon, marker:m});
+        searchable.push({title:c.city, type:'Consumo', meta:fmtEnergy(c.annual), lat:c.lat, lon:c.lon, marker:m});
     });
     
     // Linhas animadas dos cabos
@@ -415,49 +610,64 @@
         '✨ Rotas de cabos': cableLineLayer
     }, {position:'topright', collapsed:false}).addTo(map);
     
-    // Estatísticas e comparativo
-    let totalMW = WIND_FARMS.reduce((s,f)=>s+f.cap,0);
-    let totalEnergy = energyCities.reduce((s,c)=>s+c.annual,0);
+    // Estatísticas
+    const totalMW = Object.values(stateCapacity).reduce((a,b)=>a+b,0);
+    const totalEnergy = energyCities.reduce((a,b)=>a+b.annual,0);
     document.getElementById('statsGrid').innerHTML = `
-        <div class="stat-card">⚡ ${fmtNum(totalMW,0)} MW<br><small>Eólicos</small></div>
-        <div class="stat-card">🌊 ${CABLES.length}<br><small>Cabos</small></div>
-        <div class="stat-card">📍 ${Object.keys(LANDING_POINTS).length}<br><small>Aterramentos</small></div>
-        <div class="stat-card">🏙️ ${fmtNum(totalEnergy,0)} GWh<br><small>Consumo anual</small></div>
+        <div class="stat-card"><div class="stat-value">${fmtNum(totalMW,0)} MW</div><div class="stat-label">Capacidade eólica</div></div>
+        <div class="stat-card"><div class="stat-value">${CABLES.length}</div><div class="stat-label">Cabos internacionais</div></div>
+        <div class="stat-card"><div class="stat-value">${Object.keys(LANDING_POINTS).length}</div><div class="stat-label">Aterramentos BR</div></div>
+        <div class="stat-card"><div class="stat-value">${fmtNum(totalEnergy,0)} GWh</div><div class="stat-label">Consumo urbano anual</div></div>
     `;
     
+    // Comparativo estado vs consumo
+    function renderComparison(){
+        let html = '';
+        let sorted = Object.keys(stateCapacity).sort((a,b)=>stateCapacity[b]-stateCapacity[a]);
+        for(let st of sorted){
+            let cap = stateCapacity[st];
+            let cons = stateConsumption[st] || 0;
+            let percent = cons ? (cap/cons)*100 : 0;
+            html += `<div class="comparison-item"><span>${st}</span><span><strong>${fmtNum(cap,1)} MW</strong> / ${fmtNum(cons,0)} GWh</span></div>
+                     <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100,percent)}%"></div></div>`;
+        }
+        document.getElementById('stateComparisonList').innerHTML = html || '<div>Sem dados</div>';
+    }
+    renderComparison();
+    
     // Listas laterais
-    function renderList(containerId, items, titleFn, metaFn, focusFn){
-        let cont = document.getElementById(containerId);
-        if(!cont) return;
-        cont.innerHTML = items.map((item,i)=>`<button class="list-item" data-idx="${i}"><b>${escape(titleFn(item))}</b><br><small>${escape(metaFn(item))}</small></button>`).join('');
-        cont.querySelectorAll('.list-item').forEach((btn,i)=>{
-            btn.addEventListener('click',()=> focusFn(items[i]));
+    function attachList(containerId, items, titleFn, metaFn, focusFn){
+        let div = document.getElementById(containerId);
+        if(!div) return;
+        div.innerHTML = items.map((item,i)=>`<button class="list-item" data-idx="${i}"><b>${esc(titleFn(item))}</b><br><small>${esc(metaFn(item))}</small></button>`).join('');
+        div.querySelectorAll('.list-item').forEach((btn,i)=>{
+            btn.addEventListener('click',()=>focusFn(items[i]));
         });
     }
     function focusWind(f){ let m = markers.wind.find(w=>w.item.name===f.name); if(m){ map.flyTo([f.lat,f.lon],8); setTimeout(()=>m.marker.openPopup(),200); } }
-    function focusCable(c){ let firstCity = c.land.split(',')[0].trim(); let pt = landingStats.find(l=>l.city===firstCity); if(pt) map.flyTo([pt.lat,pt.lon],7); else map.flyTo([-14,-51],5); document.getElementById('selTitle').innerHTML = c.name; document.getElementById('selDesc').innerHTML = `Operador: ${c.owner} | ${c.len?c.len+'km':''} | ${c.year}`; }
+    function focusCable(c){ let first = c.land.split(',')[0].trim(); let pt = landingStats.find(l=>l.city===first); if(pt) map.flyTo([pt.lat,pt.lon],7); else map.flyTo([-14,-51],5); document.getElementById('selTitle').innerHTML = c.name; document.getElementById('selDesc').innerHTML = `Operador: ${c.owner} | ${c.len?c.len+'km':'---'} | ${c.year}`; }
     function focusLanding(p){ let m = markers.landing.find(l=>l.item.city===p.city); if(m){ map.flyTo([p.lat,p.lon],8); setTimeout(()=>m.marker.openPopup(),200); } }
     function focusEnergy(e){ let m = markers.energy.find(en=>en.item.city===e.city); if(m){ map.flyTo([e.lat,e.lon],8); setTimeout(()=>m.marker.openPopup(),200); } }
     
-    renderList('windList', WIND_FARMS, f=>f.name, f=>`${f.state} | ${f.cap}MW`, focusWind);
-    renderList('cableList', CABLES, c=>c.name, c=>`${c.year} | ${c.owner}`, focusCable);
-    renderList('landingList', landingStats, l=>l.city, l=>`${l.cables} cabos | ${fmtEnergy(l.annual)}`, focusLanding);
-    renderList('energyList', energyCities, e=>e.city, e=>fmtEnergy(e.annual), focusEnergy);
+    attachList('windList', WIND_FARMS, f=>f.name, f=>`${f.state} | ${f.cap}MW`, focusWind);
+    attachList('cableList', CABLES, c=>c.name, c=>`${c.year} | ${c.owner}`, focusCable);
+    attachList('landingList', landingStats, l=>l.city, l=>`${l.cables} cabos | ${fmtEnergy(l.annual)}`, focusLanding);
+    attachList('energyList', energyCities, e=>e.city, e=>fmtEnergy(e.annual), focusEnergy);
     
     // Busca com debounce
     let searchTimer;
-    function doSearch(q){
+    function performSearch(q){
         let term = q.trim().toLowerCase();
-        let resDiv = document.getElementById('searchResults');
-        if(!term){ resDiv.innerHTML = ''; return; }
-        let matches = searchItems.filter(i=> i.title.toLowerCase().includes(term) || i.meta.toLowerCase().includes(term)).slice(0,6);
-        if(!matches.length){ resDiv.innerHTML = '<div style="padding:8px;">Nada encontrado</div>'; return; }
-        resDiv.innerHTML = matches.map(m=>`<button class="list-item" style="margin-bottom:4px;"><b>${escape(m.title)}</b> <small>${escape(m.type)} | ${escape(m.meta)}</small></button>`).join('');
-        resDiv.querySelectorAll('.list-item').forEach((btn,i)=>{
-            btn.addEventListener('click',()=>{ let entry=matches[i]; map.flyTo([entry.lat,entry.lon],8); setTimeout(()=>entry.marker.openPopup(),200); resDiv.innerHTML=''; document.getElementById('searchInput').value=''; });
+        let container = document.getElementById('searchResults');
+        if(!term){ container.innerHTML = ''; return; }
+        let matches = searchable.filter(s=> s.title.toLowerCase().includes(term) || s.meta.toLowerCase().includes(term)).slice(0,6);
+        if(!matches.length){ container.innerHTML = '<div style="padding:8px;">Nada encontrado</div>'; return; }
+        container.innerHTML = matches.map(m=>`<button class="list-item" style="margin-bottom:4px;"><b>${esc(m.title)}</b> <small>${esc(m.type)} | ${esc(m.meta)}</small></button>`).join('');
+        container.querySelectorAll('.list-item').forEach((btn,i)=>{
+            btn.addEventListener('click',()=>{ let e=matches[i]; map.flyTo([e.lat,e.lon],8); setTimeout(()=>e.marker.openPopup(),200); container.innerHTML=''; document.getElementById('searchInput').value=''; });
         });
     }
-    document.getElementById('searchInput').addEventListener('input',(e)=>{ clearTimeout(searchTimer); searchTimer=setTimeout(()=>doSearch(e.target.value),250); });
+    document.getElementById('searchInput').addEventListener('input',e=>{ clearTimeout(searchTimer); searchTimer=setTimeout(()=>performSearch(e.target.value),250); });
     
     // Abas
     document.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -470,30 +680,61 @@
     });
     
     // Chips de foco
-    const chips = document.querySelectorAll('.chip');
-    if(chips.length) chips.forEach(c=>c.remove()); // não existe mais, mas manter compatibilidade
+    const focusMap = {
+        all: ()=>map.fitBounds(windLayer.getBounds().pad(0.2)),
+        nordeste: ()=>map.flyTo([-7.4,-38.8],6),
+        sul: ()=>map.flyTo([-29.8,-51.2],6)
+    };
+    document.querySelectorAll('.chip').forEach(chip=>{
+        chip.addEventListener('click',function(){
+            document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+            this.classList.add('active');
+            let action = focusMap[this.dataset.focus];
+            if(action) action();
+        });
+    });
     
-    // Tema
-    const themeBtn = document.getElementById('themeBtn');
-    themeBtn.addEventListener('click',()=>{
+    // Tema Dark/Light persistente
+    const themeToggle = document.getElementById('themeToggle');
+    const langSelect = document.getElementById('langSelect');
+    let isDark = localStorage.getItem('theme') === 'dark';
+    if(isDark){ document.body.classList.add('dark'); document.body.classList.remove('light'); themeToggle.innerText = '☀️'; }
+    themeToggle.addEventListener('click',()=>{
         document.body.classList.toggle('dark');
         document.body.classList.toggle('light');
+        let darkNow = document.body.classList.contains('dark');
+        localStorage.setItem('theme', darkNow ? 'dark' : 'light');
+        themeToggle.innerText = darkNow ? '☀️' : '🌓';
     });
+    
+    // Multi-idioma (simplificado)
+    const i18n = {
+        pt: { comparisonTitle: "⚡ Capacidade eólica vs consumo por estado" },
+        en: { comparisonTitle: "⚡ Wind capacity vs consumption by state" },
+        es: { comparisonTitle: "⚡ Capacidad eólica vs consumo por estado" }
+    };
+    function setLang(lang){
+        document.getElementById('comparisonTitle').innerText = i18n[lang]?.comparisonTitle || i18n.pt.comparisonTitle;
+        localStorage.setItem('lang', lang);
+    }
+    langSelect.addEventListener('change',(e)=>setLang(e.target.value));
+    const savedLang = localStorage.getItem('lang') || 'pt';
+    langSelect.value = savedLang;
+    setLang(savedLang);
     
     // Mobile menu
     const menuBtn = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    function closeMenu(){ sidebar.classList.remove('open'); overlay.classList.remove('active'); }
-    function openMenu(){ sidebar.classList.add('open'); overlay.classList.add('active'); }
-    menuBtn.addEventListener('click', (e)=>{ e.stopPropagation(); if(sidebar.classList.contains('open')) closeMenu(); else openMenu(); });
-    overlay.addEventListener('click', closeMenu);
-    // Em desktop, sidebar fica fixa
-    if(window.innerWidth > 800) sidebar.classList.add('open'); // força exibição?
-    window.addEventListener('resize',()=>{ if(window.innerWidth>800){ sidebar.classList.add('open'); overlay.classList.remove('active'); } else { if(!sidebar.classList.contains('open')) closeMenu(); } });
+    const overlayDiv = document.getElementById('overlay');
+    function closeMenu(){ sidebar.classList.remove('open'); overlayDiv.classList.remove('active'); }
+    function openMenu(){ sidebar.classList.add('open'); overlayDiv.classList.add('active'); }
+    menuBtn.addEventListener('click',(e)=>{ e.stopPropagation(); if(sidebar.classList.contains('open')) closeMenu(); else openMenu(); });
+    overlayDiv.addEventListener('click', closeMenu);
+    if(window.innerWidth > 800) sidebar.classList.add('open');
+    window.addEventListener('resize',()=>{ if(window.innerWidth>800){ sidebar.classList.add('open'); overlayDiv.classList.remove('active'); } else { if(!sidebar.classList.contains('open')) closeMenu(); } });
     
-    // Ajustar bounds do mapa
-    setTimeout(()=>{ map.fitBounds([[-33, -74], [5, -34]]); }, 200);
+    // Ajuste inicial de bounds (apenas para não deixar o mapa perdido)
+    setTimeout(()=>{ if(windLayer.getBounds().isValid()) map.fitBounds(windLayer.getBounds().pad(0.2)); }, 300);
 })();
 </script>
 </body>
