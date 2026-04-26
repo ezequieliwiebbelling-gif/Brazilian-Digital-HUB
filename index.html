@@ -46,10 +46,8 @@
         body.light { background: var(--bg-light); color: var(--text-light); }
         body.dark { background: var(--bg-dark); color: var(--text-dark); }
         
-        /* Layout principal */
         .app { display: flex; width: 100%; height: 100%; }
         
-        /* Sidebar com cores adaptáveis ao tema (corrigido contraste) */
         .sidebar {
             width: 380px;
             height: 100%;
@@ -62,8 +60,6 @@
         }
         body.light .sidebar { background: var(--surface-light); color: #ffffff; }
         body.dark .sidebar { background: var(--surface-dark); color: #e0e0e0; }
-        
-        /* Texto da sidebar – usando cores dinâmicas (não força branco fixo) */
         .sidebar, .sidebar * { color: inherit; }
         .sidebar .search-input::placeholder { color: rgba(255,255,255,0.6); }
         .sidebar .search-input {
@@ -145,7 +141,6 @@
         }
         .tab-panel.active { display: block; }
         
-        /* Mapa */
         .map-container {
             flex: 1;
             position: relative;
@@ -156,7 +151,6 @@
             height: 100%;
         }
         
-        /* Painéis flutuantes no mapa – corrigido pointer-events */
         .legend, .selection-card {
             position: absolute;
             background: rgba(0,0,0,0.75);
@@ -172,7 +166,7 @@
             bottom: 20px;
             left: 20px;
             min-width: 170px;
-            pointer-events: none; /* Não bloqueia cliques no mapa – apenas visual */
+            pointer-events: none;
         }
         .selection-card {
             bottom: 20px;
@@ -181,7 +175,6 @@
             pointer-events: auto;
         }
         
-        /* Chips reposicionados para evitar sobreposição com LayerControl */
         .chip-row {
             position: absolute;
             bottom: 20px;
@@ -211,7 +204,6 @@
             box-shadow: 0 0 0 2px rgba(223,109,67,0.5);
         }
         
-        /* Botão menu mobile – garantindo acessibilidade */
         .menu-toggle {
             display: none;
             position: fixed;
@@ -240,7 +232,6 @@
             backdrop-filter: blur(4px);
         }
         
-        /* DASHBOARD POPUP ESTILIZADO (com melhoria de carregamento) */
         .dashboard-popup {
             min-width: 260px;
             max-width: 320px;
@@ -287,7 +278,6 @@
             width: 0%;
         }
         
-        /* RESPONSIVO MOBILE – melhorado */
         @media (max-width: 800px) {
             .sidebar {
                 position: fixed;
@@ -304,7 +294,6 @@
             .sidebar.open { transform: translateX(0); }
             .menu-toggle { display: flex; }
             .overlay.active { display: block; }
-            
             body { font-size: 16px; }
             .stat-value { font-size: 1.4rem; }
             .list-item { padding: 14px !important; }
@@ -378,21 +367,21 @@
     <div class="map-container">
         <div id="map"></div>
         <div class="legend">
-            <div style="font-weight: 800; margin-bottom: 5px;">📖 Legenda</div>
-            <div>🟢 Parques eólicos (MW)</div>
-            <div>🔵 Aterramentos de cabos</div>
-            <div>🟠 Consumo urbano</div>
-            <div>✨ Rotas animadas</div>
+            <div style="font-weight: 800; margin-bottom: 5px;" data-i18n-legend-title>📖 Legenda</div>
+            <div data-i18n-legend-wind>🟢 Parques eólicos (MW)</div>
+            <div data-i18n-legend-cable>🔵 Aterramentos de cabos</div>
+            <div data-i18n-legend-energy>🟠 Consumo urbano</div>
+            <div data-i18n-legend-route>✨ Rotas animadas</div>
         </div>
         <div id="selectionCard" class="selection-card">
-            <div style="font-weight: 800;">📌 Painel rápido</div>
-            <div id="selTitle">Selecione um item no mapa</div>
-            <div id="selDesc" style="font-size: 0.7rem; opacity: 0.8;">Clique em qualquer marcador</div>
+            <div style="font-weight: 800;" data-i18n-select-title>📌 Painel rápido</div>
+            <div id="selTitle" data-i18n-select-item>Selecione um item no mapa</div>
+            <div id="selDesc" style="font-size: 0.7rem; opacity: 0.8;" data-i18n-select-hint>Clique em qualquer marcador</div>
         </div>
         <div class="chip-row">
-            <button class="chip" data-focus="all">🌎 Todo Brasil</button>
-            <button class="chip" data-focus="nordeste">🌵 Nordeste</button>
-            <button class="chip" data-focus="sul">❄️ Sul</button>
+            <button class="chip" data-focus="all" data-i18n-chip-all>🌎 Todo Brasil</button>
+            <button class="chip" data-focus="nordeste" data-i18n-chip-ne>🌵 Nordeste</button>
+            <button class="chip" data-focus="sul" data-i18n-chip-sul>❄️ Sul</button>
         </div>
     </div>
 </div>
@@ -447,7 +436,7 @@
     };
     
     const POP_EST = {"Balneário Pinhal (RS)":15000,"Fortaleza (CE)":2574412,"Praia Grande (SP)":350000,"Rio de Janeiro (RJ)":6729894,"Santos (SP)":440646,"Salvador (BA)":2568928,"Recife (PE)":1587707,"Natal (RN)":751300,"Vitória (ES)":322869,"Aracaju (SE)":602757,"Maceió (AL)":957916,"João Pessoa (PB)":833932};
-    const KWH_CAPITA = 2630; // kWh/ano
+    const KWH_CAPITA = 2630;
     const CAPACITY_FACTOR = 0.35;
     
     function esc(s){ return String(s).replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
@@ -455,7 +444,6 @@
     function fmtEnergy(gwh){ return fmtNum(gwh,0)+" GWh/ano"; }
     function toast(msg){ let t=document.getElementById("toastMsg"); t.innerText=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2500); }
     
-    // Preparar dados de consumo
     const landingStats = Object.entries(LANDING_POINTS).map(([city,coords])=>{
         let cableCount = CABLES.filter(c=>c.land.includes(city)).length;
         let pop = POP_EST[city]||50000;
@@ -464,24 +452,21 @@
     });
     const energyCities = [...landingStats].sort((a,b)=>b.annual-a.annual);
     
-    // Capacidade por estado e consumo
     const stateCapacity = {};
     WIND_FARMS.forEach(f=>{ let st=f.state.split('/')[0]; stateCapacity[st]=(stateCapacity[st]||0)+f.cap; });
     const stateConsumption = {};
     landingStats.forEach(l=>{ let st=l.city.match(/\(([A-Z]{2})\)/)?.[1]; if(st) stateConsumption[st]=(stateConsumption[st]||0)+l.annual; });
     
-    // Dados específicos de Balneário Pinhal
     const balnearioParques = WIND_FARMS.filter(f => f.lat === -30.2469 && f.lon === -50.2336);
     const balnearioCapacidade = balnearioParques.reduce((s,f)=>s+f.cap,0);
     const balnearioGeracaoAnual = balnearioCapacidade * 8760 * CAPACITY_FACTOR / 1000;
     const balnearioConsumo = (POP_EST["Balneário Pinhal (RS)"] * KWH_CAPITA) / 1e6;
     const balnearioVezes = balnearioGeracaoAnual / balnearioConsumo;
     
-    // ========== MAPA MUNDIAL COM WRAP-AROUND ==========
-    // CORREÇÃO: Trocar tile para OpenStreetMap (confiável)
+    // Mapa
     const map = L.map('map').setView([-14.2, -51.9], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         noWrap: false,
         continuousWorld: true
     }).addTo(map);
@@ -489,28 +474,25 @@
     map.setMinZoom(3);
     map.setMaxZoom(18);
     
-    // Camadas
     const windLayer = L.featureGroup();
     const landingLayer = L.featureGroup();
     const energyLayer = L.featureGroup();
     const cableLineLayer = L.featureGroup();
     const markers = { wind:[], landing:[], energy:[] };
     const searchable = [];
-    // Para evitar duplicatas na busca, usamos Set internamente
     const searchKeySet = new Set();
     
-    // PRÉ-CÁLCULO das métricas para evitar lentidão nos popups
-    function precomputeMetrics(city, annualGwh, pop) {
+    function precomputeMetrics(annualGwh, pop) {
         return {
             annual: annualGwh,
             monthly: annualGwh / 12,
             dailyMwh: (annualGwh / 365) * 1000,
             minuteKwh: (annualGwh / (365 * 24 * 60)) * 1e6,
-            pop: pop
+            pop
         };
     }
     
-    function buildFullDashboard(city, metrics, isBalneario=false) {
+    function buildFullDashboard(city, metrics, isBalneario) {
         let extraHtml = '';
         if (isBalneario) {
             extraHtml = `
@@ -538,7 +520,6 @@
         `;
     }
     
-    // Adicionar parques
     WIND_FARMS.forEach(f=>{
         let rad = Math.max(6, Math.min(22, f.cap/45));
         let m = L.circleMarker([f.lat,f.lon], {radius:rad, color:'#fff', weight:1.8, fillColor:'#12766c', fillOpacity:0.85});
@@ -551,7 +532,6 @@
         if(!searchKeySet.has(key)){ searchKeySet.add(key); searchable.push({title:f.name, type:'Parque', meta:`${f.state} ${f.cap}MW`, lat:f.lat, lon:f.lon, marker:m}); }
     });
     
-    // Aterramentos
     landingStats.forEach(p=>{
         let rad = 8 + p.cables*1.2;
         let m = L.circleMarker([p.lat,p.lon], {radius:rad, color:'#2c7da0', weight:2, fillColor:'#2c7da0', fillOpacity:0.8});
@@ -564,11 +544,10 @@
         if(!searchKeySet.has(key)){ searchKeySet.add(key); searchable.push({title:p.city, type:'Aterramento', meta:`${p.cables} cabos`, lat:p.lat, lon:p.lon, marker:m}); }
     });
     
-    // Consumo - com métricas pré-calculadas
     energyCities.forEach(c=>{
         let rad = Math.max(10, Math.min(26, 8 + c.annual/700));
         let m = L.circleMarker([c.lat,c.lon], {radius:rad, color:'#b96532', weight:2, dashArray:'4 4', fillColor:'#b96532', fillOpacity:0.2});
-        const metrics = precomputeMetrics(c.city, c.annual, c.pop);
+        const metrics = precomputeMetrics(c.annual, c.pop);
         const isBalneario = c.city === "Balneário Pinhal (RS)";
         m.bindPopup(buildFullDashboard(c.city, metrics, isBalneario));
         m.bindTooltip(`${c.city} | ${fmtEnergy(c.annual)}`, {sticky: true});
@@ -582,7 +561,6 @@
         if(!searchKeySet.has(key)){ searchKeySet.add(key); searchable.push({title:c.city, type:'Consumo', meta:fmtEnergy(c.annual), lat:c.lat, lon:c.lon, marker:m}); }
     });
     
-    // Linhas animadas dos cabos
     CABLES.forEach(cable=>{
         let cities = cable.land.split(',').map(s=>s.trim()).filter(c=>LANDING_POINTS[c]);
         let coords = cities.map(c=>LANDING_POINTS[c]).filter(c=>c);
@@ -602,7 +580,6 @@
         '✨ Rotas de cabos': cableLineLayer
     }, {position:'topright', collapsed:false}).addTo(map);
     
-    // Estatísticas
     const totalMW = Object.values(stateCapacity).reduce((a,b)=>a+b,0);
     const totalEnergy = energyCities.reduce((a,b)=>a+b.annual,0);
     document.getElementById('statsGrid').innerHTML = `
@@ -612,7 +589,6 @@
         <div class="stat-card"><div class="stat-value">${fmtNum(totalEnergy,0)} GWh</div><div class="stat-label">Consumo urbano anual</div></div>
     `;
     
-    // Comparativo com tooltip explicativo
     function renderComparison(){
         let html = '';
         let sorted = Object.keys(stateCapacity).sort((a,b)=>stateCapacity[b]-stateCapacity[a]);
@@ -627,7 +603,6 @@
     }
     renderComparison();
     
-    // Listas laterais (com padronização de tooltips)
     function attachList(containerId, items, titleFn, metaFn, focusFn){
         let div = document.getElementById(containerId);
         if(!div) return;
@@ -636,17 +611,32 @@
             btn.addEventListener('click',()=>focusFn(items[i]));
         });
     }
-    function focusWind(f){ let m = markers.wind.find(w=>w.item.name===f.name); if(m){ map.flyTo([f.lat,f.lon],8); setTimeout(()=>m.marker.openPopup(),200); } }
-    function focusCable(c){ let first = c.land.split(',')[0].trim(); let pt = landingStats.find(l=>l.city===first); if(pt) map.flyTo([pt.lat,pt.lon],7); else map.flyTo([-14,-51],5); document.getElementById('selTitle').innerHTML = c.name; document.getElementById('selDesc').innerHTML = `Operador: ${c.owner} | ${c.len?c.len+'km':'---'} | ${c.year}`; }
-    function focusLanding(p){ let m = markers.landing.find(l=>l.item.city===p.city); if(m){ map.flyTo([p.lat,p.lon],8); setTimeout(()=>m.marker.openPopup(),200); } }
-    function focusEnergy(e){ let m = markers.energy.find(en=>en.item.city===e.city); if(m){ map.flyTo([e.lat,e.lon],8); setTimeout(()=>m.marker.openPopup(),200); } }
+    
+    let pendingPopup = null;
+    map.on('moveend', function(){
+        if(pendingPopup){
+            pendingPopup.openPopup();
+            pendingPopup = null;
+        }
+    });
+    
+    function enhancedFocus(marker, lat, lon){
+        if(marker){
+            pendingPopup = marker;
+            map.flyTo([lat,lon],8);
+        }
+    }
+    
+    const focusWind = (f)=>{ let m = markers.wind.find(w=>w.item.name===f.name); if(m) enhancedFocus(m.marker, f.lat, f.lon); };
+    const focusCable = (c)=>{ let first = c.land.split(',')[0].trim(); let pt = landingStats.find(l=>l.city===first); if(pt) enhancedFocus(markers.landing.find(l=>l.item.city===pt.city)?.marker, pt.lat, pt.lon); else map.flyTo([-14,-51],5); };
+    const focusLanding = (p)=>{ let m = markers.landing.find(l=>l.item.city===p.city); if(m) enhancedFocus(m.marker, p.lat, p.lon); };
+    const focusEnergy = (e)=>{ let m = markers.energy.find(en=>en.item.city===e.city); if(m) enhancedFocus(m.marker, e.lat, e.lon); };
     
     attachList('windList', WIND_FARMS, f=>f.name, f=>`${f.state} | ${f.cap}MW`, focusWind);
     attachList('cableList', CABLES, c=>c.name, c=>`${c.year} | ${c.owner} | ${c.len?c.len+'km':'N/A'}`, focusCable);
     attachList('landingList', landingStats, l=>l.city, l=>`${l.cables} cabos | ${fmtEnergy(l.annual)}`, focusLanding);
     attachList('energyList', energyCities, e=>e.city, e=>fmtEnergy(e.annual), focusEnergy);
     
-    // Busca com debounce e sem duplicatas
     let searchTimer;
     function performSearch(q){
         let term = q.trim().toLowerCase();
@@ -656,12 +646,11 @@
         if(!matches.length){ container.innerHTML = '<div style="padding:8px;">Nada encontrado</div>'; return; }
         container.innerHTML = matches.map(m=>`<button class="list-item" style="margin-bottom:4px;"><b>${esc(m.title)}</b> <small>${esc(m.type)} | ${esc(m.meta)}</small></button>`).join('');
         container.querySelectorAll('.list-item').forEach((btn,i)=>{
-            btn.addEventListener('click',()=>{ let e=matches[i]; map.flyTo([e.lat,e.lon],8); setTimeout(()=>e.marker.openPopup(),200); container.innerHTML=''; document.getElementById('searchInput').value=''; });
+            btn.addEventListener('click',()=>{ let e=matches[i]; enhancedFocus(e.marker, e.lat, e.lon); container.innerHTML=''; document.getElementById('searchInput').value=''; });
         });
     }
     document.getElementById('searchInput').addEventListener('input',e=>{ clearTimeout(searchTimer); searchTimer=setTimeout(()=>performSearch(e.target.value),250); });
     
-    // Abas
     document.querySelectorAll('.tab-btn').forEach(btn=>{
         btn.addEventListener('click',()=>{
             document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -671,7 +660,6 @@
         });
     });
     
-    // Chips de foco
     const focusMap = {
         all: ()=>map.fitBounds(windLayer.getBounds().pad(0.2)),
         nordeste: ()=>map.flyTo([-7.4,-38.8],6),
@@ -686,7 +674,6 @@
         });
     });
     
-    // Tema Dark/Light persistente (corrigido para popups)
     const themeToggle = document.getElementById('themeToggle');
     const langSelect = document.getElementById('langSelect');
     let isDark = localStorage.getItem('theme') === 'dark';
@@ -697,32 +684,31 @@
         let darkNow = document.body.classList.contains('dark');
         localStorage.setItem('theme', darkNow ? 'dark' : 'light');
         themeToggle.innerText = darkNow ? '☀️' : '🌓';
-        // Força atualização visual dos popups (opcional)
         map.eachLayer(layer => { if(layer.getPopup) layer.closePopup(); });
     });
     
-    // i18n expandido (legenda, chips, placeholders, botões)
     const i18n = {
-        pt: { comparisonTitle: "⚡ Capacidade eólica vs consumo por estado", searchPlaceholder: "🔍 Buscar parque, cabo, cidade...", toastNoResults: "Nada encontrado", legendTitle: "📖 Legenda", legendWind: "Parques eólicos (MW)", legendCable: "Aterramentos de cabos", legendEnergy: "Consumo urbano", legendRoute: "Rotas animadas", chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sul", selectTitle: "Selecione um item no mapa", selectDesc: "Clique em qualquer marcador" },
-        en: { comparisonTitle: "⚡ Wind capacity vs consumption by state", searchPlaceholder: "🔍 Search wind farm, cable, city...", toastNoResults: "No results found", legendTitle: "📖 Legend", legendWind: "Wind farms (MW)", legendCable: "Cable landing points", legendEnergy: "Urban consumption", legendRoute: "Animated routes", chipAll: "🌎 All Brazil", chipNE: "🌵 Northeast", chipSul: "❄️ South", selectTitle: "Select an item on the map", selectDesc: "Click any marker" },
-        es: { comparisonTitle: "⚡ Capacidad eólica vs consumo por estado", searchPlaceholder: "🔍 Buscar parque, cable, ciudad...", toastNoResults: "Sin resultados", legendTitle: "📖 Leyenda", legendWind: "Parques eólicos (MW)", legendCable: "Puntos de amarre", legendEnergy: "Consumo urbano", legendRoute: "Rutas animadas", chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sur", selectTitle: "Seleccione un elemento en el mapa", selectDesc: "Haga clic en cualquier marcador" }
+        pt: { comparisonTitle: "⚡ Capacidade eólica vs consumo por estado", searchPlaceholder: "🔍 Buscar parque, cabo, cidade...", legendTitle: "📖 Legenda", legendWind: "🟢 Parques eólicos (MW)", legendCable: "🔵 Aterramentos de cabos", legendEnergy: "🟠 Consumo urbano", legendRoute: "✨ Rotas animadas", chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sul", selectTitle: "📌 Painel rápido", selectItem: "Selecione um item no mapa", selectHint: "Clique em qualquer marcador" },
+        en: { comparisonTitle: "⚡ Wind capacity vs consumption by state", searchPlaceholder: "🔍 Search wind farm, cable, city...", legendTitle: "📖 Legend", legendWind: "🟢 Wind farms (MW)", legendCable: "🔵 Cable landing points", legendEnergy: "🟠 Urban consumption", legendRoute: "✨ Animated routes", chipAll: "🌎 All Brazil", chipNE: "🌵 Northeast", chipSul: "❄️ South", selectTitle: "📌 Quick panel", selectItem: "Select an item on the map", selectHint: "Click any marker" },
+        es: { comparisonTitle: "⚡ Capacidad eólica vs consumo por estado", searchPlaceholder: "🔍 Buscar parque, cable, ciudad...", legendTitle: "📖 Leyenda", legendWind: "🟢 Parques eólicos (MW)", legendCable: "🔵 Puntos de amarre", legendEnergy: "🟠 Consumo urbano", legendRoute: "✨ Rutas animadas", chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sur", selectTitle: "📌 Panel rápido", selectItem: "Seleccione un elemento en el mapa", selectHint: "Haga clic en cualquier marcador" }
     };
     function setLang(lang){
         let t = i18n[lang] || i18n.pt;
         document.getElementById('comparisonTitle').innerText = t.comparisonTitle;
         document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-        document.querySelectorAll('.legend div')[0].innerText = t.legendTitle;
-        let legendDivs = document.querySelectorAll('.legend div');
+        const legendDivs = document.querySelectorAll('.legend div');
+        if(legendDivs[0]) legendDivs[0].innerHTML = t.legendTitle;
         if(legendDivs[1]) legendDivs[1].innerHTML = t.legendWind;
         if(legendDivs[2]) legendDivs[2].innerHTML = t.legendCable;
         if(legendDivs[3]) legendDivs[3].innerHTML = t.legendEnergy;
         if(legendDivs[4]) legendDivs[4].innerHTML = t.legendRoute;
-        let chips = document.querySelectorAll('.chip');
+        const chips = document.querySelectorAll('.chip');
         if(chips[0]) chips[0].innerHTML = t.chipAll;
         if(chips[1]) chips[1].innerHTML = t.chipNE;
         if(chips[2]) chips[2].innerHTML = t.chipSul;
-        document.getElementById('selTitle').innerText = t.selectTitle;
-        document.getElementById('selDesc').innerText = t.selectDesc;
+        document.querySelector('[data-i18n-select-title]').innerHTML = t.selectTitle;
+        document.getElementById('selTitle').innerText = t.selectItem;
+        document.getElementById('selDesc').innerText = t.selectHint;
         localStorage.setItem('lang', lang);
     }
     langSelect.addEventListener('change',(e)=>setLang(e.target.value));
@@ -730,68 +716,26 @@
     langSelect.value = savedLang;
     setLang(savedLang);
     
-    // Mobile menu com z-index corrigido
     const menuBtn = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     const overlayDiv = document.getElementById('overlay');
     let isMobileOpen = localStorage.getItem('sidebarOpen') === 'true';
-    
     function closeMenu(){ sidebar.classList.remove('open'); overlayDiv.classList.remove('active'); if(window.innerWidth<=800) localStorage.setItem('sidebarOpen', 'false'); }
     function openMenu(){ sidebar.classList.add('open'); overlayDiv.classList.add('active'); if(window.innerWidth<=800) localStorage.setItem('sidebarOpen', 'true'); }
-    
     if(menuBtn){
         menuBtn.addEventListener('click',(e)=>{ e.stopPropagation(); if(sidebar.classList.contains('open')) closeMenu(); else openMenu(); });
     }
     overlayDiv.addEventListener('click', closeMenu);
-    
     if(window.innerWidth > 800) {
         sidebar.classList.add('open');
     } else if(isMobileOpen) {
         openMenu();
     }
-    
     window.addEventListener('resize',()=>{
         if(window.innerWidth>800){ sidebar.classList.add('open'); overlayDiv.classList.remove('active'); }
         else { if(!sidebar.classList.contains('open') && localStorage.getItem('sidebarOpen') === 'true') openMenu(); }
     });
     
-    // Ajuste inicial e melhoria de clique de marcador (usando moveend)
-    let pendingPopup = null;
-    map.on('moveend', function(){
-        if(pendingPopup){
-            pendingPopup.openPopup();
-            pendingPopup = null;
-        }
-    });
-    // Sobrescrever a função de flyTo + popup para os itens de lista
-    const originalFocusWind = focusWind;
-    window.focusWind = (f) => {
-        let m = markers.wind.find(w=>w.item.name===f.name);
-        if(m){
-            pendingPopup = m.marker;
-            map.flyTo([f.lat,f.lon],8);
-        }
-    };
-    // Ajuste para os outros tipos também (simplificado)
-    function enhancedFocus(marker, lat, lon){
-        if(marker){
-            pendingPopup = marker;
-            map.flyTo([lat,lon],8);
-        }
-    }
-    // Substitui as funções de foco
-    window.focusWind = (f)=>{ let m = markers.wind.find(w=>w.item.name===f.name); if(m) enhancedFocus(m.marker, f.lat, f.lon); };
-    window.focusCable = (c)=>{ let first = c.land.split(',')[0].trim(); let pt = landingStats.find(l=>l.city===first); if(pt) enhancedFocus(markers.landing.find(l=>l.item.city===pt.city)?.marker, pt.lat, pt.lon); else map.flyTo([-14,-51],5); };
-    window.focusLanding = (p)=>{ let m = markers.landing.find(l=>l.item.city===p.city); if(m) enhancedFocus(m.marker, p.lat, p.lon); };
-    window.focusEnergy = (e)=>{ let m = markers.energy.find(en=>en.item.city===e.city); if(m) enhancedFocus(m.marker, e.lat, e.lon); };
-    
-    // Reaplica as listas com as novas funções
-    attachList('windList', WIND_FARMS, f=>f.name, f=>`${f.state} | ${f.cap}MW`, window.focusWind);
-    attachList('cableList', CABLES, c=>c.name, c=>`${c.year} | ${c.owner} | ${c.len?c.len+'km':'N/A'}`, window.focusCable);
-    attachList('landingList', landingStats, l=>l.city, l=>`${l.cables} cabos | ${fmtEnergy(l.annual)}`, window.focusLanding);
-    attachList('energyList', energyCities, e=>e.city, e=>fmtEnergy(e.annual), window.focusEnergy);
-    
-    // Ajuste de bounds inicial
     setTimeout(()=>{ if(windLayer.getBounds().isValid()) map.fitBounds(windLayer.getBounds().pad(0.2)); }, 300);
 })();
 </script>
