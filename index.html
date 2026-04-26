@@ -16,6 +16,7 @@
     <style>
         :root {
             --bg-dark: #0a0f14;
+            --bg-light: #f4efe7;
             --accent: #df6d43;
             --accent2: #e8835a;
             --gold: #f0b846;
@@ -31,6 +32,7 @@
             --radius-md: 12px;
             --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --text-light: #e8e8e8;
+            --text-dark: #1e2a36;
             --success: #2ecc71;
             --danger: #e74c3c;
         }
@@ -49,6 +51,25 @@
             position: fixed;
             background: var(--bg-dark);
             color: var(--text-light);
+            transition: background 0.3s, color 0.3s;
+        }
+        body.light {
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+        body.light .splash {
+            background: linear-gradient(160deg, #1a3a4a 0%, #2a5a6a 100%);
+        }
+        body.light .sidebar {
+            background: rgba(0, 0, 0, 0.75);
+            color: #f0f0f0;
+        }
+        body.light .city-dashboard {
+            background: rgba(255, 255, 255, 0.96);
+            color: #1e2a36;
+        }
+        body.light .dash-city-name {
+            color: #b96532;
         }
         .splash {
             position: fixed;
@@ -86,11 +107,12 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
         .logo-svg {
             width: 48px;
             height: 48px;
-            filter: drop-shadow(0 0 10px rgba(240,184,70,0.4));
+            filter: drop-shadow(0 0 10px rgba(240, 184, 70, 0.4));
         }
         .logo-text {
             font-size: 2.8rem;
@@ -138,13 +160,27 @@
             transition: transform 0.2s, background 0.2s, border-color 0.2s;
             animation: fadeInUp 0.6s ease both;
         }
-        .splash-stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .splash-stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .splash-stat-card:nth-child(3) { animation-delay: 0.3s; }
-        .splash-stat-card:nth-child(4) { animation-delay: 0.4s; }
+        .splash-stat-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        .splash-stat-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .splash-stat-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        .splash-stat-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .splash-stat-card:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -195,8 +231,13 @@
             vertical-align: middle;
         }
         @keyframes pulseDot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 74, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(255, 107, 74, 0); }
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 74, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(255, 107, 74, 0);
+            }
         }
         .live-value-large {
             font-size: 2.4rem;
@@ -232,9 +273,15 @@
             backdrop-filter: blur(6px);
             animation: fadeInUp 0.6s ease both;
         }
-        .splash-info-card:nth-child(1) { animation-delay: 0.2s; }
-        .splash-info-card:nth-child(2) { animation-delay: 0.35s; }
-        .splash-info-card:nth-child(3) { animation-delay: 0.5s; }
+        .splash-info-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        .splash-info-card:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+        .splash-info-card:nth-child(3) {
+            animation-delay: 0.5s;
+        }
         .splash-info-card:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(240, 184, 70, 0.25);
@@ -274,7 +321,6 @@
             background: rgba(240, 184, 70, 0.12);
             color: var(--gold);
         }
-        /* Tooltips educativos */
         [data-tooltip] {
             position: relative;
             cursor: help;
@@ -293,9 +339,8 @@
             font-size: 0.7rem;
             white-space: nowrap;
             z-index: 10;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
-        /* Calculadora */
         .calculator-section {
             background: rgba(240, 184, 70, 0.04);
             border: 2px solid rgba(240, 184, 70, 0.2);
@@ -332,9 +377,10 @@
             text-transform: uppercase;
             opacity: 0.8;
         }
-        .calc-field input, .calc-field select {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.2);
+        .calc-field input,
+        .calc-field select {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 40px;
             padding: 10px 14px;
             color: #fff;
@@ -353,7 +399,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: var(--radius-md);
             padding: 14px;
         }
@@ -371,21 +417,58 @@
             text-transform: uppercase;
             opacity: 0.7;
         }
+        .energy-table-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(240, 184, 70, 0.2);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease both;
+            animation-delay: 0.65s;
+        }
+        .energy-table-section h3 {
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        .energy-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+        .energy-table th {
+            text-align: left;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.06);
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .energy-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .energy-table tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
         .splash-btn {
             align-self: center;
             background: linear-gradient(135deg, #df6d43 0%, #f0b846 100%);
             border: none;
             border-radius: 60px;
             padding: 16px 40px;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 800;
             color: #fff;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 6px 28px rgba(223, 109, 67, 0.45);
-            letter-spacing: 0.4px;
+            transition: all 0.35s;
+            box-shadow: 0 8px 32px rgba(223, 109, 67, 0.5);
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
             margin-top: 8px;
@@ -397,18 +480,21 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        .splash-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(223, 109, 67, 0.7);
         }
         .splash-btn:hover::before {
             left: 100%;
         }
-        .splash-btn:hover {
-            transform: scale(1.04);
-            box-shadow: 0 8px 36px rgba(223, 109, 67, 0.6);
+        .splash-btn:active {
+            transform: scale(0.96);
         }
         .roadmap {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: var(--radius-md);
             padding: 14px;
             font-size: 0.8rem;
@@ -428,7 +514,9 @@
             visibility: hidden;
             position: relative;
         }
-        .app.visible { visibility: visible; }
+        .app.visible {
+            visibility: visible;
+        }
         .sidebar {
             width: 370px;
             min-width: 370px;
@@ -437,7 +525,7 @@
             padding: 20px 18px 100px;
             backdrop-filter: blur(20px);
             z-index: 1000;
-            box-shadow: 4px 0 28px rgba(0,0,0,0.3);
+            box-shadow: 4px 0 28px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -451,11 +539,18 @@
             align-items: center;
             flex-shrink: 0;
         }
-        .sidebar-header h1 { font-size: 1.5rem; font-weight: 900; }
-        .sidebar-controls { display: flex; gap: 6px; }
-        .sidebar-controls button, .sidebar-controls select {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.15);
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+        .sidebar-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .sidebar-controls button,
+        .sidebar-controls select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 40px;
             padding: 7px 10px;
             font-weight: 700;
@@ -472,11 +567,17 @@
             background-repeat: no-repeat;
             background-position: right 8px center;
         }
-        .sidebar-controls select option { background: #1a2530; color: #f0f0f0; }
-        .sidebar-controls button:hover, .sidebar-controls select:hover { background: rgba(255,255,255,0.2); }
+        .sidebar-controls select option {
+            background: #1a2530;
+            color: #f0f0f0;
+        }
+        .sidebar-controls button:hover,
+        .sidebar-controls select:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
         .search-input {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 60px;
             padding: 11px 14px;
             font-size: 0.85rem;
@@ -487,66 +588,381 @@
             transition: border-color 0.2s;
             flex-shrink: 0;
         }
-        .search-input:focus { outline: none; border-color: var(--accent); }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex-shrink: 0; }
-        .stat-card { background: rgba(0,0,0,0.35); border-radius: var(--radius-md); padding: 10px 8px; text-align: center; }
-        .stat-card .stat-value { font-size: 1.2rem; font-weight: 800; color: var(--gold); }
-        .stat-card .stat-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; opacity: 0.8; margin-top: 2px; }
-        .comparison-panel { background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 10px 12px; flex-shrink: 0; }
-        .comparison-panel .comp-title { font-weight: 800; font-size: 0.8rem; margin-bottom: 8px; color: var(--gold); }
-        .comparison-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; margin: 4px 0; padding: 6px 8px; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
-        .comparison-item:hover { background: rgba(255,255,255,0.08); }
-        .progress-bar-dual { height: 6px; background: rgba(255,255,255,0.15); border-radius: 6px; margin: 5px 0; overflow: hidden; }
-        .progress-fill-dual { height: 100%; border-radius: 6px; transition: width 0.5s; }
-        .tabs { display: flex; flex-wrap: wrap; gap: 5px; flex-shrink: 0; }
-        .tab-btn { background: rgba(255,255,255,0.1); border: none; border-radius: 60px; padding: 8px 13px; font-weight: 700; cursor: pointer; color: inherit; font-family: inherit; font-size: 0.75rem; transition: background 0.2s; }
-        .tab-btn.active { background: var(--accent); color: white; }
-        .tab-panel { display: none; flex: 1; overflow-y: auto; min-height: 100px; }
-        .tab-panel.active { display: block; }
-        .list-item { background: rgba(255,255,255,0.06); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: 6px; cursor: pointer; font-weight: 600; border: none; color: inherit; width: 100%; text-align: left; transition: background 0.2s, transform 0.15s; font-family: inherit; font-size: 0.78rem; }
-        .list-item:hover { background: rgba(255,255,255,0.18); transform: translateX(4px); }
-        .map-container { flex: 1; position: relative; min-width: 0; }
-        #map { width: 100%; height: 100%; z-index: 1; }
-        .map-legend { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border-radius: var(--radius-md); padding: 10px 14px; font-size: 0.7rem; color: #eee; z-index: 500; font-weight: 600; pointer-events: none; line-height: 1.5; }
-        .chip-row { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.72); backdrop-filter: blur(8px); border-radius: 60px; padding: 5px 8px; display: flex; gap: 5px; z-index: 600; }
-        .chip { background: rgba(0,0,0,0.65); border: 1px solid rgba(255,255,255,0.22); border-radius: 40px; padding: 6px 12px; font-weight: 700; color: white; cursor: pointer; font-family: inherit; font-size: 0.73rem; transition: all 0.2s; }
-        .chip.active { background: var(--accent); border-color: var(--accent); }
-        .city-dashboard { position: absolute; bottom: 0; left: 0; right: 0; z-index: 700; background: var(--panel-bg); border-top: 1px solid var(--panel-border); backdrop-filter: blur(20px); transform: translateY(100%); transition: transform var(--transition-smooth); border-radius: var(--radius-xl) var(--radius-xl) 0 0; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-lg); padding: 14px 18px 22px; color: #eef5f9; }
-        .city-dashboard.open { transform: translateY(0); }
-        .dash-close { position: absolute; top: 10px; right: 14px; background: rgba(255,255,255,0.12); border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 1.1rem; cursor: pointer; color: #fff; font-weight: 700; transition: background 0.2s; z-index: 2; }
-        .dash-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-right: 36px; }
-        .dash-city-name { font-size: 1.2rem; font-weight: 900; color: var(--gold); }
-        .dash-metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 8px; margin-bottom: 12px; }
-        .dash-metric-box { background: rgba(255,255,255,0.05); border-radius: var(--radius-md); padding: 10px 12px; text-align: center; }
-        .dash-metric-box .metric-value { font-size: 1.1rem; font-weight: 800; color: var(--gold); }
-        .dash-metric-box .metric-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; opacity: 0.65; }
-        .dash-section-title { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px; }
-        .dash-info-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.78rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
-        .info-label { opacity: 0.65; }
-        .info-value { font-weight: 700; color: var(--gold); }
-        .dash-progress { height: 6px; background: rgba(255,255,255,0.15); border-radius: 6px; margin: 6px 0; overflow: hidden; }
-        .dash-progress-fill { height: 100%; border-radius: 6px; transition: width 0.5s; }
-        .dash-badge { display: inline-block; background: var(--accent); color: #fff; padding: 5px 12px; border-radius: 40px; font-weight: 800; font-size: 0.75rem; margin-top: 6px; }
-        .pie-chart-container { display: flex; align-items: center; gap: 14px; margin: 10px 0; flex-wrap: wrap; justify-content: center; }
-        .pie-legend { display: flex; flex-direction: column; gap: 4px; font-size: 0.7rem; }
-        .pie-legend span { display: flex; align-items: center; gap: 6px; }
-        .pie-legend .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
-        .menu-toggle { display: none; position: fixed; bottom: 20px; left: 20px; z-index: 1100; background: var(--accent); border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 22px; color: white; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 999; display: none; }
-        .overlay.active { display: block; }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .stat-card {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: var(--radius-md);
+            padding: 10px 8px;
+            text-align: center;
+        }
+        .stat-card .stat-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+        .stat-card .stat-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        .comparison-panel {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: var(--radius-md);
+            padding: 10px 12px;
+            flex-shrink: 0;
+        }
+        .comparison-panel .comp-title {
+            font-weight: 800;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            color: var(--gold);
+        }
+        .comparison-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            margin: 4px 0;
+            padding: 6px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .comparison-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .progress-bar-dual {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+        .progress-fill-dual {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s;
+        }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 60px;
+            padding: 8px 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: inherit;
+            font-family: inherit;
+            font-size: 0.75rem;
+            transition: background 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+        .tab-panel {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 100px;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+        .list-item {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            color: inherit;
+            width: 100%;
+            text-align: left;
+            transition: background 0.2s, transform 0.15s;
+            font-family: inherit;
+            font-size: 0.78rem;
+        }
+        .list-item:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateX(4px);
+        }
+        .map-container {
+            flex: 1;
+            position: relative;
+            min-width: 0;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            font-size: 0.7rem;
+            color: #eee;
+            z-index: 500;
+            font-weight: 600;
+            pointer-events: none;
+            line-height: 1.5;
+        }
+        .chip-row {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 5px 8px;
+            display: flex;
+            gap: 5px;
+            z-index: 600;
+        }
+        .chip {
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 40px;
+            padding: 6px 12px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.73rem;
+            transition: all 0.2s;
+        }
+        .chip.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .city-dashboard {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 700;
+            background: var(--panel-bg);
+            border-top: 1px solid var(--panel-border);
+            backdrop-filter: blur(20px);
+            transform: translateY(100%);
+            transition: transform var(--transition-smooth);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            max-height: 60vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            padding: 14px 18px 22px;
+            color: #eef5f9;
+        }
+        .city-dashboard.open {
+            transform: translateY(0);
+        }
+        .dash-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 700;
+            transition: background 0.2s;
+            z-index: 2;
+        }
+        .dash-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-right: 36px;
+        }
+        .dash-city-name {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+        .dash-metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .dash-metric-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 10px 12px;
+            text-align: center;
+        }
+        .dash-metric-box .metric-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+        .dash-metric-box .metric-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            opacity: 0.65;
+        }
+        .dash-section-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 4px;
+        }
+        .dash-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.78rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .info-label {
+            opacity: 0.65;
+        }
+        .info-value {
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .dash-progress {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            margin: 6px 0;
+            overflow: hidden;
+        }
+        .dash-progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s;
+        }
+        .dash-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            margin-top: 6px;
+        }
+        .pie-chart-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.7rem;
+        }
+        .pie-legend span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pie-legend .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1100;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 22px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            display: none;
+        }
+        .overlay.active {
+            display: block;
+        }
         @media (max-width:850px) {
-            .sidebar { position: fixed; left:0; top:0; width:85%; max-width:340px; min-width:auto; transform:translateX(-105%); border-radius:0 var(--radius-xl) var(--radius-xl) 0; z-index:1050; height:100%; }
-            .sidebar.open { transform:translateX(0); }
-            .menu-toggle { display:flex; align-items:center; justify-content:center; }
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 85%;
+                max-width: 340px;
+                min-width: auto;
+                transform: translateX(-105%);
+                border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+                z-index: 1050;
+                height: 100%;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
         @media (max-width:700px) {
-            .splash-stats-grid { grid-template-columns: 1fr 1fr; }
-            .splash-cards-row { grid-template-columns: 1fr; }
-            .live-value-large { font-size: 1.8rem; }
+            .splash-stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .splash-cards-row {
+                grid-template-columns: 1fr;
+            }
+            .live-value-large {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
-<body>
+<body class="dark">
+
     <div id="splash" class="splash">
         <div class="splash-container">
             <div class="splash-header">
@@ -572,50 +988,37 @@
                 <div class="splash-info-card">
                     <span class="card-badge" id="badgeWind">🌬️ Energia</span>
                     <h3 id="cardWindTitle">Energia Eólica no Brasil</h3>
-                    <p id="cardWindText">O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional. O Nordeste concentra mais de 80% da produção, com <span data-tooltip="Fator de capacidade é a razão entre a geração real e a máxima teórica em um período.">fatores de capacidade</span> excepcionais — o Maranhão atinge <strong>47%</strong>.</p>
+                    <p id="cardWindText">O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional.</p>
                 </div>
                 <div class="splash-info-card">
                     <span class="card-badge" id="badgeHubs">🔌 Conectividade</span>
                     <h3 id="cardHubsTitle">Hubs Estratégicos</h3>
-                    <p id="cardHubsText">Cabos submarinos transformam cidades litorâneas em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.</p>
+                    <p id="cardHubsText">Cabos submarinos transformam cidades em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.</p>
                 </div>
                 <div class="splash-info-card">
                     <span class="card-badge" id="badgeBalneario">📍 Tese Central</span>
                     <h3 id="cardBalnearioTitle">Balneário Pinhal (RS)</h3>
-                    <p id="cardBalnearioText">Com <strong id="splashBalnearioMW">752 MW</strong> de capacidade eólica, o município gera <strong id="splashBalnearioGWh">2.174,7 GWh/ano</strong> — <strong id="splashBalnearioX">53,6</strong> vezes seu consumo residencial. Já o estado do RS tem <span data-tooltip="Déficit eólico significa que a geração eólica estadual é menor que o consumo residencial total do estado.">déficit eólico</span>, dependendo de outras fontes.</p>
+                    <p id="cardBalnearioText">Com <strong id="splashBalnearioMW">752 MW</strong> de capacidade eólica, o município gera <strong id="splashBalnearioGWh">2.174,7 GWh/ano</strong> — <strong id="splashBalnearioX">53,6</strong> vezes seu consumo residencial.</p>
                 </div>
             </div>
+
+            <!-- Tabela de dados energéticos por estado -->
+            <div class="energy-table-section">
+                <h3>📊 Capacidade Eólica e Consumo Residencial por Estado</h3>
+                <table class="energy-table" id="energyStateTable">
+                    <thead><tr><th>Estado</th><th>Eólica Total (MW)</th><th>Eólica Mapeada (MW)</th><th>População (M)</th><th>Consumo Resid. (GWh/ano)</th><th>Superávit/Déficit</th></tr></thead>
+                    <tbody id="energyStateTableBody"></tbody>
+                </table>
+            </div>
+
             <div class="calculator-section">
                 <div class="calculator-title">🔧 Calculadora de Consumo &amp; Geração (Eletrotécnica)</div>
                 <div class="calc-row">
-                    <div class="calc-field">
-                        <label>Potência (W)</label>
-                        <input type="number" id="calcPower" value="1500" placeholder="Ex: 1500 W">
-                    </div>
-                    <div class="calc-field">
-                        <label>Horas / dia</label>
-                        <input type="number" id="calcHours" value="8" placeholder="8">
-                    </div>
-                    <div class="calc-field">
-                        <label>Dias / mês</label>
-                        <input type="number" id="calcDays" value="30" placeholder="30">
-                    </div>
-                    <div class="calc-field">
-                        <label>Tarifa (R$/kWh)</label>
-                        <input type="number" id="calcTariff" value="0.85" step="0.01" placeholder="0.85">
-                    </div>
-                    <div class="calc-field">
-                        <label>Fator de capacidade (%)</label>
-                        <select id="calcStateCf">
-                            <option value="0.38">Nacional (38%)</option>
-                            <option value="0.47">Maranhão (47%)</option>
-                            <option value="0.419">Paraíba (41.9%)</option>
-                            <option value="0.414">Piauí (41.4%)</option>
-                            <option value="0.409">Bahia (40.9%)</option>
-                            <option value="0.38">RN/Outros (38%)</option>
-                            <option value="0.33">RS (33%)</option>
-                        </select>
-                    </div>
+                    <div class="calc-field"><label>Potência (W)</label><input type="number" id="calcPower" value="1500"></div>
+                    <div class="calc-field"><label>Horas / dia</label><input type="number" id="calcHours" value="8"></div>
+                    <div class="calc-field"><label>Dias / mês</label><input type="number" id="calcDays" value="30"></div>
+                    <div class="calc-field"><label>Tarifa (R$/kWh)</label><input type="number" id="calcTariff" value="0.85" step="0.01"></div>
+                    <div class="calc-field"><label>Fator de capacidade (%)</label><select id="calcStateCf"><option value="0.38">Nacional (38%)</option><option value="0.47">Maranhão (47%)</option><option value="0.419">Paraíba (41.9%)</option><option value="0.414">Piauí (41.4%)</option><option value="0.409">Bahia (40.9%)</option><option value="0.38">RN/Outros (38%)</option><option value="0.33">RS (33%)</option></select></div>
                 </div>
                 <div class="calc-result" id="calcResult">
                     <div class="calc-result-item"><div class="value" id="calcConsumo">--</div><div class="label">kWh/mês</div></div>
@@ -690,7 +1093,6 @@
     <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
     <script>
     (function() {
-        // Dados (mantidos como antes)
         const WIND_FARMS = [
             { name: "Lagoa dos Ventos", state: "PI", lat: -8.8531, lon: -41.5597, cap: 716.5, op: "Enel Green Power" },
             { name: "Complexo Chuí", state: "RS", lat: -33.1233, lon: -53.4458, cap: 582.8, op: "Omega Energia" },
@@ -725,7 +1127,7 @@
             "Vitória (ES)": [-20.3195, -40.3378], "Aracaju (SE)": [-10.9162, -37.0629],
             "Maceió (AL)": [-9.6656, -35.7355], "João Pessoa (PB)": [-7.1195, -34.845]
         };
-        const POP_EST = { "Balneário Pinhal (RS)": 15413, "Fortaleza (CE)": 2578483, "Praia Grande (SP)": 349935, "Rio de Janeiro (RJ)": 6730729, "Santos (SP)": 418608, "Salvador (BA)": 2564204, "Recife (PE)": 1488920, "Natal (RN)": 751300, "Vitória (ES)": 322869, "Aracaju (SE)": 630932, "Maceió (AL)": 994952, "João Pessoa (PB)": 833932 };
+        const POP_EST = { "Balneário Pinhal (RS)":15413,"Fortaleza (CE)":2578483,"Praia Grande (SP)":349935,"Rio de Janeiro (RJ)":6730729,"Santos (SP)":418608,"Salvador (BA)":2564204,"Recife (PE)":1488920,"Natal (RN)":751300,"Vitória (ES)":322869,"Aracaju (SE)":630932,"Maceió (AL)":994952,"João Pessoa (PB)":833932 };
         const BRAZIL_POPULATION = 203100000;
         const KWH_CAPITA = 2630;
         const CAPACITY_FACTOR_NATIONAL = 0.38;
@@ -788,6 +1190,35 @@
         }
         updateSplashData();
 
+        // Build energy table
+        function buildEnergyTable() {
+            const tbody = document.getElementById('energyStateTableBody');
+            if (!tbody) return;
+            const allStates = Object.keys(STATE_POPULATION).filter(st => STATE_MATRIX[st]);
+            allStates.sort((a, b) => (STATE_WIND_TOTAL[b] || 0) - (STATE_WIND_TOTAL[a] || 0));
+            let html = '';
+            allStates.forEach(st => {
+                const windTotal = STATE_WIND_TOTAL[st] || 0;
+                const mappedCap = stateCapacity[st] || 0;
+                const pop = STATE_POPULATION[st] || 5000000;
+                const cons = stateConsumption[st] || 0;
+                const cf = STATE_CAPACITY_FACTOR[st] || CAPACITY_FACTOR_NATIONAL;
+                const gen = windTotal * 8760 * cf / 1000;
+                const surplus = cons > 0 ? ((gen - cons) / cons * 100) : 0;
+                const statusEmoji = surplus > 5 ? '🟢' : surplus > -5 ? '🟡' : '🔴';
+                html += `<tr>
+                    <td><strong>${st}</strong></td>
+                    <td>${fmtNum(windTotal, 0)} MW</td>
+                    <td>${mappedCap > 0 ? fmtNum(mappedCap, 0)+' MW' : '—'}</td>
+                    <td>${(pop/1e6).toFixed(1)} M</td>
+                    <td>${fmtNum(cons, 0)} GWh</td>
+                    <td>${statusEmoji} ${surplus > 0 ? '+' : ''}${surplus.toFixed(1)}%</td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+        buildEnergyTable();
+
         let accumulatedKwh=0;
         const startTime=Date.now();
         const liveCounter=document.getElementById('liveConsumptionCounter');
@@ -799,33 +1230,41 @@
         }
         updateLiveCounter();
 
-        // Calculadora
         function updateCalculator() {
-            const power = parseFloat(document.getElementById('calcPower').value) || 0;
-            const hours = parseFloat(document.getElementById('calcHours').value) || 0;
-            const days = parseFloat(document.getElementById('calcDays').value) || 0;
-            const tariff = parseFloat(document.getElementById('calcTariff').value) || 0;
-            const cf = parseFloat(document.getElementById('calcStateCf').value) || 0.38;
-            const consumoMensal = (power * hours * days) / 1000;
-            const custo = consumoMensal * tariff;
-            const potenciaEolicaNecessaria = consumoMensal / (30 * 24 * cf);
-            const turbinas = Math.ceil(potenciaEolicaNecessaria / 3000);
-            document.getElementById('calcConsumo').textContent = fmtNum(consumoMensal, 1) + ' kWh';
-            document.getElementById('calcCusto').textContent = 'R$ ' + fmtNum(custo, 2);
-            document.getElementById('calcPotenciaEolica').textContent = fmtNum(potenciaEolicaNecessaria, 2) + ' kW (' + fmtNum(potenciaEolicaNecessaria/1000, 3) + ' MW)';
-            document.getElementById('calcTurbinas').textContent = turbinas + ' turbinas (~3 MW)';
+            const power = parseFloat(document.getElementById('calcPower').value)||0;
+            const hours = parseFloat(document.getElementById('calcHours').value)||0;
+            const days = parseFloat(document.getElementById('calcDays').value)||0;
+            const tariff = parseFloat(document.getElementById('calcTariff').value)||0;
+            const cf = parseFloat(document.getElementById('calcStateCf').value)||0.38;
+            const consumoMensal = (power*hours*days)/1000;
+            const custo = consumoMensal*tariff;
+            const potenciaEolicaNecessaria = consumoMensal/(30*24*cf);
+            const turbinas = Math.ceil(potenciaEolicaNecessaria/3000);
+            document.getElementById('calcConsumo').textContent = fmtNum(consumoMensal,1)+' kWh';
+            document.getElementById('calcCusto').textContent = 'R$ '+fmtNum(custo,2);
+            document.getElementById('calcPotenciaEolica').textContent = fmtNum(potenciaEolicaNecessaria,2)+' kW';
+            document.getElementById('calcTurbinas').textContent = turbinas+' turbinas (~3 MW)';
         }
-        document.getElementById('calcPower').addEventListener('input', updateCalculator);
-        document.getElementById('calcHours').addEventListener('input', updateCalculator);
-        document.getElementById('calcDays').addEventListener('input', updateCalculator);
-        document.getElementById('calcTariff').addEventListener('input', updateCalculator);
-        document.getElementById('calcStateCf').addEventListener('change', updateCalculator);
+        document.getElementById('calcPower').addEventListener('input',updateCalculator);
+        document.getElementById('calcHours').addEventListener('input',updateCalculator);
+        document.getElementById('calcDays').addEventListener('input',updateCalculator);
+        document.getElementById('calcTariff').addEventListener('input',updateCalculator);
+        document.getElementById('calcStateCf').addEventListener('change',updateCalculator);
         updateCalculator();
 
-        // Mapa
-        const map = L.map('map',{zoomControl:true,zoomAnimation:true}).setView([-14.2,-51.9],5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',noWrap:false,continuousWorld:true}).addTo(map);
-        map.setMaxBounds(null);
+        // Mapa com globo completo (maxBounds para limitar scroll horizontal)
+        const map = L.map('map', {
+            zoomControl: true,
+            zoomAnimation: true,
+            worldCopyJump: true,
+            minZoom: 2,
+            maxBounds: [[-90, -180], [90, 180]],
+            maxBoundsViscosity: 1.0
+        }).setView([-14.2, -51.9], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            noWrap: true
+        }).addTo(map);
 
         const windLayer = L.featureGroup();
         const landingLayer = L.featureGroup();
@@ -892,20 +1331,19 @@
         L.control.layers(null,{"🌬️ Parques eólicos":windLayer,"📍 Aterramentos":landingLayer,"⚡ Consumo urbano":energyLayer,"✨ Rotas de cabos":cableLineLayer},{position:'topright',collapsed:false}).addTo(map);
 
         const defaultVisibility={wind:true,landing:true,energy:true,cables:true};
-        const savedVisibility=(()=>{try{return JSON.parse(localStorage.getItem('infraBrLayersV6'))||defaultVisibility;}catch{return defaultVisibility;}})();
+        const savedVisibility=(()=>{try{return JSON.parse(localStorage.getItem('infraBrLayersV7'))||defaultVisibility;}catch{return defaultVisibility;}})();
         if(!savedVisibility.wind) map.removeLayer(windLayer);
         if(!savedVisibility.landing) map.removeLayer(landingLayer);
         if(!savedVisibility.energy) map.removeLayer(energyLayer);
         if(!savedVisibility.cables) map.removeLayer(cableLineLayer);
-        function saveLayerState(){localStorage.setItem('infraBrLayersV6',JSON.stringify({wind:map.hasLayer(windLayer),landing:map.hasLayer(landingLayer),energy:map.hasLayer(energyLayer),cables:map.hasLayer(cableLineLayer)}));}
+        function saveLayerState(){localStorage.setItem('infraBrLayersV7',JSON.stringify({wind:map.hasLayer(windLayer),landing:map.hasLayer(landingLayer),energy:map.hasLayer(energyLayer),cables:map.hasLayer(cableLineLayer)}));}
         map.on('overlayadd',saveLayerState); map.on('overlayremove',saveLayerState);
 
         const cityDashboard=document.getElementById('cityDashboard');
         const dashContent=document.getElementById('dashContent');
         const dashCloseBtn=document.getElementById('dashCloseBtn');
-        let currentDashCity=null;
 
-        function drawPieChart(canvasId,matrix,totalMw){
+        function drawPieChart(canvasId,matrix){
             const canvas=document.getElementById(canvasId);
             if(!canvas) return;
             const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,r=Math.min(cx,cy)-4;
@@ -951,7 +1389,7 @@
             <div class="dash-info-row"><span class="info-label">⚡ Eólica mapeada</span><span class="info-value">${fmtNum(mappedCap,0)} MW (13 parques)</span></div>
             `;
             cityDashboard.classList.add('open');
-            setTimeout(()=>drawPieChart('pieChartCanvas',matrix,windTotal),200);
+            setTimeout(()=>drawPieChart('pieChartCanvas',matrix),200);
         }
 
         function openCityDashboard(cityName){
@@ -1099,12 +1537,29 @@
         }
         renderComparison();
 
+        // Tema
         const themeToggle=document.getElementById('themeToggle');
-        let isDark=localStorage.getItem('theme')!=='light';
-        function applyTheme(dark){document.body.classList.toggle('dark',dark);document.body.classList.toggle('light',!dark);themeToggle.textContent=dark?'☀️':'🌓';}
+        let isDark=localStorage.getItem('theme')==='dark' || !localStorage.getItem('theme');
+        function applyTheme(dark){
+            if(dark){
+                document.body.classList.add('dark');
+                document.body.classList.remove('light');
+                themeToggle.textContent='☀️';
+            } else {
+                document.body.classList.add('light');
+                document.body.classList.remove('dark');
+                themeToggle.textContent='🌙';
+            }
+        }
         applyTheme(isDark);
-        themeToggle.addEventListener('click',()=>{const darkNow=!document.body.classList.contains('dark');applyTheme(darkNow);localStorage.setItem('theme',darkNow?'dark':'light');});
+        themeToggle.addEventListener('click',()=>{
+            const darkNow=document.body.classList.contains('dark');
+            const newTheme=!darkNow;
+            applyTheme(newTheme);
+            localStorage.setItem('theme',newTheme?'dark':'light');
+        });
 
+        // i18n completo
         const i18n={
             pt:{
                 splashSubtitle:"Plataforma interativa de monitoramento da infraestrutura energética e de conectividade do Brasil",
@@ -1112,19 +1567,51 @@
                 splashLabelWind:"Mapeado (13 parques)",splashLabelCables:"Cabos Submarinos",splashLabelCities:"Cidades Monitoradas",splashLabelNational:"Total Nacional 2024",
                 liveTitle:"Consumo Residencial Brasil — Ao Vivo",liveSubtitle:"kWh consumidos desde o início desta sessão (estimativa)",
                 badgeWind:"🌬️ Energia",cardWindTitle:"Energia Eólica no Brasil",
-                cardWindText:"O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional. O Nordeste concentra mais de 80% da produção, com fatores de capacidade excepcionais — o Maranhão atinge <strong>47%</strong>.",
+                cardWindText:"O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional.",
                 badgeHubs:"🔌 Conectividade",cardHubsTitle:"Hubs Estratégicos",
-                cardHubsText:"Cabos submarinos transformam cidades litorâneas em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.",
+                cardHubsText:"Cabos submarinos transformam cidades em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.",
                 badgeBalneario:"📍 Tese Central",cardBalnearioTitle:"Balneário Pinhal (RS)",
-                cardBalnearioText:"Com <strong id='splashBalnearioMW'>752 MW</strong> de capacidade eólica, o município gera <strong id='splashBalnearioGWh'>2.174,7 GWh/ano</strong> — <strong id='splashBalnearioX'>53,6</strong> vezes seu consumo residencial. Já o estado do RS tem déficit eólico, dependendo de outras fontes.",
+                cardBalnearioText:"Com <strong id='splashBalnearioMW'>752 MW</strong> de capacidade eólica, o município gera <strong id='splashBalnearioGWh'>2.174,7 GWh/ano</strong> — <strong id='splashBalnearioX'>53,6</strong> vezes seu consumo residencial.",
                 enterMapBtnText:"🌎 Explorar Mapa Interativo",searchPlaceholder:"🔍 Buscar parque, cabo, cidade...",
                 compTitle:"⚡ Matriz Energética por Estado",
                 legendTitle:"📖 Legenda",legendWind:"🟢 Parques eólicos (MW)",legendCable:"🔵 Aterramentos de cabos",legendEnergy:"🟠 Consumo urbano",legendRoute:"✨ Rotas animadas de cabos",
                 chipAll:"🌎 Todo Brasil",chipNE:"🌵 Nordeste",chipSul:"❄️ Sul",tabWind:"🌬️ Parques",tabCables:"🌊 Cabos",tabLanding:"📍 Aterramentos",tabEnergy:"⚡ Consumo",
                 stats:{wind_capacity:"Eólica mapeada",intl_cables:"Cabos submarinos",landings_br:"Aterramentos BR",br_min_consumption:"kWh/min BR"}
             },
-            en:{ /* similar estrutura, omitido por brevidade, mantendo o existente */ },
-            es:{ /* similar estrutura, omitido por brevidade */ }
+            en:{
+                splashSubtitle:"Interactive platform for monitoring Brazil's energy and connectivity infrastructure",
+                sectionLabel:"⚡ WIND ENERGY",
+                splashLabelWind:"Mapped (13 farms)",splashLabelCables:"Submarine Cables",splashLabelCities:"Monitored Cities",splashLabelNational:"National Total 2024",
+                liveTitle:"Brazil Residential Consumption — Live",liveSubtitle:"kWh consumed since session start (estimated)",
+                badgeWind:"🌬️ Energy",cardWindTitle:"Wind Energy in Brazil",
+                cardWindText:"Brazil ended 2024 with <strong>33.7 GW</strong> of wind capacity (1,103 farms) and generation of <strong>107.7 TWh</strong>. Wind accounts for <strong>16.1% of the electricity mix</strong>.",
+                badgeHubs:"🔌 Connectivity",cardHubsTitle:"Strategic Hubs",
+                cardHubsText:"Submarine cables turn coastal cities into digital portals. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> and <strong>Rio de Janeiro (RJ)</strong> are South America's main data entry points.",
+                badgeBalneario:"📍 Core Thesis",cardBalnearioTitle:"Balneário Pinhal (RS)",
+                cardBalnearioText:"With <strong id='splashBalnearioMW'>752 MW</strong> of wind capacity, the municipality generates <strong id='splashBalnearioGWh'>2,174.7 GWh/year</strong> — <strong id='splashBalnearioX'>53.6</strong> times its residential consumption.",
+                enterMapBtnText:"🌎 Explore Interactive Map",searchPlaceholder:"🔍 Search wind farm, cable, city...",
+                compTitle:"⚡ Energy Matrix by State",
+                legendTitle:"📖 Legend",legendWind:"🟢 Wind farms (MW)",legendCable:"🔵 Cable landings",legendEnergy:"🟠 Urban consumption",legendRoute:"✨ Animated cable routes",
+                chipAll:"🌎 All Brazil",chipNE:"🌵 Northeast",chipSul:"❄️ South",tabWind:"🌬️ Wind farms",tabCables:"🌊 Cables",tabLanding:"📍 Landings",tabEnergy:"⚡ Consumption",
+                stats:{wind_capacity:"Mapped wind",intl_cables:"Submarine cables",landings_br:"BR landings",br_min_consumption:"kWh/min BR"}
+            },
+            es:{
+                splashSubtitle:"Plataforma interactiva de monitoreo de la infraestructura energética y de conectividad de Brasil",
+                sectionLabel:"⚡ ENERGÍA EÓLICA",
+                splashLabelWind:"Mapeado (13 parques)",splashLabelCables:"Cables Submarinos",splashLabelCities:"Ciudades Monitoreadas",splashLabelNational:"Total Nacional 2024",
+                liveTitle:"Consumo Residencial Brasil — En Vivo",liveSubtitle:"kWh consumidos desde el inicio de esta sesión (estimado)",
+                badgeWind:"🌬️ Energía",cardWindTitle:"Energía Eólica en Brasil",
+                cardWindText:"Brasil cerró 2024 con <strong>33,7 GW</strong> de capacidad eólica (1.103 parques) y generación de <strong>107,7 TWh</strong>. La fuente representa el <strong>16,1% de la matriz eléctrica</strong>.",
+                badgeHubs:"🔌 Conectividad",cardHubsTitle:"Hubs Estratégicos",
+                cardHubsText:"Los cables submarinos convierten ciudades costeras en portales digitales. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> y <strong>Rio de Janeiro (RJ)</strong> son los principales puntos de entrada de datos de Sudamérica.",
+                badgeBalneario:"📍 Tesis Central",cardBalnearioTitle:"Balneário Pinhal (RS)",
+                cardBalnearioText:"Con <strong id='splashBalnearioMW'>752 MW</strong> de capacidad eólica, el municipio genera <strong id='splashBalnearioGWh'>2.174,7 GWh/año</strong> — <strong id='splashBalnearioX'>53,6</strong> veces su consumo residencial.",
+                enterMapBtnText:"🌎 Explorar Mapa Interactivo",searchPlaceholder:"🔍 Buscar parque, cable, ciudad...",
+                compTitle:"⚡ Matriz Energética por Estado",
+                legendTitle:"📖 Leyenda",legendWind:"🟢 Parques eólicos (MW)",legendCable:"🔵 Puntos de amarre",legendEnergy:"🟠 Consumo urbano",legendRoute:"✨ Rutas animadas de cables",
+                chipAll:"🌎 Todo Brasil",chipNE:"🌵 Nordeste",chipSul:"❄️ Sur",tabWind:"🌬️ Parques",tabCables:"🌊 Cables",tabLanding:"📍 Amarre",tabEnergy:"⚡ Consumo",
+                stats:{wind_capacity:"Eólica mapeada",intl_cables:"Cables submarinos",landings_br:"Amarres BR",br_min_consumption:"kWh/min BR"}
+            }
         };
 
         function setLang(lang){
