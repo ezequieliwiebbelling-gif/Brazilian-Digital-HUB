@@ -12,24 +12,23 @@
     <style>
         :root {
             --bg-dark: #0a0f14;
-            --bg-card: rgba(255, 255, 255, 0.05);
-            --bg-card-hover: rgba(255, 255, 255, 0.1);
             --accent: #df6d43;
             --accent2: #e8835a;
             --gold: #f0b846;
             --gold-light: #f5d07a;
             --wind: #1a9e91;
             --cable: #3b9dc4;
-            --energy: #d4854a;
-            --surface-dark: rgba(10, 15, 20, 0.92);
+            --surface-dark: rgba(10, 15, 20, 0.94);
             --panel-bg: rgba(12, 18, 24, 0.97);
             --panel-border: rgba(255, 255, 255, 0.1);
             --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
             --radius-xl: 24px;
             --radius-lg: 16px;
             --radius-md: 12px;
-            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --text-light: #e8e8e8;
+            --success: #2ecc71;
+            --danger: #e74c3c;
         }
         * {
             margin: 0;
@@ -47,8 +46,6 @@
             background: var(--bg-dark);
             color: var(--text-light);
         }
-
-        /* ============ SPLASH SCREEN ============ */
         .splash {
             position: fixed;
             inset: 0;
@@ -73,7 +70,7 @@
             max-width: 960px;
             display: flex;
             flex-direction: column;
-            gap: 22px;
+            gap: 18px;
             padding: 10px 0 40px;
         }
         .splash-header {
@@ -81,82 +78,91 @@
             margin-bottom: 4px;
         }
         .splash-header .logo {
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 900;
             letter-spacing: -1.5px;
-            margin-bottom: 6px;
             background: linear-gradient(135deg, #f0b846, #e8835a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .splash-header .subtitle {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 600;
-            opacity: 0.85;
+            opacity: 0.8;
             max-width: 650px;
-            margin: 0 auto;
+            margin: 8px auto 0;
             line-height: 1.5;
             color: #c0c8d0;
         }
+        .section-label {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--accent);
+            margin-bottom: 2px;
+            padding: 3px 10px;
+            border: 1px solid rgba(223, 109, 67, 0.3);
+            border-radius: 20px;
+            align-self: flex-start;
+        }
         .splash-stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
         }
         .splash-stat-card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-lg);
-            padding: 20px 16px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.25s, background 0.25s, border-color 0.25s;
-        }
-        .splash-stat-card:hover {
-            background: rgba(255, 255, 255, 0.11);
-            border-color: rgba(240, 184, 70, 0.4);
-            transform: translateY(-3px);
-        }
-        .splash-stat-card .value {
-            font-size: 1.9rem;
-            font-weight: 900;
-            color: var(--gold);
-            line-height: 1.2;
-            letter-spacing: -0.3px;
-        }
-        .splash-stat-card .label {
-            font-size: 0.73rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            opacity: 0.8;
-            margin-top: 6px;
-            color: #bcc4cc;
-        }
-
-        /* Cards horizontais interativos */
-        .splash-cards-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-        }
-        .splash-info-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius-lg);
+            padding: 16px 14px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s, background 0.2s, border-color 0.2s;
+        }
+        .splash-stat-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(240, 184, 70, 0.3);
+            transform: translateY(-2px);
+        }
+        .splash-stat-card .value {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1.2;
+        }
+        .splash-stat-card .label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.75;
+            margin-top: 4px;
+            color: #bcc4cc;
+        }
+        .splash-cards-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+        }
+        .splash-info-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-lg);
             padding: 20px 22px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.25s;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(6px);
         }
         .splash-info-card:hover {
-            background: rgba(255, 255, 255, 0.09);
-            border-color: rgba(240, 184, 70, 0.35);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(240, 184, 70, 0.25);
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
         .splash-info-card h3 {
             font-weight: 800;
@@ -165,13 +171,14 @@
             font-size: 1.05rem;
             letter-spacing: 0.2px;
             border-left: 3px solid var(--accent);
-            padding-left: 10px;
+            padding-left: 12px;
         }
         .splash-info-card p {
             color: var(--gold-light);
             font-weight: 500;
-            font-size: 0.9rem;
-            line-height: 1.55;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            padding-left: 4px;
         }
         .splash-info-card p strong {
             color: #ffffff;
@@ -181,73 +188,32 @@
             position: absolute;
             top: 14px;
             right: 16px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
-            letter-spacing: 0.4px;
-            background: rgba(240, 184, 70, 0.15);
+            letter-spacing: 0.3px;
+            background: rgba(240, 184, 70, 0.12);
             color: var(--gold);
         }
-
-        /* Dashboard de consumo animado */
         .live-consumption-dashboard {
-            background: rgba(240, 184, 70, 0.07);
-            border: 2px solid rgba(240, 184, 70, 0.3);
+            background: rgba(240, 184, 70, 0.05);
+            border: 2px solid rgba(240, 184, 70, 0.25);
             border-radius: var(--radius-xl);
-            padding: 22px 20px;
+            padding: 20px 18px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
-        .live-consumption-dashboard::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(240, 184, 70, 0.06) 10deg, transparent 40deg, transparent 70deg, rgba(240, 184, 70, 0.04) 90deg, transparent 120deg);
-            animation: rotateGlow 8s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes rotateGlow {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .live-consumption-dashboard .live-title {
+        .live-title {
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             color: #ffffff;
-            margin-bottom: 8px;
-            position: relative;
             z-index: 1;
-        }
-        .live-consumption-dashboard .live-value {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: -1px;
             position: relative;
-            z-index: 1;
-            font-variant-numeric: tabular-nums;
-            font-family: 'Montserrat', monospace;
-        }
-        .live-consumption-dashboard .live-subtitle {
-            font-size: 0.8rem;
-            font-weight: 600;
-            opacity: 0.7;
-            color: #e0e0e0;
-            position: relative;
-            z-index: 1;
-            margin-top: 4px;
         }
         .live-pulse {
             display: inline-block;
@@ -257,8 +223,7 @@
             border-radius: 50%;
             margin-right: 6px;
             animation: pulseDot 1.2s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
+            vertical-align: middle;
         }
         @keyframes pulseDot {
             0%,
@@ -266,58 +231,64 @@
                 box-shadow: 0 0 0 0 rgba(255, 107, 74, 0.7);
             }
             50% {
-                box-shadow: 0 0 0 12px rgba(255, 107, 74, 0);
+                box-shadow: 0 0 0 10px rgba(255, 107, 74, 0);
             }
+        }
+        .live-value-large {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--gold);
+            z-index: 1;
+            position: relative;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.5px;
+        }
+        .live-subtitle {
+            font-size: 0.75rem;
+            font-weight: 600;
+            opacity: 0.65;
+            color: #e0e0e0;
+            z-index: 1;
+            position: relative;
         }
         .splash-btn {
             align-self: center;
-            background: var(--accent);
+            background: linear-gradient(135deg, #df6d43 0%, #f0b846 100%);
             border: none;
             border-radius: 60px;
             padding: 16px 40px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 800;
-            color: white;
+            color: #fff;
             cursor: pointer;
-            transition: all 0.25s;
-            box-shadow: 0 4px 24px rgba(223, 109, 67, 0.45);
+            transition: all 0.3s;
+            box-shadow: 0 6px 28px rgba(223, 109, 67, 0.45);
             letter-spacing: 0.4px;
             text-transform: uppercase;
-            margin-top: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .splash-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+        .splash-btn:hover::before {
+            left: 100%;
         }
         .splash-btn:hover {
-            background: var(--accent2);
-            transform: scale(1.03);
-            box-shadow: 0 8px 32px rgba(223, 109, 67, 0.6);
+            transform: scale(1.04);
+            box-shadow: 0 8px 36px rgba(223, 109, 67, 0.6);
         }
         .splash-btn:active {
             transform: scale(0.97);
         }
-
-        @media (max-width: 700px) {
-            .splash-header .logo {
-                font-size: 2.2rem;
-            }
-            .splash-stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .splash-stat-card .value {
-                font-size: 1.4rem;
-            }
-            .splash-cards-row {
-                grid-template-columns: 1fr;
-            }
-            .live-consumption-dashboard .live-value {
-                font-size: 2.2rem;
-            }
-            .splash-btn {
-                padding: 14px 28px;
-                font-size: 1rem;
-            }
-        }
-
-        /* ============ APP LAYOUT ============ */
         .app {
             display: flex;
             width: 100%;
@@ -328,8 +299,6 @@
         .app.visible {
             visibility: visible;
         }
-
-        /* ============ SIDEBAR ============ */
         .sidebar {
             width: 370px;
             min-width: 370px;
@@ -339,12 +308,12 @@
             backdrop-filter: blur(20px);
             z-index: 1000;
             box-shadow: 4px 0 28px rgba(0, 0, 0, 0.3);
-            transition: transform var(--transition-smooth);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             background: var(--surface-dark);
             color: #f0f0f0;
+            transition: transform var(--transition-smooth);
         }
         .sidebar-header {
             display: flex;
@@ -353,38 +322,50 @@
             flex-shrink: 0;
         }
         .sidebar-header h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 900;
             letter-spacing: -0.5px;
         }
         .sidebar-controls {
             display: flex;
-            gap: 8px;
-            flex-shrink: 0;
+            gap: 6px;
         }
         .sidebar-controls button,
         .sidebar-controls select {
-            background: rgba(255, 255, 255, 0.12);
-            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 40px;
-            padding: 8px 12px;
+            padding: 7px 10px;
             font-weight: 700;
             cursor: pointer;
-            color: inherit;
+            color: #f0f0f0;
             font-family: inherit;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: background 0.2s;
+        }
+        .sidebar-controls select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23f0b846'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+        }
+        .sidebar-controls select option {
+            background: #1a2530;
+            color: #f0f0f0;
         }
         .sidebar-controls button:hover,
         .sidebar-controls select:hover {
-            background: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.2);
         }
         .search-input {
-            background: rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 60px;
-            padding: 12px 16px;
-            font-size: 0.9rem;
+            padding: 11px 14px;
+            font-size: 0.85rem;
             color: white;
             width: 100%;
             font-family: inherit;
@@ -397,87 +378,87 @@
             border-color: var(--accent);
         }
         .search-input::placeholder {
-            color: #bbb;
-            font-weight: 500;
-        }
-        .search-results {
-            max-height: 150px;
-            overflow-y: auto;
-            flex-shrink: 0;
+            color: #aaa;
         }
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
             flex-shrink: 0;
         }
         .stat-card {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.35);
             border-radius: var(--radius-md);
-            padding: 12px 10px;
+            padding: 10px 8px;
             text-align: center;
             backdrop-filter: blur(4px);
         }
         .stat-card .stat-value {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--gold);
         }
         .stat-card .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
             text-transform: uppercase;
-            opacity: 0.85;
-            margin-top: 4px;
+            opacity: 0.8;
+            margin-top: 2px;
         }
         .comparison-panel {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.25);
             border-radius: var(--radius-md);
-            padding: 12px 14px;
+            padding: 10px 12px;
             flex-shrink: 0;
         }
         .comparison-panel .comp-title {
             font-weight: 800;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
             color: var(--gold);
         }
         .comparison-item {
             display: flex;
             justify-content: space-between;
-            font-size: 0.73rem;
+            align-items: center;
+            font-size: 0.7rem;
+            margin: 4px 0;
+            padding: 6px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .comparison-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .progress-bar-dual {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
             margin: 5px 0;
-            opacity: 0.9;
+            overflow: hidden;
         }
-        .progress-bar {
-            height: 5px;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 5px;
-            margin: 6px 0;
-            cursor: help;
-        }
-        .progress-fill {
+        .progress-fill-dual {
             height: 100%;
-            background: var(--wind);
-            border-radius: 5px;
+            border-radius: 6px;
             transition: width 0.5s;
         }
         .tabs {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 5px;
             flex-shrink: 0;
         }
         .tab-btn {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             border-radius: 60px;
-            padding: 9px 15px;
+            padding: 8px 13px;
             font-weight: 700;
             cursor: pointer;
             color: inherit;
             font-family: inherit;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: background 0.2s;
         }
         .tab-btn.active {
@@ -488,16 +469,16 @@
             display: none;
             flex: 1;
             overflow-y: auto;
-            min-height: 120px;
+            min-height: 100px;
         }
         .tab-panel.active {
             display: block;
         }
         .list-item {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             border-radius: var(--radius-md);
-            padding: 12px 14px;
-            margin-bottom: 8px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
             cursor: pointer;
             font-weight: 600;
             border: none;
@@ -506,18 +487,12 @@
             text-align: left;
             transition: background 0.2s, transform 0.15s;
             font-family: inherit;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
         }
         .list-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(3px);
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateX(4px);
         }
-        .list-item small {
-            opacity: 0.75;
-            font-weight: 500;
-        }
-
-        /* ============ MAP AREA ============ */
         .map-container {
             flex: 1;
             position: relative;
@@ -536,62 +511,42 @@
             backdrop-filter: blur(10px);
             border-radius: var(--radius-md);
             padding: 10px 14px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: #eee;
             z-index: 500;
             font-weight: 600;
             pointer-events: none;
             line-height: 1.5;
         }
-        .map-legend .legend-title {
-            font-weight: 800;
-            margin-bottom: 4px;
-            font-size: 0.78rem;
-        }
         .chip-row {
             position: absolute;
-            top: 16px;
+            top: 14px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.72);
             backdrop-filter: blur(8px);
             border-radius: 60px;
-            padding: 6px 10px;
+            padding: 5px 8px;
             display: flex;
-            gap: 6px;
+            gap: 5px;
             z-index: 600;
-            flex-wrap: wrap;
-            justify-content: center;
         }
         .chip {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             border-radius: 40px;
-            padding: 7px 14px;
+            padding: 6px 12px;
             font-weight: 700;
             color: white;
             cursor: pointer;
             font-family: inherit;
-            font-size: 0.78rem;
+            font-size: 0.73rem;
             transition: all 0.2s;
-            white-space: nowrap;
         }
         .chip.active {
             background: var(--accent);
             border-color: var(--accent);
-            color: #fff;
         }
-        .chip:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .leaflet-control-layers {
-            border-radius: var(--radius-md) !important;
-            font-family: 'Montserrat', sans-serif !important;
-            font-weight: 600 !important;
-            font-size: 0.8rem !important;
-        }
-
-        /* ============ BOTTOM CITY DASHBOARD ============ */
         .city-dashboard {
             position: absolute;
             bottom: 0;
@@ -604,129 +559,137 @@
             transform: translateY(100%);
             transition: transform var(--transition-smooth);
             border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-            max-height: 55vh;
+            max-height: 60vh;
             overflow-y: auto;
             box-shadow: var(--shadow-lg);
-            padding: 16px 20px 24px;
+            padding: 14px 18px 22px;
             color: #eef5f9;
         }
         .city-dashboard.open {
             transform: translateY(0);
         }
-        .city-dashboard .dash-close {
+        .dash-close {
             position: absolute;
-            top: 12px;
-            right: 16px;
-            background: rgba(255, 255, 255, 0.15);
+            top: 10px;
+            right: 14px;
+            background: rgba(255, 255, 255, 0.12);
             border: none;
             border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 1.2rem;
+            width: 32px;
+            height: 32px;
+            font-size: 1.1rem;
             cursor: pointer;
             color: #fff;
             font-weight: 700;
             transition: background 0.2s;
             z-index: 2;
         }
-        .city-dashboard .dash-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
         .dash-header {
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 16px;
-            padding-right: 40px;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-right: 36px;
         }
-        .dash-header .dash-icon {
-            font-size: 2.2rem;
-            flex-shrink: 0;
-        }
-        .dash-header .dash-city-name {
-            font-size: 1.3rem;
+        .dash-city-name {
+            font-size: 1.2rem;
             font-weight: 900;
             letter-spacing: -0.3px;
             color: var(--gold);
         }
-        .dash-header .dash-city-state {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            font-weight: 600;
-        }
         .dash-metrics-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
         }
         .dash-metric-box {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: var(--radius-md);
-            padding: 12px 14px;
+            padding: 10px 12px;
             text-align: center;
         }
         .dash-metric-box .metric-value {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 800;
             color: var(--gold);
         }
         .dash-metric-box .metric-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             text-transform: uppercase;
-            opacity: 0.7;
-            margin-top: 3px;
+            opacity: 0.65;
         }
         .dash-section-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             color: var(--accent);
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 6px;
+            margin-bottom: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 4px;
         }
         .dash-info-row {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
-            font-size: 0.82rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 5px 0;
+            font-size: 0.78rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .dash-info-row .info-label {
-            opacity: 0.7;
+        .info-label {
+            opacity: 0.65;
         }
-        .dash-info-row .info-value {
+        .info-value {
             font-weight: 700;
             color: var(--gold);
         }
         .dash-progress {
             height: 6px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 6px;
-            margin: 8px 0;
+            margin: 6px 0;
             overflow: hidden;
         }
         .dash-progress-fill {
             height: 100%;
-            background: var(--accent);
             border-radius: 6px;
-            transition: width 0.6s;
+            transition: width 0.5s;
         }
         .dash-badge {
             display: inline-block;
             background: var(--accent);
             color: #fff;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 0.8rem;
-            margin-top: 8px;
+            font-size: 0.75rem;
+            margin-top: 6px;
         }
-
-        /* ============ MOBILE MENU ============ */
+        .pie-chart-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.7rem;
+        }
+        .pie-legend span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pie-legend .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            display: inline-block;
+        }
         .menu-toggle {
             display: none;
             position: fixed;
@@ -736,16 +699,12 @@
             background: var(--accent);
             border: none;
             border-radius: 50%;
-            width: 52px;
-            height: 52px;
-            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            font-size: 22px;
             color: white;
             cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-            transition: transform 0.2s;
-        }
-        .menu-toggle:active {
-            transform: scale(0.9);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
         }
         .overlay {
             position: fixed;
@@ -757,7 +716,6 @@
         .overlay.active {
             display: block;
         }
-
         @media (max-width: 850px) {
             .sidebar {
                 position: fixed;
@@ -770,7 +728,6 @@
                 border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
                 z-index: 1050;
                 height: 100%;
-                padding-bottom: 120px;
             }
             .sidebar.open {
                 transform: translateX(0);
@@ -780,104 +737,67 @@
                 align-items: center;
                 justify-content: center;
             }
-            .overlay.active {
-                display: block;
-            }
-            .map-legend {
-                bottom: 90px;
-                left: 10px;
-                font-size: 0.68rem;
-                padding: 8px 10px;
-            }
-            .chip-row {
-                top: 10px;
-                gap: 4px;
-                padding: 5px 8px;
-            }
-            .chip {
-                padding: 5px 10px;
-                font-size: 0.7rem;
-            }
-            .city-dashboard {
-                max-height: 45vh;
-                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-                padding: 12px 14px 18px;
-            }
-            .dash-metrics-row {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 6px;
-            }
-            .dash-header .dash-city-name {
-                font-size: 1.1rem;
+            .splash-header .logo {
+                font-size: 2.2rem;
             }
         }
-        @media (max-width: 400px) {
-            .chip-row {
-                flex-wrap: wrap;
-                max-width: 95%;
-                gap: 3px;
+        @media (max-width: 700px) {
+            .splash-stats-grid {
+                grid-template-columns: 1fr 1fr;
             }
-            .chip {
-                padding: 4px 8px;
-                font-size: 0.68rem;
+            .splash-cards-row {
+                grid-template-columns: 1fr;
             }
-            .map-legend {
-                bottom: 100px;
-                left: 6px;
-                font-size: 0.62rem;
+            .live-value-large {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- ==================== SPLASH SCREEN ==================== -->
     <div id="splash" class="splash">
         <div class="splash-container">
             <div class="splash-header">
                 <div class="logo">⚡ Infra.BR Hub</div>
-                <p class="subtitle">Plataforma interativa de monitoramento da infraestrutura energética e de conectividade do Brasil</p>
+                <div class="subtitle" id="splashSubtitle">Plataforma interativa de monitoramento da infraestrutura energética e de conectividade do Brasil</div>
             </div>
-
-            <!-- Cards de estatísticas principais -->
-            <div class="splash-stats-grid" id="splashStatsGrid">
-                <div class="splash-stat-card"><div class="value" id="splashValWind">--</div><div class="label">Capacidade Eólica Mapeada</div></div>
-                <div class="splash-stat-card"><div class="value" id="splashValCables">--</div><div class="label">Cabos Submarinos</div></div>
-                <div class="splash-stat-card"><div class="value" id="splashValCities">--</div><div class="label">Cidades Monitoradas</div></div>
-                <div class="splash-stat-card"><div class="value" id="splashValNational">33,7 GW</div><div class="label">Total Nacional 2024</div></div>
+            <div class="section-label" id="sectionLabel">⚡ ENERGIA EÓLICA</div>
+            <div class="splash-stats-grid">
+                <div class="splash-stat-card"><div class="value" id="splashValWind">5.930 MW</div><div class="label" id="splashLabelWind">Mapeado (13 parques)</div></div>
+                <div class="splash-stat-card"><div class="value" id="splashValCables">9</div><div class="label" id="splashLabelCables">Cabos Submarinos</div></div>
+                <div class="splash-stat-card"><div class="value" id="splashValCities">12</div><div class="label" id="splashLabelCities">Cidades Monitoradas</div></div>
+                <div class="splash-stat-card"><div class="value" id="splashValNational">33,7 GW</div><div class="label" id="splashLabelNational">Total Nacional 2024</div></div>
             </div>
-
-            <!-- Dashboard de consumo ao vivo -->
             <div class="live-consumption-dashboard">
-                <div class="live-title"><span class="live-pulse"></span>Consumo Residencial Brasil — Ao Vivo</div>
-                <div class="live-value" id="liveConsumptionCounter">--</div>
-                <div class="live-subtitle">kWh consumidos desde o início desta sessão (est.)</div>
+                <div class="live-title"><span class="live-pulse"></span><span id="liveTitle">Consumo Residencial Brasil — Ao Vivo</span></div>
+                <div class="live-value-large" id="liveConsumptionCounter">--</div>
+                <div class="live-subtitle" id="liveSubtitle">kWh consumidos desde o início desta sessão (estimativa)</div>
             </div>
-
-            <!-- Cards informativos horizontais -->
             <div class="splash-cards-row">
-                <div class="splash-info-card" id="cardWind">
-                    <span class="card-badge">🌬️ Energia</span>
-                    <h3>Energia Eólica no Brasil</h3>
-                    <p>O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica instalada (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional. O Nordeste concentra mais de 80% da produção, com fatores de capacidade excepcionais — o Maranhão atinge <strong>47%</strong>, quase o dobro da média europeia.</p>
+                <div class="splash-info-card">
+                    <span class="card-badge" id="badgeWind">🌬️ Energia</span>
+                    <h3 id="cardWindTitle">Energia Eólica no Brasil</h3>
+                    <p id="cardWindText">O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional. O Nordeste concentra mais de 80% da produção, com fatores de capacidade excepcionais — o Maranhão atinge <strong>47%</strong>.</p>
                 </div>
-                <div class="splash-info-card" id="cardHubs">
-                    <span class="card-badge">🔌 Conectividade</span>
-                    <h3>Hubs Estratégicos</h3>
-                    <p>Os cabos submarinos que aterram no Brasil transformam cidades litorâneas em <strong>portais digitais</strong>. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul, conectando o país aos EUA, Europa e África através de milhares de quilômetros de fibra óptica submarina.</p>
+                <div class="splash-info-card">
+                    <span class="card-badge" id="badgeHubs">🔌 Conectividade</span>
+                    <h3 id="cardHubsTitle">Hubs Estratégicos</h3>
+                    <p id="cardHubsText">Cabos submarinos transformam cidades litorâneas em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.</p>
                 </div>
-                <div class="splash-info-card" id="cardBalneario">
-                    <span class="card-badge">📍 Tese Central</span>
-                    <h3>Balneário Pinhal (RS)</h3>
-                    <p>Com <strong id="splashBalnearioMW">752 MW</strong> de capacidade eólica instalada, o município gera aproximadamente <strong id="splashBalnearioGWh">--</strong> GWh/ano — cerca de <strong id="splashBalnearioX">--</strong> vezes o seu consumo residencial. Isso o configura como um <strong>hub exportador estratégico</strong> de energia limpa, com potencial para alimentar data centers e infraestrutura digital regional.</p>
+                <div class="splash-info-card">
+                    <span class="card-badge" id="badgeBalneario">📍 Tese Central</span>
+                    <h3 id="cardBalnearioTitle">Balneário Pinhal (RS)</h3>
+                    <p id="cardBalnearioText">Com <strong id="splashBalnearioMW">752 MW</strong> de capacidade eólica, o município gera <strong id="splashBalnearioGWh">2.174,7 GWh/ano</strong> — <strong id="splashBalnearioX">53,6</strong> vezes seu consumo residencial. Já o estado do RS tem déficit eólico, dependendo de outras fontes.</p>
                 </div>
             </div>
-
+            <div class="splash-text-block" style="background:rgba(255,255,255,0.04);border-left:3px solid var(--accent);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:16px 18px;line-height:1.6;font-size:0.88rem;">
+                <h3 style="color:#fff;font-size:0.95rem;font-weight:800;margin-bottom:6px;">👥 Para quem é este mapa?</h3>
+                <p style="color:var(--gold-light);font-size:0.82rem;"><strong style="color:#fff;">Planejadores energéticos</strong> — visualizam distribuição de parques e balanço oferta × consumo. <strong style="color:#fff;">Operadoras de telecom</strong> — identificam pontos de aterramento e rotas de conectividade. <strong style="color:#fff;">Investidores e pesquisadores</strong> — analisam potencial de hubs híbridos (energia + dados). <strong style="color:#fff;">Estudantes e entusiastas</strong> — aprendem sobre infraestrutura crítica de forma interativa.</p>
+            </div>
             <button id="enterMapBtn" class="splash-btn">🌎 Explorar Mapa Interativo</button>
         </div>
     </div>
 
-    <!-- ==================== APP PRINCIPAL ==================== -->
     <div id="app" class="app">
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
@@ -895,10 +815,10 @@
             <div class="search-results" id="searchResults"></div>
             <div class="stats-grid" id="statsGrid"></div>
             <div class="comparison-panel">
-                <div class="comp-title" id="comparisonTitle">⚡ Capacidade eólica vs consumo por estado</div>
+                <div class="comp-title" id="comparisonTitle">⚡ Matriz Energética por Estado</div>
                 <div id="stateComparisonList"></div>
             </div>
-            <div class="tabs" id="tabsContainer">
+            <div class="tabs">
                 <button class="tab-btn active" data-tab="wind">🌬️ Parques</button>
                 <button class="tab-btn" data-tab="cables">🌊 Cabos</button>
                 <button class="tab-btn" data-tab="landing">📍 Aterramentos</button>
@@ -909,7 +829,6 @@
             <div id="tab-landing" class="tab-panel"><div id="landingList"></div></div>
             <div id="tab-energy" class="tab-panel"><div id="energyList"></div></div>
         </aside>
-
         <div class="map-container">
             <div id="map"></div>
             <div class="map-legend" id="mapLegend">
@@ -924,14 +843,12 @@
                 <button class="chip" data-focus="nordeste">🌵 Nordeste</button>
                 <button class="chip" data-focus="sul">❄️ Sul</button>
             </div>
-
             <div class="city-dashboard" id="cityDashboard">
                 <button class="dash-close" id="dashCloseBtn" title="Fechar painel">✕</button>
                 <div id="dashContent"></div>
             </div>
         </div>
     </div>
-
     <button id="menuToggle" class="menu-toggle">☰</button>
     <div id="overlay" class="overlay"></div>
 
@@ -939,7 +856,6 @@
     <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
     <script>
     (function() {
-        // ==================== DADOS ATUALIZADOS (2024/2025 validados) ====================
         const WIND_FARMS = [
             { name: "Lagoa dos Ventos", state: "PI", lat: -8.8531, lon: -41.5597, cap: 716.5, op: "Enel Green Power" },
             { name: "Complexo Chuí", state: "RS", lat: -33.1233, lon: -53.4458, cap: 582.8, op: "Omega Energia" },
@@ -956,9 +872,9 @@
             { name: "Complexo Eólico Osório", state: "RS", lat: -30.2469, lon: -50.2336, cap: 150, op: "AES Brasil" }
         ];
         const CABLES = [
+            { name: "Malbec", land: "Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)", len: 2880, year: 2025, owner: "V.tal / GlobeNet", status: "Operacional" },
             { name: "Firmina", land: "Praia Grande (SP), Punta del Este (UY), Las Toninas (AR)", len: 14517, year: 2024, owner: "Google / Telxius", status: "Operacional" },
             { name: "Tannat", land: "Santos (SP), Praia Grande (SP), Maldonado (UY)", len: 2000, year: 2022, owner: "Google / Antel", status: "Operacional" },
-            { name: "Malbec", land: "Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)", len: 2880, year: 2026, owner: "V.tal / GlobeNet", status: "Em construção" },
             { name: "EllaLink", land: "Fortaleza (CE), Sines (Portugal)", len: 5900, year: 2021, owner: "EllaLink Group", status: "Operacional" },
             { name: "Monet", land: "Santos (SP), Fortaleza (CE), Boca Raton (EUA)", len: 10000, year: 2017, owner: "Google / Algar", status: "Operacional" },
             { name: "Seabras-1", land: "Praia Grande (SP), Wall Township (EUA)", len: 10000, year: 2017, owner: "Seaborn Networks", status: "Operacional" },
@@ -980,53 +896,50 @@
             "Maceió (AL)": [-9.6656, -35.7355],
             "João Pessoa (PB)": [-7.1195, -34.845]
         };
-        // Populações atualizadas IBGE (Censo 2022 + Estimativas 2025)
         const POP_EST = {
-            "Balneário Pinhal (RS)": 15413,
-            "Fortaleza (CE)": 2578483,
-            "Praia Grande (SP)": 349935,
-            "Rio de Janeiro (RJ)": 6730729,
-            "Santos (SP)": 418608,
-            "Salvador (BA)": 2564204,
-            "Recife (PE)": 1488920,
-            "Natal (RN)": 751300,
-            "Vitória (ES)": 322869,
-            "Aracaju (SE)": 630932,
-            "Maceió (AL)": 994952,
-            "João Pessoa (PB)": 833932
+            "Balneário Pinhal (RS)": 15413, "Fortaleza (CE)": 2578483, "Praia Grande (SP)": 349935,
+            "Rio de Janeiro (RJ)": 6730729, "Santos (SP)": 418608, "Salvador (BA)": 2564204,
+            "Recife (PE)": 1488920, "Natal (RN)": 751300, "Vitória (ES)": 322869,
+            "Aracaju (SE)": 630932, "Maceió (AL)": 994952, "João Pessoa (PB)": 833932
         };
-        // População total dos estados para cálculo de consumo (IBGE 2022/2025)
+        const BRAZIL_POPULATION = 203100000;
+        const KWH_CAPITA = 2630;
+        const CAPACITY_FACTOR_NATIONAL = 0.38;
         const STATE_POPULATION = {
-            "PI": 3273227,
-            "RS": 10882850,
-            "BA": 14136154,
-            "RN": 3302727,
-            "PB": 4039277,
-            "MA": 6776997
+            "PI": 3273227, "RS": 10882850, "BA": 14136154, "RN": 3302727, "PB": 4039277, "MA": 6776997,
+            "SP": 44411238, "RJ": 16054524, "MG": 20538718, "PR": 11444380, "CE": 8794448
         };
-        const KWH_CAPITA = 2630; // Consumo residencial per capita (EPE 2024)
-        const CAPACITY_FACTOR_NATIONAL = 0.38; // Média nacional 2024 (ABEEólica)
         const STATE_CAPACITY_FACTOR = {
-            "MA": 0.47,
-            "PB": 0.419,
-            "PI": 0.414,
-            "BA": 0.409,
-            "RN": 0.38,
-            "RS": 0.38
+            "MA": 0.47, "PB": 0.419, "PI": 0.414, "BA": 0.409, "RN": 0.38, "RS": 0.33,
+            "SP": 0.38, "RJ": 0.38, "MG": 0.38, "PR": 0.38, "CE": 0.38
         };
-
-        // Capacidade eólica por município
+        // Capacidade eólica real por estado (Portal Solar/ABEEólica 2024)
+        const STATE_WIND_TOTAL = {
+            "PI": 4030, "RS": 1830, "BA": 9310, "RN": 9740, "PB": 992, "MA": 426,
+            "SP": 18, "RJ": 28, "MG": 850, "PR": 38, "CE": 2570
+        };
+        // Matriz elétrica por estado (hidro/eólica/solar/biomassa/nuclear/térmica) em % da capacidade instalada
+        const STATE_MATRIX = {
+            "PI": { hydro: 5, wind: 68, solar: 22, biomass: 2, nuclear: 0, thermal: 3 },
+            "RS": { hydro: 45, wind: 22, solar: 12, biomass: 8, nuclear: 0, thermal: 13 },
+            "BA": { hydro: 38, wind: 35, solar: 16, biomass: 5, nuclear: 0, thermal: 6 },
+            "RN": { hydro: 5, wind: 72, solar: 14, biomass: 3, nuclear: 0, thermal: 6 },
+            "PB": { hydro: 15, wind: 42, solar: 20, biomass: 10, nuclear: 0, thermal: 13 },
+            "MA": { hydro: 30, wind: 28, solar: 18, biomass: 8, nuclear: 0, thermal: 16 },
+            "SP": { hydro: 58, wind: 1, solar: 8, biomass: 18, nuclear: 0, thermal: 15 },
+            "RJ": { hydro: 28, wind: 2, solar: 6, biomass: 4, nuclear: 18, thermal: 42 },
+            "MG": { hydro: 62, wind: 5, solar: 18, biomass: 8, nuclear: 0, thermal: 7 },
+            "PR": { hydro: 68, wind: 1, solar: 10, biomass: 12, nuclear: 0, thermal: 9 },
+            "CE": { hydro: 10, wind: 58, solar: 22, biomass: 4, nuclear: 0, thermal: 6 }
+        };
         const cityCapacityMW = {};
         WIND_FARMS.forEach(f => {
             Object.entries(LANDING_POINTS).forEach(([city, coords]) => {
                 if (f.lat === coords[0] && f.lon === coords[1]) cityCapacityMW[city] = (cityCapacityMW[city] || 0) + f.cap;
             });
         });
-
         const esc = s => String(s).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
         const fmtNum = (v, d) => Number(v).toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
-        const fmtEnergy = gwh => fmtNum(gwh, 0) + " GWh/ano";
-
         const landingStats = Object.entries(LANDING_POINTS).map(([city, coords]) => {
             const cableCount = CABLES.filter(c => c.land.includes(city)).length;
             const pop = POP_EST[city] || 50000;
@@ -1034,16 +947,10 @@
             return { city, lat: coords[0], lon: coords[1], cables: cableCount, pop, annual };
         });
         const energyCities = [...landingStats].sort((a, b) => b.annual - a.annual);
-
-        // Capacidade eólica por estado (soma dos parques mapeados)
         const stateCapacity = {};
         WIND_FARMS.forEach(f => { const st = f.state.split('/')[0]; stateCapacity[st] = (stateCapacity[st] || 0) + f.cap; });
-
-        // Consumo residencial estadual (população total × kWh per capita)
-        const stateConsumptionTotal = {};
-        Object.entries(STATE_POPULATION).forEach(([st, pop]) => {
-            stateConsumptionTotal[st] = pop * KWH_CAPITA / 1e6;
-        });
+        const stateConsumption = {};
+        Object.entries(STATE_POPULATION).forEach(([st, pop]) => { stateConsumption[st] = pop * KWH_CAPITA / 1e6; });
 
         const balnearioCapacidade = cityCapacityMW["Balneário Pinhal (RS)"] || 0;
         const balnearioCf = STATE_CAPACITY_FACTOR["RS"] || CAPACITY_FACTOR_NATIONAL;
@@ -1052,12 +959,12 @@
         const balnearioVezes = balnearioConsumo > 0 ? balnearioGeracaoAnual / balnearioConsumo : 0;
 
         const totalMW = Object.values(stateCapacity).reduce((a, b) => a + b, 0);
-        const totalEnergy = energyCities.reduce((a, b) => a + b.annual, 0);
-        const consumoBrasilPorMinutoKwh = (totalEnergy * 1e6) / (365 * 24 * 60);
         const totalCables = CABLES.length;
         const totalCities = Object.keys(LANDING_POINTS).length;
+        const consumoBrasilAnual = BRAZIL_POPULATION * KWH_CAPITA / 1e6;
+        const consumoBrasilPorMinutoKwh = (consumoBrasilAnual * 1e6) / (365 * 24 * 60);
+        const consumoBrasilPorSegundoKwh = consumoBrasilPorMinutoKwh / 60;
 
-        // ==================== SPLASH DINÂMICO ====================
         function updateSplashData() {
             document.getElementById('splashValWind').textContent = fmtNum(totalMW, 0) + ' MW';
             document.getElementById('splashValCables').textContent = totalCables;
@@ -1068,28 +975,21 @@
         }
         updateSplashData();
 
-        // ==================== CONTADOR DE CONSUMO AO VIVO ====================
-        const consumoPorSegundoKwh = consumoBrasilPorMinutoKwh / 60;
         let accumulatedKwh = 0;
         const startTime = Date.now();
         const liveCounter = document.getElementById('liveConsumptionCounter');
-
         function updateLiveCounter() {
             const elapsedSeconds = (Date.now() - startTime) / 1000;
-            accumulatedKwh = consumoPorSegundoKwh * elapsedSeconds;
+            accumulatedKwh = consumoBrasilPorSegundoKwh * elapsedSeconds;
             liveCounter.textContent = fmtNum(accumulatedKwh, 0) + ' kWh';
-            requestAnimationFrame(() => {
-                setTimeout(updateLiveCounter, 900);
-            });
+            requestAnimationFrame(() => { setTimeout(updateLiveCounter, 950); });
         }
         updateLiveCounter();
 
-        // ==================== MAPA ====================
         const map = L.map('map', { zoomControl: true, zoomAnimation: true }).setView([-14.2, -51.9], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors',
-            noWrap: false,
-            continuousWorld: true
+            noWrap: false, continuousWorld: true
         }).addTo(map);
         map.setMaxBounds(null);
 
@@ -1102,12 +1002,18 @@
         const searchKeySet = new Set();
 
         function precomputeMetrics(annualGwh) {
-            return {
-                annual: annualGwh,
-                monthly: annualGwh / 12,
-                dailyMwh: (annualGwh / 365) * 1000,
-                minuteKwh: (annualGwh / (365 * 24 * 60)) * 1e6
-            };
+            return { annual: annualGwh, monthly: annualGwh / 12, dailyMwh: (annualGwh / 365) * 1000, minuteKwh: (annualGwh / (365 * 24 * 60)) * 1e6 };
+        }
+
+        function getCityStatus(cityName) {
+            const localCap = cityCapacityMW[cityName] || 0;
+            const stateMatch = cityName.match(/\(([A-Z]{2})\)/);
+            const state = stateMatch ? stateMatch[1] : '';
+            const cf = STATE_CAPACITY_FACTOR[state] || CAPACITY_FACTOR_NATIONAL;
+            const gen = localCap * 8760 * cf / 1000;
+            const cons = (POP_EST[cityName] * KWH_CAPITA) / 1e6;
+            if (!localCap || cons === 0) return 'neutral';
+            return gen > cons ? 'surplus' : 'deficit';
         }
 
         WIND_FARMS.forEach(f => {
@@ -1115,52 +1021,43 @@
             const m = L.circleMarker([f.lat, f.lon], { radius: rad, color: '#fff', weight: 1.8, fillColor: '#12766c', fillOpacity: 0.85 });
             m.bindPopup(`<div style="padding:6px;"><b>${esc(f.name)}</b><hr style="margin:4px 0;border-color:rgba(255,255,255,0.2);"><div>⚡ ${fmtNum(f.cap,1)} MW</div><div>📍 ${f.state}</div><div>🏢 ${esc(f.op)}</div></div>`);
             m.bindTooltip(`${f.name} | ${fmtNum(f.cap,1)} MW`, { sticky: true });
+            m.on('click', (e) => { L.DomEvent.stopPropagation(e); openCityDashboardForWind(f); });
             m.addTo(windLayer);
             markers.wind.push({ m, item: f });
             const key = f.name + f.lat + f.lon;
-            if (!searchKeySet.has(key)) { searchKeySet.add(key);
-                searchable.push({ title: f.name, type: 'Parque', meta: `${f.state} · ${f.cap} MW`, lat: f.lat, lon: f.lon,
-                    marker: m }); }
+            if (!searchKeySet.has(key)) { searchKeySet.add(key); searchable.push({ title: f.name, type: 'Parque', meta: `${f.state} · ${f.cap} MW`, lat: f.lat, lon: f.lon, marker: m }); }
         });
 
         landingStats.forEach(p => {
+            const status = getCityStatus(p.city);
             const rad = 8 + p.cables * 1.2;
-            const m = L.circleMarker([p.lat, p.lon], { radius: rad, color: '#3b9dc4', weight: 2, fillColor: '#3b9dc4',
-                fillOpacity: 0.8 });
-            m.bindTooltip(`${p.city} | ${p.cables} cabos`, { sticky: true });
-            m.on('click', (e) => { L.DomEvent.stopPropagation(e);
-                openCityDashboard(p.city); });
+            const m = L.circleMarker([p.lat, p.lon], { radius: rad, color: '#3b9dc4', weight: 2.5, fillColor: '#3b9dc4', fillOpacity: 0.7 });
+            m.bindTooltip(`${p.city} | ${p.cables} cabos | ${status === 'surplus' ? '⬆️ Superávit' : status === 'deficit' ? '⬇️ Déficit' : '⚖️ Neutro'}`, { sticky: true });
+            m.on('click', (e) => { L.DomEvent.stopPropagation(e); openCityDashboard(p.city); });
             m.addTo(landingLayer);
             markers.landing.push({ m, item: p });
             const key = p.city + p.lat + p.lon;
-            if (!searchKeySet.has(key)) { searchKeySet.add(key);
-                searchable.push({ title: p.city, type: 'Aterramento', meta: `${p.cables} cabos`, lat: p.lat, lon: p.lon,
-                    marker: m }); }
+            if (!searchKeySet.has(key)) { searchKeySet.add(key); searchable.push({ title: p.city, type: 'Aterramento', meta: `${p.cables} cabos`, lat: p.lat, lon: p.lon, marker: m }); }
         });
 
         energyCities.forEach(c => {
             const rad = Math.max(10, Math.min(26, 8 + c.annual / 700));
-            const m = L.circleMarker([c.lat, c.lon], { radius: rad, color: '#d4854a', weight: 2, dashArray: '4 4',
-                fillColor: '#d4854a', fillOpacity: 0.2 });
-            m.bindTooltip(`${c.city} | ${fmtEnergy(c.annual)}`, { sticky: true });
-            m.on('click', (e) => { L.DomEvent.stopPropagation(e);
-                openCityDashboard(c.city); });
+            const m = L.circleMarker([c.lat, c.lon], { radius: rad, color: '#d4854a', weight: 2, dashArray: '4 4', fillColor: '#d4854a', fillOpacity: 0.2 });
+            m.bindTooltip(`${c.city} | ${fmtNum(c.annual,1)} GWh/ano`, { sticky: true });
+            m.on('click', (e) => { L.DomEvent.stopPropagation(e); openCityDashboard(c.city); });
             m.addTo(energyLayer);
             markers.energy.push({ m, item: c });
             const key = c.city + c.lat + c.lon;
-            if (!searchKeySet.has(key)) { searchKeySet.add(key);
-                searchable.push({ title: c.city, type: 'Consumo', meta: fmtEnergy(c.annual), lat: c.lat, lon: c.lon,
-                    marker: m }); }
+            if (!searchKeySet.has(key)) { searchKeySet.add(key); searchable.push({ title: c.city, type: 'Consumo', meta: fmtNum(c.annual,1)+' GWh/ano', lat: c.lat, lon: c.lon, marker: m }); }
         });
 
         CABLES.forEach(cable => {
-            if (cable.status === 'Em construção') return; // Não exibe rotas de cabos em construção
             const cities = cable.land.split(',').map(s => s.trim()).filter(c => LANDING_POINTS[c]);
             const coords = cities.map(c => LANDING_POINTS[c]).filter(c => c);
-            if (coords.length >= 2) L.polyline.antPath(coords, { color: '#ffaa44', weight: 2.5, delay: 300,
-                dashArray: [10, 20], pulseColor: '#fff' }).addTo(cableLineLayer);
+            if (coords.length >= 2) L.polyline.antPath(coords, { color: '#ffaa44', weight: 2.5, delay: 300, dashArray: [10, 20], pulseColor: '#fff' }).addTo(cableLineLayer);
         });
 
+        // Default: todas as camadas visíveis
         windLayer.addTo(map);
         landingLayer.addTo(map);
         energyLayer.addTo(map);
@@ -1173,145 +1070,196 @@
             "✨ Rotas de cabos": cableLineLayer
         }, { position: 'topright', collapsed: false }).addTo(map);
 
-        const defaultVisibility = { wind: false, landing: true, energy: true, cables: false };
-        const savedVisibility = (() => { try { return JSON.parse(localStorage.getItem('infraBrLayersV2')) ||
-                    defaultVisibility; } catch { return defaultVisibility; } })();
+        const defaultVisibility = { wind: true, landing: true, energy: true, cables: true };
+        const savedVisibility = (() => { try { return JSON.parse(localStorage.getItem('infraBrLayersV5')) || defaultVisibility; } catch { return defaultVisibility; } })();
         if (!savedVisibility.wind) map.removeLayer(windLayer);
         if (!savedVisibility.landing) map.removeLayer(landingLayer);
         if (!savedVisibility.energy) map.removeLayer(energyLayer);
         if (!savedVisibility.cables) map.removeLayer(cableLineLayer);
-
-        function saveLayerState() {
-            localStorage.setItem('infraBrLayersV2', JSON.stringify({
-                wind: map.hasLayer(windLayer),
-                landing: map.hasLayer(landingLayer),
-                energy: map.hasLayer(energyLayer),
-                cables: map.hasLayer(cableLineLayer)
-            }));
-        }
+        function saveLayerState() { localStorage.setItem('infraBrLayersV5', JSON.stringify({ wind: map.hasLayer(windLayer), landing: map.hasLayer(landingLayer), energy: map.hasLayer(energyLayer), cables: map.hasLayer(cableLineLayer) })); }
         map.on('overlayadd', saveLayerState);
         map.on('overlayremove', saveLayerState);
 
-        // ==================== PAINEL INFERIOR ESTÁVEL ====================
         const cityDashboard = document.getElementById('cityDashboard');
         const dashContent = document.getElementById('dashContent');
         const dashCloseBtn = document.getElementById('dashCloseBtn');
         let currentDashCity = null;
-        let dashboardTimeout = null;
+
+        function drawPieChart(canvasId, matrix, totalMw) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            const cx = w / 2, cy = h / 2, r = Math.min(cx, cy) - 4;
+            ctx.clearRect(0, 0, w, h);
+            const colors = { hydro: '#3b9dc4', wind: '#1a9e91', solar: '#f0b846', biomass: '#2ecc71', nuclear: '#e74c3c', thermal: '#b0b8c1' };
+            const labels = { hydro: 'Hidrelétrica', wind: 'Eólica', solar: 'Solar', biomass: 'Biomassa', nuclear: 'Nuclear', thermal: 'Térmica' };
+            let startAngle = -Math.PI / 2;
+            Object.entries(matrix).forEach(([key, val]) => {
+                if (val <= 0) return;
+                const sliceAngle = (val / 100) * 2 * Math.PI;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, r, startAngle, startAngle + sliceAngle);
+                ctx.closePath();
+                ctx.fillStyle = colors[key] || '#888';
+                ctx.fill();
+                ctx.strokeStyle = '#0a0f14';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                const midAngle = startAngle + sliceAngle / 2;
+                const labelR = r * 0.65;
+                const lx = cx + Math.cos(midAngle) * labelR;
+                const ly = cy + Math.sin(midAngle) * labelR;
+                if (val > 8) {
+                    ctx.fillStyle = '#fff';
+                    ctx.font = 'bold 9px Montserrat';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(val + '%', lx, ly);
+                }
+                startAngle += sliceAngle;
+            });
+        }
+
+        function openStateMatrixDashboard(state) {
+            const matrix = STATE_MATRIX[state];
+            const windTotal = STATE_WIND_TOTAL[state] || 0;
+            const popState = STATE_POPULATION[state] || 5000000;
+            const consState = popState * KWH_CAPITA / 1e6;
+            const metrics = precomputeMetrics(consState);
+            const mappedCap = stateCapacity[state] || 0;
+            const colors = { hydro: '#3b9dc4', wind: '#1a9e91', solar: '#f0b846', biomass: '#2ecc71', nuclear: '#e74c3c', thermal: '#b0b8c1' };
+            const labels = { hydro: 'Hidrelétrica', wind: 'Eólica', solar: 'Solar', biomass: 'Biomassa', nuclear: 'Nuclear', thermal: 'Térmica' };
+            let legendHtml = '';
+            Object.entries(matrix).forEach(([k, v]) => {
+                if (v > 0) legendHtml += `<span><span class="dot" style="background:${colors[k]}"></span> ${labels[k]}: <strong>${v}%</strong></span>`;
+            });
+            dashContent.innerHTML = `
+            <div class="dash-header"><div class="dash-icon">🗺️</div><div><div class="dash-city-name">${state} — Matriz Energética</div><div style="font-size:0.75rem;opacity:0.65;">Pop. ${fmtNum(popState,0)} hab. · Consumo resid. ${fmtNum(consState,0)} GWh/ano</div></div></div>
+            <div class="dash-section-title">📊 Consumo Residencial Estimado</div>
+            <div class="dash-metrics-row">
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.annual, 1)} GWh</div><div class="metric-label">Anual</div></div>
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.monthly, 1)} GWh</div><div class="metric-label">Mensal</div></div>
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.dailyMwh, 0)} MWh</div><div class="metric-label">Diário</div></div>
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.minuteKwh, 0)} kWh</div><div class="metric-label">Por minuto</div></div>
+            </div>
+            <div class="dash-section-title">🥧 Matriz Elétrica (% da capacidade instalada)</div>
+            <div class="pie-chart-container">
+                <canvas id="pieChartCanvas" width="160" height="160"></canvas>
+                <div class="pie-legend">${legendHtml}</div>
+            </div>
+            <div class="dash-info-row"><span class="info-label">⚡ Eólica total no estado</span><span class="info-value">${fmtNum(windTotal, 0)} MW (real)</span></div>
+            <div class="dash-info-row"><span class="info-label">⚡ Eólica mapeada</span><span class="info-value">${fmtNum(mappedCap, 0)} MW (13 parques)</span></div>
+            <div class="dash-info-row"><span class="info-label">💡 Consumo total (resid.)</span><span class="info-value">${fmtNum(consState, 0)} GWh/ano</span></div>
+          `;
+            cityDashboard.classList.add('open');
+            setTimeout(() => drawPieChart('pieChartCanvas', matrix, windTotal), 200);
+        }
 
         function openCityDashboard(cityName) {
-            if (dashboardTimeout) clearTimeout(dashboardTimeout);
-            dashboardTimeout = setTimeout(() => {
-                currentDashCity = cityName;
-                const landing = landingStats.find(l => l.city === cityName);
-                const energy = energyCities.find(e => e.city === cityName);
-                const cityData = landing || energy;
-                if (!cityData) return;
-
-                const metrics = precomputeMetrics(cityData.annual);
-                const stateMatch = cityName.match(/\(([A-Z]{2})\)/);
-                const state = stateMatch ? stateMatch[1] : '';
-                const stateWindCap = state ? (stateCapacity[state] || 0) : 0;
-                const localCap = cityCapacityMW[cityName] || 0;
-                const cf = STATE_CAPACITY_FACTOR[state] || CAPACITY_FACTOR_NATIONAL;
-                const localGenGwh = localCap * 8760 * cf / 1000;
-                const excessPercLocal = metrics.annual > 0 ? (localGenGwh / metrics.annual) * 100 : 0;
-                const isBalneario = cityName === "Balneário Pinhal (RS)";
-                const cablesList = CABLES.filter(c => c.land.includes(cityName));
-                const connectedCities = new Set();
-                cablesList.forEach(c => c.land.split(',').map(s => s.trim()).forEach(cc => { if (cc !== cityName &&
-                        LANDING_POINTS[cc]) connectedCities.add(cc); }));
-
-                dashContent.innerHTML = `
-                <div class="dash-header">
-                    <div class="dash-icon">🏙️</div>
-                    <div><div class="dash-city-name">${esc(cityName)}</div><div class="dash-city-state">${state ? 'Estado: ' + state : ''} · Pop. IBGE: ${fmtNum(cityData.pop, 0)} hab.</div></div>
-                </div>
-                <div class="dash-section-title">📊 Consumo Residencial Estimado</div>
-                <div class="dash-metrics-row">
-                    <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.annual, 1)} GWh</div><div class="metric-label">Anual</div></div>
-                    <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.monthly, 1)} GWh</div><div class="metric-label">Mensal</div></div>
-                    <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.dailyMwh, 0)} MWh</div><div class="metric-label">Diário</div></div>
-                    <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.minuteKwh, 0)} kWh</div><div class="metric-label">Por minuto</div></div>
-                </div>
-                <div class="dash-section-title">⚡ Energia Eólica</div>
-                <div class="dash-info-row"><span class="info-label">Capacidade no município</span><span class="info-value">${localCap > 0 ? fmtNum(localCap, 1) + ' MW' : '—'}</span></div>
-                <div class="dash-info-row"><span class="info-label">Geração local estimada (CF ${(cf*100).toFixed(0)}%)</span><span class="info-value">${localCap > 0 ? fmtNum(localGenGwh, 1) + ' GWh/ano' : '—'}</span></div>
-                <div class="dash-info-row"><span class="info-label">Capacidade do estado (${state})</span><span class="info-value">${fmtNum(stateWindCap, 1)} MW</span></div>
-                ${localCap > 0 ? `<div class="dash-progress"><div class="dash-progress-fill" style="width:${Math.min(100, excessPercLocal)}%"></div></div><div class="dash-info-row"><span class="info-label">Produção local / Consumo</span><span class="info-value">${excessPercLocal.toFixed(1)}%</span></div>` : ''}
-                ${isBalneario ? `<div class="dash-badge">✨ Gera ${fmtNum(balnearioVezes, 1)}× o próprio consumo residencial — Hub exportador</div>` : ''}
-                <div class="dash-section-title" style="margin-top:12px;">🔌 Conectividade Submarina</div>
-                <div class="dash-info-row"><span class="info-label">Cabos que aterram aqui</span><span class="info-value">${cablesList.length}</span></div>
-                ${cablesList.length > 0 ? cablesList.map(c => `<div class="dash-info-row"><span class="info-label">🔗 ${esc(c.name)} ${c.status === 'Em construção' ? '🚧' : '✅'}</span><span class="info-value">${c.len ? fmtNum(c.len, 0)+' km' : 'N/A'} · ${c.owner} · ${c.status}</span></div>`).join('') : '<div class="dash-info-row"><span class="info-label">Nenhum cabo mapeado</span><span class="info-value">—</span></div>'}
-                ${connectedCities.size > 0 ? `<div class="dash-info-row"><span class="info-label">Conecta-se a</span><span class="info-value">${[...connectedCities].join(', ')}</span></div>` : ''}
-              `;
-                cityDashboard.classList.add('open');
-                map.flyTo([cityData.lat, cityData.lon], 9, { animate: true, duration: 0.6 });
-                dashboardTimeout = null;
-            }, 80);
-        }
-
-        function closeCityDashboard() {
-            if (dashboardTimeout) clearTimeout(dashboardTimeout);
-            cityDashboard.classList.remove('open');
-            currentDashCity = null;
-        }
-        dashCloseBtn.addEventListener('click', closeCityDashboard);
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && cityDashboard.classList.contains(
-                'open')) closeCityDashboard(); });
-
-        // ==================== LISTAS & BUSCA ====================
-        function focusMarker(marker, lat, lon) { if (marker) { marker.openPopup();
-                map.flyTo([lat, lon], 8); } }
-
-        function focusCityInDashboard(cityName) {
             const landing = landingStats.find(l => l.city === cityName);
-            if (landing) openCityDashboard(cityName);
+            const energy = energyCities.find(e => e.city === cityName);
+            const cityData = landing || energy;
+            if (!cityData) return;
+            const metrics = precomputeMetrics(cityData.annual);
+            const stateMatch = cityName.match(/\(([A-Z]{2})\)/);
+            const state = stateMatch ? stateMatch[1] : '';
+            const stateWindCap = STATE_WIND_TOTAL[state] || (stateCapacity[state] || 0);
+            const localCap = cityCapacityMW[cityName] || 0;
+            const cf = STATE_CAPACITY_FACTOR[state] || CAPACITY_FACTOR_NATIONAL;
+            const localGenGwh = localCap * 8760 * cf / 1000;
+            const excessPercLocal = metrics.annual > 0 ? (localGenGwh / metrics.annual) * 100 : 0;
+            const isBalneario = cityName === "Balneário Pinhal (RS)";
+            const cablesList = CABLES.filter(c => c.land.includes(cityName));
+            const status = getCityStatus(cityName);
+            const statusText = status === 'surplus' ? '⬆️ Superávit' : status === 'deficit' ? '⬇️ Déficit' : '⚖️ Neutro';
+            const statusBadge = status === 'surplus' ? '🟢' : status === 'deficit' ? '🔴' : '🟡';
+
+            dashContent.innerHTML = `
+            <div class="dash-header">
+                <div class="dash-icon">🏙️</div>
+                <div><div class="dash-city-name">${statusBadge} ${esc(cityName)} <span style="font-size:0.7rem;opacity:0.7;">(${statusText})</span></div><div style="font-size:0.75rem;opacity:0.65;">${state ? 'Estado: ' + state : ''} · Pop. IBGE: ${fmtNum(cityData.pop, 0)} hab.</div></div>
+            </div>
+            <div class="dash-section-title">📊 Consumo Residencial Estimado</div>
+            <div class="dash-metrics-row">
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.annual, 1)} GWh</div><div class="metric-label">Anual</div></div>
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.monthly, 1)} GWh</div><div class="metric-label">Mensal</div></div>
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.dailyMwh, 0)} MWh</div><div class="metric-label">Diário</div></div>
+                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.minuteKwh, 0)} kWh</div><div class="metric-label">Por minuto</div></div>
+            </div>
+            <div class="dash-section-title">⚡ Energia Eólica</div>
+            <div class="dash-info-row"><span class="info-label">Capacidade no município</span><span class="info-value">${localCap > 0 ? fmtNum(localCap, 1) + ' MW' : '—'}</span></div>
+            <div class="dash-info-row"><span class="info-label">Geração local estimada (CF ${(cf*100).toFixed(0)}%)</span><span class="info-value">${localCap > 0 ? fmtNum(localGenGwh, 1) + ' GWh/ano' : '—'}</span></div>
+            <div class="dash-info-row"><span class="info-label">Capacidade eólica do estado (${state})</span><span class="info-value">${fmtNum(stateWindCap, 0)} MW</span></div>
+            ${localCap > 0 ? `<div class="dash-progress"><div class="dash-progress-fill" style="width:${Math.min(100, excessPercLocal)}%; background:${excessPercLocal >= 100 ? '#2ecc71' : '#e74c3c'}"></div></div><div class="dash-info-row"><span class="info-label">Produção local / Consumo</span><span class="info-value">${excessPercLocal.toFixed(1)}%</span></div>` : ''}
+            ${isBalneario ? `<div class="dash-badge">✨ Gera ${fmtNum(balnearioVezes, 1)}× o próprio consumo residencial — Hub exportador</div>` : ''}
+            <div class="dash-section-title" style="margin-top:12px;">🔌 Conectividade Submarina</div>
+            <div class="dash-info-row"><span class="info-label">Cabos que aterram aqui</span><span class="info-value">${cablesList.length}</span></div>
+            ${cablesList.length > 0 ? cablesList.map(c => `<div class="dash-info-row"><span class="info-label">🔗 ${esc(c.name)} ${c.status === 'Em construção' ? '🚧' : '✅'}</span><span class="info-value">${c.len ? fmtNum(c.len, 0)+' km' : 'N/A'} · ${c.owner} · ${c.status}</span></div>`).join('') : '<div class="dash-info-row"><span class="info-label">Nenhum cabo mapeado</span><span class="info-value">—</span></div>'}
+          `;
+            cityDashboard.classList.add('open');
+            map.flyTo([cityData.lat, cityData.lon], 9, { animate: true, duration: 0.6 });
         }
 
+        function openCityDashboardForWind(farm) {
+            const state = farm.state.split('/')[0];
+            const cf = STATE_CAPACITY_FACTOR[state] || CAPACITY_FACTOR_NATIONAL;
+            const genGwh = farm.cap * 8760 * cf / 1000;
+            const popState = STATE_POPULATION[state] || 5000000;
+            const consState = popState * KWH_CAPITA / 1e6;
+            const excessPercState = consState > 0 ? (genGwh / consState) * 100 : 0;
+            const windTotal = STATE_WIND_TOTAL[state] || 0;
+            document.getElementById('dashContent').innerHTML = `
+            <div class="dash-header"><div class="dash-icon">🌬️</div><div><div class="dash-city-name">${esc(farm.name)}</div><div style="font-size:0.75rem;opacity:0.65;">${farm.state} · ${fmtNum(farm.cap,1)} MW</div></div></div>
+            <div class="dash-section-title">⚡ Dados do Parque</div>
+            <div class="dash-metrics-row">
+              <div class="dash-metric-box"><div class="metric-value">${fmtNum(farm.cap,1)} MW</div><div class="metric-label">Capacidade</div></div>
+              <div class="dash-metric-box"><div class="metric-value">${fmtNum(genGwh,1)} GWh/ano</div><div class="metric-label">Geração est. (CF ${(cf*100).toFixed(0)}%)</div></div>
+            </div>
+            <div class="dash-info-row"><span class="info-label">Operador</span><span class="info-value">${esc(farm.op)}</span></div>
+            <div class="dash-info-row"><span class="info-label">Estado</span><span class="info-value">${state} (pop. ${fmtNum(popState,0)} hab.)</span></div>
+            <div class="dash-info-row"><span class="info-label">Eólica total do estado</span><span class="info-value">${fmtNum(windTotal,0)} MW</span></div>
+            <div class="dash-info-row"><span class="info-label">Consumo residencial do estado</span><span class="info-value">${fmtNum(consState,1)} GWh/ano</span></div>
+            <div class="dash-progress"><div class="dash-progress-fill" style="width:${Math.min(100, excessPercState)}%; background:${excessPercState >= 100 ? '#2ecc71' : '#e74c3c'}"></div></div>
+            <div class="dash-info-row"><span class="info-label">Geração parque / Consumo estado</span><span class="info-value">${excessPercState.toFixed(2)}%</span></div>
+          `;
+            cityDashboard.classList.add('open');
+            map.flyTo([farm.lat, farm.lon], 10, { animate: true, duration: 0.6 });
+        }
+
+        function closeCityDashboard() { cityDashboard.classList.remove('open'); }
+        dashCloseBtn.addEventListener('click', closeCityDashboard);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && cityDashboard.classList.contains('open')) closeCityDashboard(); });
+
+        function focusCityInDashboard(cityName) { const landing = landingStats.find(l => l.city === cityName); if (landing) openCityDashboard(cityName); }
         function attachList(containerId, items, titleFn, metaFn, onClickFn) {
             const div = document.getElementById(containerId);
             if (!div) return;
-            div.innerHTML = items.map((item, i) =>
-                `<button class="list-item" data-idx="${i}"><b>${esc(titleFn(item))}</b><br><small>${esc(metaFn(item))}</small></button>`
-                ).join('');
-            div.querySelectorAll('.list-item').forEach((btn, i) => btn.addEventListener('click', () => onClickFn(items[
-                i])));
+            div.innerHTML = items.map((item, i) => `<button class="list-item"><b>${esc(titleFn(item))}</b><br><small>${esc(metaFn(item))}</small></button>`).join('');
+            div.querySelectorAll('.list-item').forEach((btn, i) => btn.addEventListener('click', () => onClickFn(items[i])));
         }
-        attachList('windList', WIND_FARMS, f => f.name, f => `${f.state} · ${f.cap} MW`, f => { const m = markers.wind.find(
-                w => w.item.name === f.name); if (m) focusMarker(m.m, f.lat, f.lon); });
-        attachList('cableList', CABLES, c => c.name, c =>
-            `${c.year || 'N/A'} · ${c.owner} · ${c.status}`, c => { const first = c.land.split(',')[0].trim();
-                const pt = landingStats.find(l => l.city === first); if (pt) focusCityInDashboard(pt.city);
-                else map.flyTo([-14, -51], 5); });
-        attachList('landingList', landingStats, l => l.city, l =>
-            `${l.cables} cabos · ${fmtEnergy(l.annual)}`, p => focusCityInDashboard(p.city));
-        attachList('energyList', energyCities, e => e.city, e => fmtEnergy(e.annual), e => focusCityInDashboard(e
-            .city));
+        attachList('windList', WIND_FARMS, f => f.name, f => `${f.state} · ${f.cap} MW`, f => { openCityDashboardForWind(f); });
+        attachList('cableList', CABLES, c => c.name, c => `${c.year || 'N/A'} · ${c.owner} · ${c.status}`, c => { const first = c.land.split(',')[0].trim(); const pt = landingStats.find(l => l.city === first); if (pt) focusCityInDashboard(pt.city); else map.flyTo([-14, -51], 5); });
+        attachList('landingList', landingStats, l => l.city, l => `${l.cables} cabos · ${fmtNum(l.annual,1)} GWh/ano`, p => focusCityInDashboard(p.city));
+        attachList('energyList', energyCities, e => e.city, e => fmtNum(e.annual,1)+' GWh/ano', e => focusCityInDashboard(e.city));
 
         let searchTimer;
-
         function performSearch(q) {
             const term = q.trim().toLowerCase();
             const container = document.getElementById('searchResults');
             if (!term) { container.innerHTML = ''; return; }
-            const matches = searchable.filter(s => s.title.toLowerCase().includes(term) || s.meta.toLowerCase().includes(
-                term)).slice(0, 6);
-            if (!matches.length) { container.innerHTML =
-                    '<div style="padding:8px;opacity:0.6;">Nada encontrado</div>'; return; }
-            container.innerHTML = matches.map(m =>
-                `<button class="list-item"><b>${esc(m.title)}</b> <small>${esc(m.type)} · ${esc(m.meta)}</small></button>`
-                ).join('');
+            const matches = searchable.filter(s => s.title.toLowerCase().includes(term) || s.meta.toLowerCase().includes(term)).slice(0, 6);
+            if (!matches.length) { container.innerHTML = '<div style="padding:8px;opacity:0.6;">Nada encontrado</div>'; return; }
+            container.innerHTML = matches.map(m => `<button class="list-item"><b>${esc(m.title)}</b> <small>${esc(m.type)} · ${esc(m.meta)}</small></button>`).join('');
             container.querySelectorAll('.list-item').forEach((btn, i) => btn.addEventListener('click', () => {
                 const e = matches[i];
                 if (e.type === 'Consumo' || e.type === 'Aterramento') focusCityInDashboard(e.title);
-                else focusMarker(e.marker, e.lat, e.lon);
+                else if (e.type === 'Parque') { const farm = WIND_FARMS.find(f => f.name === e.title); if (farm) openCityDashboardForWind(farm); }
                 container.innerHTML = '';
                 document.getElementById('searchInput').value = '';
             }));
         }
-        document.getElementById('searchInput').addEventListener('input', e => { clearTimeout(searchTimer);
-            searchTimer = setTimeout(() => performSearch(e.target.value), 250); });
+        document.getElementById('searchInput').addEventListener('input', e => { clearTimeout(searchTimer); searchTimer = setTimeout(() => performSearch(e.target.value), 250); });
 
         document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1320,13 +1268,7 @@
             document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
         }));
 
-        const focusMap = {
-            all: () => map.fitBounds(landingLayer.getBounds().isValid() ? landingLayer.getBounds().pad(0.15) : [
-                [-33, -74], [5, -34]
-            ]),
-            nordeste: () => map.flyTo([-7.4, -38.8], 6),
-            sul: () => map.flyTo([-29.8, -51.2], 6)
-        };
+        const focusMap = { all: () => map.fitBounds(landingLayer.getBounds().isValid() ? landingLayer.getBounds().pad(0.15) : [[-33, -74], [5, -34]]), nordeste: () => map.flyTo([-7.4, -38.8], 6), sul: () => map.flyTo([-29.8, -51.2], 6) };
         document.querySelectorAll('.chip').forEach(chip => chip.addEventListener('click', function() {
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
             this.classList.add('active');
@@ -1335,80 +1277,115 @@
 
         function updateStatCards() {
             document.getElementById('statsGrid').innerHTML = `
-            <div class="stat-card"><div class="stat-value">${fmtNum(totalMW,0)} MW</div><div class="stat-label" data-i18n-stats="wind_capacity">Capacidade mapeada</div></div>
+            <div class="stat-card"><div class="stat-value">${fmtNum(totalMW,0)} MW</div><div class="stat-label" data-i18n-stats="wind_capacity">Eólica mapeada</div></div>
             <div class="stat-card"><div class="stat-value">${totalCables}</div><div class="stat-label" data-i18n-stats="intl_cables">Cabos submarinos</div></div>
             <div class="stat-card"><div class="stat-value">${totalCities}</div><div class="stat-label" data-i18n-stats="landings_br">Aterramentos BR</div></div>
-            <div class="stat-card"><div class="stat-value">${fmtNum(consumoBrasilPorMinutoKwh,0)} kWh</div><div class="stat-label" data-i18n-stats="br_min_consumption">Consumo/min</div></div>
+            <div class="stat-card"><div class="stat-value">${fmtNum(consumoBrasilPorMinutoKwh,0)}</div><div class="stat-label" data-i18n-stats="br_min_consumption">kWh/min BR</div></div>
           `;
         }
         updateStatCards();
 
         function renderComparison() {
             let html = '';
-            Object.keys(stateCapacity).sort((a, b) => stateCapacity[b] - stateCapacity[a]).forEach(st => {
-                const cap = stateCapacity[st];
-                const cons = stateConsumptionTotal[st] || 0;
-                const cf = STATE_CAPACITY_FACTOR[st] || CAPACITY_FACTOR_NATIONAL;
-                const gen = cap * 8760 * cf / 1000;
-                const percent = cons > 0 ? ((gen - cons) / cons) * 100 : 0;
-                const barWidth = Math.max(0, Math.min(100, (gen / Math.max(cons, 1)) * 50));
+            const allStates = Object.keys(STATE_POPULATION).filter(st => STATE_MATRIX[st]);
+            allStates.sort((a, b) => (STATE_WIND_TOTAL[b] || 0) - (STATE_WIND_TOTAL[a] || 0));
+            allStates.forEach(st => {
+                const windTotal = STATE_WIND_TOTAL[st] || 0;
+                const cons = stateConsumption[st] || 0;
+                const mappedCap = stateCapacity[st] || 0;
                 html += `
-              <div class="comparison-item"><span>${st}</span><span><strong>${fmtNum(cap,1)} MW</strong> / ${fmtNum(cons,0)} GWh</span></div>
-              <div class="progress-bar" title="Superávit eólico: ${percent.toFixed(1)}% (Geração est.: ${fmtNum(gen,0)} GWh)"><div class="progress-fill" style="width:${barWidth}%; background:${percent > 0 ? 'var(--wind)' : '#c44'}"></div></div>
+              <div class="comparison-item" onclick="document.__openMatrix('${st}')" title="Clique para ver matriz energética de ${st}">
+                <span>${st}</span><span><strong>${fmtNum(windTotal,0)} MW</strong> / ${fmtNum(cons,0)} GWh</span>
+              </div>
+              <div class="progress-bar-dual"><div class="progress-fill-dual" style="width:${Math.min(100, (mappedCap/Math.max(windTotal,1))*100)}%; background:#3b9dc4;"></div></div>
+              <div style="font-size:0.6rem;opacity:0.7;margin-bottom:4px;">Mapeado: ${fmtNum(mappedCap,0)} MW de ${fmtNum(windTotal,0)} MW total</div>
             `;
             });
-            document.getElementById('stateComparisonList').innerHTML = html ||
-                '<div style="opacity:0.6;font-style:italic;">Sem dados</div>';
+            document.getElementById('stateComparisonList').innerHTML = html || '<div style="opacity:0.6;">Sem dados</div>';
+            document.__openMatrix = function(st) { openStateMatrixDashboard(st); };
         }
         renderComparison();
 
-        // ==================== TEMA (mantido dark como padrão) ====================
         const themeToggle = document.getElementById('themeToggle');
         let isDark = localStorage.getItem('theme') !== 'light';
-        function applyTheme(dark) {
-            document.body.classList.toggle('dark', dark);
-            document.body.classList.toggle('light', !dark);
-            themeToggle.textContent = dark ? '☀️' : '🌓';
-        }
+        function applyTheme(dark) { document.body.classList.toggle('dark', dark); document.body.classList.toggle('light', !dark); themeToggle.textContent = dark ? '☀️' : '🌓'; }
         applyTheme(isDark);
-        themeToggle.addEventListener('click', () => {
-            const darkNow = !document.body.classList.contains('dark');
-            applyTheme(darkNow);
-            localStorage.setItem('theme', darkNow ? 'dark' : 'light');
-        });
+        themeToggle.addEventListener('click', () => { const darkNow = !document.body.classList.contains('dark'); applyTheme(darkNow); localStorage.setItem('theme', darkNow ? 'dark' : 'light'); });
 
-        // ==================== INTERNACIONALIZAÇÃO ====================
         const i18n = {
-            pt: { searchPlaceholder: "🔍 Buscar parque, cabo, cidade...",
-                compTitle: "⚡ Superávit eólico vs consumo residencial por estado", legendTitle: "📖 Legenda",
-                legendWind: "🟢 Parques eólicos (MW)", legendCable: "🔵 Aterramentos de cabos",
-                legendEnergy: "🟠 Consumo urbano", legendRoute: "✨ Rotas animadas de cabos",
-                chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sul", tabWind: "🌬️ Parques",
-                tabCables: "🌊 Cabos", tabLanding: "📍 Aterramentos", tabEnergy: "⚡ Consumo",
-                stats: { wind_capacity: "Capacidade mapeada", intl_cables: "Cabos submarinos",
-                    landings_br: "Aterramentos BR", br_min_consumption: "Consumo/min" } },
-            en: { searchPlaceholder: "🔍 Search wind farm, cable, city...",
-                compTitle: "⚡ Wind surplus vs residential consumption by state", legendTitle: "📖 Legend",
-                legendWind: "🟢 Wind farms (MW)", legendCable: "🔵 Cable landings",
-                legendEnergy: "🟠 Urban consumption", legendRoute: "✨ Animated cable routes",
-                chipAll: "🌎 All Brazil", chipNE: "🌵 Northeast", chipSul: "❄️ South",
-                tabWind: "🌬️ Wind farms", tabCables: "🌊 Cables", tabLanding: "📍 Landings",
-                tabEnergy: "⚡ Consumption", stats: { wind_capacity: "Mapped capacity",
-                    intl_cables: "Submarine cables", landings_br: "BR landings",
-                br_min_consumption: "Consumption/min" } },
-            es: { searchPlaceholder: "🔍 Buscar parque, cable, ciudad...",
-                compTitle: "⚡ Superávit eólico vs consumo residencial por estado", legendTitle: "📖 Leyenda",
-                legendWind: "🟢 Parques eólicos (MW)", legendCable: "🔵 Puntos de amarre",
-                legendEnergy: "🟠 Consumo urbano", legendRoute: "✨ Rutas animadas de cables",
-                chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sur",
-                tabWind: "🌬️ Parques", tabCables: "🌊 Cables", tabLanding: "📍 Amarre",
-                tabEnergy: "⚡ Consumo", stats: { wind_capacity: "Capacidad mapeada",
-                    intl_cables: "Cables submarinos", landings_br: "Amarres BR",
-                br_min_consumption: "Consumo/min" } }
+            pt: {
+                splashSubtitle: "Plataforma interativa de monitoramento da infraestrutura energética e de conectividade do Brasil",
+                sectionLabel: "⚡ ENERGIA EÓLICA",
+                splashLabelWind: "Mapeado (13 parques)", splashLabelCables: "Cabos Submarinos", splashLabelCities: "Cidades Monitoradas", splashLabelNational: "Total Nacional 2024",
+                liveTitle: "Consumo Residencial Brasil — Ao Vivo", liveSubtitle: "kWh consumidos desde o início desta sessão (estimativa)",
+                badgeWind: "🌬️ Energia", cardWindTitle: "Energia Eólica no Brasil",
+                cardWindText: "O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional. O Nordeste concentra mais de 80% da produção, com fatores de capacidade excepcionais — o Maranhão atinge <strong>47%</strong>.",
+                badgeHubs: "🔌 Conectividade", cardHubsTitle: "Hubs Estratégicos",
+                cardHubsText: "Cabos submarinos transformam cidades litorâneas em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.",
+                badgeBalneario: "📍 Tese Central", cardBalnearioTitle: "Balneário Pinhal (RS)",
+                cardBalnearioText: "Com <strong id='splashBalnearioMW'>752 MW</strong> de capacidade eólica, o município gera <strong id='splashBalnearioGWh'>2.174,7 GWh/ano</strong> — <strong id='splashBalnearioX'>53,6</strong> vezes seu consumo residencial. Já o estado do RS tem déficit eólico, dependendo de outras fontes.",
+                enterMapBtnText: "🌎 Explorar Mapa Interativo", searchPlaceholder: "🔍 Buscar parque, cabo, cidade...",
+                compTitle: "⚡ Matriz Energética por Estado",
+                legendTitle: "📖 Legenda", legendWind: "🟢 Parques eólicos (MW)", legendCable: "🔵 Aterramentos de cabos", legendEnergy: "🟠 Consumo urbano", legendRoute: "✨ Rotas animadas de cabos",
+                chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sul", tabWind: "🌬️ Parques", tabCables: "🌊 Cabos", tabLanding: "📍 Aterramentos", tabEnergy: "⚡ Consumo",
+                stats: { wind_capacity: "Eólica mapeada", intl_cables: "Cabos submarinos", landings_br: "Aterramentos BR", br_min_consumption: "kWh/min BR" }
+            },
+            en: {
+                splashSubtitle: "Interactive platform for monitoring Brazil's energy and connectivity infrastructure",
+                sectionLabel: "⚡ WIND ENERGY",
+                splashLabelWind: "Mapped (13 farms)", splashLabelCables: "Submarine Cables", splashLabelCities: "Monitored Cities", splashLabelNational: "National Total 2024",
+                liveTitle: "Brazil Residential Consumption — Live", liveSubtitle: "kWh consumed since session start (estimated)",
+                badgeWind: "🌬️ Energy", cardWindTitle: "Wind Energy in Brazil",
+                cardWindText: "Brazil ended 2024 with <strong>33.7 GW</strong> of wind capacity (1,103 farms) and generation of <strong>107.7 TWh</strong>. Wind accounts for <strong>16.1% of the electricity mix</strong>. The Northeast concentrates over 80% of production, with exceptional capacity factors — Maranhão reaches <strong>47%</strong>.",
+                badgeHubs: "🔌 Connectivity", cardHubsTitle: "Strategic Hubs",
+                cardHubsText: "Submarine cables turn coastal cities into digital portals. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> and <strong>Rio de Janeiro (RJ)</strong> are South America's main data entry points.",
+                badgeBalneario: "📍 Core Thesis", cardBalnearioTitle: "Balneário Pinhal (RS)",
+                cardBalnearioText: "With <strong id='splashBalnearioMW'>752 MW</strong> of wind capacity, the municipality generates <strong id='splashBalnearioGWh'>2,174.7 GWh/year</strong> — <strong id='splashBalnearioX'>53.6</strong> times its residential consumption. The state of RS, however, has a wind deficit and relies on other sources.",
+                enterMapBtnText: "🌎 Explore Interactive Map", searchPlaceholder: "🔍 Search wind farm, cable, city...",
+                compTitle: "⚡ Energy Matrix by State",
+                legendTitle: "📖 Legend", legendWind: "🟢 Wind farms (MW)", legendCable: "🔵 Cable landings", legendEnergy: "🟠 Urban consumption", legendRoute: "✨ Animated cable routes",
+                chipAll: "🌎 All Brazil", chipNE: "🌵 Northeast", chipSul: "❄️ South", tabWind: "🌬️ Wind farms", tabCables: "🌊 Cables", tabLanding: "📍 Landings", tabEnergy: "⚡ Consumption",
+                stats: { wind_capacity: "Mapped wind", intl_cables: "Submarine cables", landings_br: "BR landings", br_min_consumption: "kWh/min BR" }
+            },
+            es: {
+                splashSubtitle: "Plataforma interactiva de monitoreo de la infraestructura energética y de conectividad de Brasil",
+                sectionLabel: "⚡ ENERGÍA EÓLICA",
+                splashLabelWind: "Mapeado (13 parques)", splashLabelCables: "Cables Submarinos", splashLabelCities: "Ciudades Monitoreadas", splashLabelNational: "Total Nacional 2024",
+                liveTitle: "Consumo Residencial Brasil — En Vivo", liveSubtitle: "kWh consumidos desde el inicio de esta sesión (estimado)",
+                badgeWind: "🌬️ Energía", cardWindTitle: "Energía Eólica en Brasil",
+                cardWindText: "Brasil cerró 2024 con <strong>33,7 GW</strong> de capacidad eólica (1.103 parques) y generación de <strong>107,7 TWh</strong>. La fuente representa el <strong>16,1% de la matriz eléctrica</strong>. El Nordeste concentra más del 80% de la producción, con factores de capacidad excepcionales — Maranhão alcanza el <strong>47%</strong>.",
+                badgeHubs: "🔌 Conectividad", cardHubsTitle: "Hubs Estratégicos",
+                cardHubsText: "Los cables submarinos convierten ciudades costeras en portales digitales. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> y <strong>Rio de Janeiro (RJ)</strong> son los principales puntos de entrada de datos de Sudamérica.",
+                badgeBalneario: "📍 Tesis Central", cardBalnearioTitle: "Balneário Pinhal (RS)",
+                cardBalnearioText: "Con <strong id='splashBalnearioMW'>752 MW</strong> de capacidad eólica, el municipio genera <strong id='splashBalnearioGWh'>2.174,7 GWh/año</strong> — <strong id='splashBalnearioX'>53,6</strong> veces su consumo residencial. El estado de RS, sin embargo, tiene un déficit eólico y depende de otras fuentes.",
+                enterMapBtnText: "🌎 Explorar Mapa Interactivo", searchPlaceholder: "🔍 Buscar parque, cable, ciudad...",
+                compTitle: "⚡ Matriz Energética por Estado",
+                legendTitle: "📖 Leyenda", legendWind: "🟢 Parques eólicos (MW)", legendCable: "🔵 Puntos de amarre", legendEnergy: "🟠 Consumo urbano", legendRoute: "✨ Rutas animadas de cables",
+                chipAll: "🌎 Todo Brasil", chipNE: "🌵 Nordeste", chipSul: "❄️ Sur", tabWind: "🌬️ Parques", tabCables: "🌊 Cables", tabLanding: "📍 Amarre", tabEnergy: "⚡ Consumo",
+                stats: { wind_capacity: "Eólica mapeada", intl_cables: "Cables submarinos", landings_br: "Amarres BR", br_min_consumption: "kWh/min BR" }
+            }
         };
 
         function setLang(lang) {
             const t = i18n[lang] || i18n.pt;
+            document.getElementById('splashSubtitle').textContent = t.splashSubtitle;
+            document.getElementById('sectionLabel').textContent = t.sectionLabel;
+            document.getElementById('splashLabelWind').textContent = t.splashLabelWind;
+            document.getElementById('splashLabelCables').textContent = t.splashLabelCables;
+            document.getElementById('splashLabelCities').textContent = t.splashLabelCities;
+            document.getElementById('splashLabelNational').textContent = t.splashLabelNational;
+            document.getElementById('liveTitle').innerHTML = '<span class="live-pulse"></span>' + t.liveTitle;
+            document.getElementById('liveSubtitle').textContent = t.liveSubtitle;
+            document.getElementById('badgeWind').textContent = t.badgeWind;
+            document.getElementById('cardWindTitle').textContent = t.cardWindTitle;
+            document.getElementById('cardWindText').innerHTML = t.cardWindText;
+            document.getElementById('badgeHubs').textContent = t.badgeHubs;
+            document.getElementById('cardHubsTitle').textContent = t.cardHubsTitle;
+            document.getElementById('cardHubsText').innerHTML = t.cardHubsText;
+            document.getElementById('badgeBalneario').textContent = t.badgeBalneario;
+            document.getElementById('cardBalnearioTitle').textContent = t.cardBalnearioTitle;
+            document.getElementById('cardBalnearioText').innerHTML = t.cardBalnearioText;
+            document.getElementById('enterMapBtn').textContent = t.enterMapBtnText;
             document.getElementById('searchInput').placeholder = t.searchPlaceholder;
             document.getElementById('comparisonTitle').innerText = t.compTitle;
             const leg = document.querySelectorAll('.map-legend div');
@@ -1431,41 +1408,26 @@
                 if (t.stats[k]) el.innerText = t.stats[k];
             });
             localStorage.setItem('lang', lang);
+            updateSplashData();
         }
         document.getElementById('langSelect').addEventListener('change', e => setLang(e.target.value));
         setLang(localStorage.getItem('lang') || 'pt');
 
-        // ==================== MOBILE ====================
-        const menuBtn = document.getElementById('menuToggle'),
-            sidebar = document.getElementById('sidebar'),
-            overlayDiv = document.getElementById('overlay');
-
-        function closeMenu() { sidebar.classList.remove('open');
-            overlayDiv.classList.remove('active'); }
-
-        function openMenu() { sidebar.classList.add('open');
-            overlayDiv.classList.add('active'); }
-        menuBtn.addEventListener('click', e => { e.stopPropagation();
-            sidebar.classList.contains('open') ? closeMenu() : openMenu(); });
+        const menuBtn = document.getElementById('menuToggle'), sidebar = document.getElementById('sidebar'), overlayDiv = document.getElementById('overlay');
+        function closeMenu() { sidebar.classList.remove('open'); overlayDiv.classList.remove('active'); }
+        function openMenu() { sidebar.classList.add('open'); overlayDiv.classList.add('active'); }
+        menuBtn.addEventListener('click', e => { e.stopPropagation(); sidebar.classList.contains('open') ? closeMenu() : openMenu(); });
         overlayDiv.addEventListener('click', closeMenu);
-
-        function handleResize() { if (window.innerWidth > 850) { sidebar.classList.add('open');
-                overlayDiv.classList.remove('active'); } }
+        function handleResize() { if (window.innerWidth > 850) { sidebar.classList.add('open'); overlayDiv.classList.remove('active'); } }
         window.addEventListener('resize', handleResize);
         handleResize();
 
-        // ==================== SPLASH → APP ====================
-        const splash = document.getElementById('splash'),
-            appDiv = document.getElementById('app');
+        const splash = document.getElementById('splash'), appDiv = document.getElementById('app');
         document.getElementById('enterMapBtn').addEventListener('click', () => {
             splash.classList.add('hide');
-            setTimeout(() => { splash.style.display = 'none';
-                appDiv.classList.add('visible');
-                map.invalidateSize(); if (landingLayer.getBounds().isValid()) map.fitBounds(landingLayer
-                    .getBounds().pad(0.15)); }, 500);
+            setTimeout(() => { splash.style.display = 'none'; appDiv.classList.add('visible'); map.invalidateSize(); if (landingLayer.getBounds().isValid()) map.fitBounds(landingLayer.getBounds().pad(0.15)); }, 500);
         });
-        setTimeout(() => { map.invalidateSize(); if (landingLayer.getBounds().isValid()) map.fitBounds(landingLayer
-                .getBounds().pad(0.15)); }, 400);
+        setTimeout(() => { map.invalidateSize(); if (landingLayer.getBounds().isValid()) map.fitBounds(landingLayer.getBounds().pad(0.15)); }, 400);
     })();
     </script>
 </body>
