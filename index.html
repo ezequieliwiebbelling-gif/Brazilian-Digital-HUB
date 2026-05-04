@@ -1,1100 +1,900 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <meta name="theme-color" content="#0a0f14">
-    <title>⚡ Infra.BR – Hub de Energia e Conectividade</title>
-    <meta name="description" content="Mapa interativo com parques eólicos, cabos submarinos e consumo urbano – Balneário Pinhal como hub estratégico.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-    <meta property="og:title" content="Infra.BR Hub">
-    <meta property="og:description" content="Mapa interativo de energia e conectividade no Brasil">
-    <meta property="og:type" content="website">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alarme Monitorado em Balneário Pinhal, Magistério e Cidreira | Cindapa — desde 1991</title>
+    <meta name="description" content="🛡️ Alarme monitorado 24h em Balneário Pinhal a partir de R$100/mês. APP exclusivo + Drones pós-temporal. ⭐ 4.9 no Google · 81 avaliações. Ligue: (51) 99810-8817" />
+    <meta name="keywords" content="alarme Balneário Pinhal, monitoramento 24h Pinhal RS, segurança residencial Magistério, alarme Cidreira Costa do Sol, câmera segurança litoral gaúcho, casa de veraneio monitoramento RS, Cindapa segurança desde 1991" />
+    <meta name="geo.region" content="BR-RS" />
+    <meta name="geo.placename" content="Balneário Pinhal" />
+    <meta name="geo.position" content="-30.2486;-50.2361" />
+    <meta name="ICBM" content="-30.2486, -50.2361" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Alarme Monitorado 24h em Balneário Pinhal | Cindapa Segurança" />
+    <meta property="og:description" content="Proteja sua casa ou veraneio no litoral gaúcho. Monitoramento 24h. A partir de R$100/mês. ⭐ 4.9 no Google · 81 avaliações reais." />
+    <meta property="og:url" content="https://cindapapinhal.com.br" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:image" content="https://cindapapinhal.com.br/images/foto-base-cindapa.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://cindapapinhal.com.br" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23000'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='%232563EB' font-size='20' font-weight='bold'>C</text></svg>" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"LocalBusiness","name":"Cindapa Segurança","image":"https://cindapapinhal.com.br/images/logo-cindapa-dark.png","address":{"@type":"PostalAddress","streetAddress":"Av. Nei Luiz Zang, 812","addressLocality":"Balneário Pinhal","addressRegion":"RS","addressCountry":"BR"},"geo":{"@type":"GeoCoordinates","latitude":-30.2486,"longitude":-50.2361},"url":"https://cindapapinhal.com.br","telephone":"+5551998108817","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"81"},"areaServed":[{"@type":"City","name":"Balneário Pinhal"},{"@type":"City","name":"Magistério"},{"@type":"City","name":"Cidreira"}],"serviceType":"Monitoramento de Alarme 24h"}
+    </script>
+    <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quanto custa um alarme em Balneário Pinhal?","acceptedAnswer":{"@type":"Answer","text":"Planos a partir de R$100/mês para alarme monitorado e R$150/mês com 2 câmeras HD, incluindo APP exclusivo, drones pós-temporal e gerenciamento de chaves."}},{"@type":"Question","name":"O monitoramento funciona 24 horas por dia?","acceptedAnswer":{"@type":"Answer","text":"Sim, nossa central monitora 24 horas por dia, 7 dias por semana, com equipe preparada para acionar autoridades em caso de emergência."}},{"@type":"Question","name":"A Cindapa atende Magistério e Cidreira?","acceptedAnswer":{"@type":"Answer","text":"Sim, atendemos Balneário Pinhal, Magistério e Cidreira (Costa do Sol) com a mesma qualidade, tecnologia e tempo de resposta."}},{"@type":"Question","name":"O sistema funciona sem internet ou energia elétrica?","acceptedAnswer":{"@type":"Answer","text":"Sim, o sistema conta com chip de dados 4G integrado que garante funcionamento contínuo mesmo sem internet ou em caso de queda de energia."}},{"@type":"Question","name":"Como é feita a instalação do alarme?","acceptedAnswer":{"@type":"Answer","text":"Um técnico especializado vai até seu imóvel, instala e configura todos os equipamentos sem necessidade de obras. O processo é rápido e incluso no plano."}}]}
+    </script>
     <style>
         :root {
-            --bg-dark: #0a0f14;
-            --bg-light: #f8fafc;
-            --accent: #df6d43;
-            --accent2: #e8835a;
-            --gold: #f0b846;
-            --gold-light: #f5d07a;
-            --wind: #1a9e91;
-            --cable: #3b9dc4;
-            --surface-dark: rgba(10, 15, 20, 0.94);
-            --panel-bg: rgba(12, 18, 24, 0.97);
-            --panel-border: rgba(255, 255, 255, 0.1);
-            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-            --radius-xl: 24px;
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
-            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --text-light: #e8e8e8;
-            --text-dark: #1e293b;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --warning: #f39c12;
+            --color-accent: #2563eb;
+            --color-accent-hover: #1d4ed8;
+            --color-accent-glow: #3b82f6;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --bg-primary: #0b0f1a;
+            --bg-secondary: #0f1322;
+            --bg-elevated: #141a28;
+            --bg-glass: rgba(255, 255, 255, 0.035);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #64748b;
+            --text-inverse: #0f172a;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 30px rgba(37,99,235,0.2);
+            --radius-lg: 1rem;
+            --radius-xl: 1.25rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 2rem;
+            --transition-fast: 180ms ease;
+            --transition-base: 280ms ease;
         }
-        * {
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html, body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+        html { scroll-behavior:smooth; font-size:16px; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { width: 100%; max-width: 1200px; margin:0 auto; padding:0 1.5rem; }
+        .hidden { display:none !important; }
+
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-2xl);
+            transition: all var(--transition-base);
+        }
+        .glass-card:hover {
+            border-color: rgba(37,99,235,0.35);
+            box-shadow: var(--shadow-lg), 0 0 25px rgba(37,99,235,0.12);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            min-height: 52px;
+            white-space: normal;
+            text-align: center;
+            line-height: 1.3;
+            font-family: 'Montserrat', sans-serif;
+            max-width: 100%;
+            letter-spacing: -0.01em;
+        }
+        .btn--primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(37,99,235,0.35);
+        }
+        .btn--primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            box-shadow: 0 10px 28px rgba(37,99,235,0.5);
+            transform: translateY(-2px);
+        }
+        .btn--primary:active { transform: translateY(0); }
+        .btn--secondary {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn--secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(37,99,235,0.45);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn--xl { padding:1.1rem 2.4rem; font-size:1.1rem; min-height:56px; font-weight:700; }
+        .btn--full { width:100%; max-width:400px; margin:0 auto; display:flex; }
+        .btn--light { background: #fff; color: var(--text-inverse); box-shadow: var(--shadow-md); }
+        .btn--light:hover { background: #f1f5f9; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn--outline-light { border: 2px solid rgba(255,255,255,0.45); color: #fff; background: rgba(255,255,255,0.04); backdrop-filter: blur(8px); }
+        .btn--outline-light:hover { background: rgba(255,255,255,0.12); border-color: #fff; transform: translateY(-2px); }
+
+        .header {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(11,15,26,0.82);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0.7rem 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; min-height: 68px;
+        }
+        .header__logo { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+        .header__logo-img {
+            height: clamp(42px, 6vw, 56px);
+            width: auto;
+            max-width: 220px;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 2px 8px rgba(37,99,235,0.35));
+            transition: filter var(--transition-fast);
+        }
+        .header__logo:hover .header__logo-img { filter: drop-shadow(0 4px 14px rgba(37,99,235,0.55)); }
+        .header__actions { display:flex; align-items:center; gap:0.6rem; flex-shrink: 0; }
+
+        .hero {
+            position: relative; padding: clamp(3rem, 8vw, 6rem) 1.5rem clamp(2.5rem, 6vw, 5rem);
+            text-align: center; background: #0b0f1a; overflow: hidden; isolation: isolate;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% -5%, rgba(37,99,235,0.14) 0%, transparent 60%),
+                        radial-gradient(ellipse 30% 40% at 80% 85%, rgba(37,99,235,0.06) 0%, transparent 55%);
+            z-index: 0; pointer-events: none;
+        }
+        .hero::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 120%; height: 120%;
+            background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 60%);
+            transform: translate(-50%, -50%); z-index: 0; pointer-events: none;
+        }
+        .hero__content { max-width:800px; margin:0 auto; position: relative; z-index: 1; }
+        .hero__badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #cbd5e1; padding: 0.4rem 1rem; border-radius: 2rem;
+            font-size: clamp(0.78rem, 2vw, 0.88rem); margin-bottom: 1.8rem;
+            border: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;
+        }
+        .hero__title {
+            color: #fff; font-weight: 800;
+            font-size: clamp(1.8rem, 5.5vw, 3.6rem);
+            line-height: 1.15; margin-bottom: 1.4rem; letter-spacing: -0.04em;
+            text-shadow: 0 0 80px rgba(37,99,235,0.3);
+        }
+        .hero__title-accent { color: #3b82f6; }
+        .hero__subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.12rem);
+            color: rgba(255,255,255,0.78); margin-bottom: 1.8rem;
+            max-width:580px; margin-left:auto; margin-right:auto; line-height: 1.65;
+        }
+        .hero__price-anchor {
+            display: inline-block; background: rgba(37,99,235,0.12);
+            border: 1px solid rgba(37,99,235,0.3); color: var(--text-secondary);
+            font-size: clamp(0.82rem, 2vw, 0.9rem); padding: 0.45rem 1.1rem;
+            border-radius: 2rem; margin-bottom: 1.5rem;
+        }
+        .hero__price-anchor strong { color: #ffffff; font-weight: 700; }
+        .hero__cta { display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin-bottom:1.8rem; }
+        .hero__trust { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; font-size: clamp(0.78rem, 2vw, 0.88rem); color: rgba(255,255,255,0.65); }
+
+        .garantias-faixa {
+            background: #090c14; border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.4rem 0;
+        }
+        .garantias-faixa__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 880px; margin: 0 auto; text-align: center; }
+        .garantias-faixa__item { display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
+        .garantias-faixa__icon { font-size: 1.6rem; flex-shrink: 0; }
+        .garantias-faixa__valor { display: block; font-size: clamp(0.85rem, 2vw, 0.98rem); font-weight: 700; color: #FFFFFF; line-height: 1.2; }
+        .garantias-faixa__label { display: block; font-size: 0.7rem; color: #6b7280; margin-top: 0.15rem; }
+
+        .section { padding: 5rem 0; }
+        .section--bg-secondary { background: var(--bg-secondary); }
+        .section__title {
+            font-weight: 800; font-size: clamp(1.5rem, 4vw, 2.3rem);
+            text-align: center; margin-bottom: 1rem; letter-spacing: -0.03em; line-height: 1.2;
+        }
+        .section__subtitle {
+            text-align: center; color: var(--text-secondary); margin-bottom: 2.5rem;
+            font-size: clamp(0.92rem, 2.5vw, 1.05rem); line-height: 1.6;
+            max-width: 580px; margin-left: auto; margin-right: auto;
+        }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in--visible { opacity: 1; transform: translateY(0); }
+
+        .como-funciona__grid {
+            display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+            gap: 1.2rem; align-items: center; max-width: 880px; margin: 0 auto;
+        }
+        .como-funciona__step {
+            background: var(--bg-elevated); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-2xl); padding: 1.8rem 1.2rem; text-align: center;
+            transition: all var(--transition-base); display: flex;
+            flex-direction: column; align-items: center; justify-content: flex-start; min-height: 200px;
+        }
+        .como-funciona__step:hover { border-color: rgba(37,99,235,0.4); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .como-funciona__number { font-size: 0.7rem; font-weight: 800; color: var(--color-accent); opacity: 0.55; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; display: block; }
+        .como-funciona__icon { font-size: 2.2rem; margin-bottom: 0.8rem; display: block; line-height: 1; }
+        .como-funciona__title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+        .como-funciona__text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+        .como-funciona__connector { font-size: 1.6rem; color: var(--color-accent); opacity: 0.3; font-weight: 700; flex-shrink: 0; }
+
+        .quiz-wrapper { padding:2.5rem 0; background: var(--bg-secondary); }
+        .quiz {
+            max-width:620px; margin:0 auto; padding:2rem 1.5rem;
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-2xl);
+            box-shadow:var(--shadow-lg); opacity:0; transform:translateY(20px);
+            transition: opacity 0.5s, transform 0.5s; width:100%;
+        }
+        .quiz--visible { opacity:1; transform:translateY(0); }
+        .progress { margin-bottom:1.6rem; }
+        .progress__label { display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size: 0.82rem; color:var(--text-secondary); }
+        .progress__bar { height:10px; background: var(--bg-secondary); border-radius: var(--radius-full); overflow:hidden; }
+        .progress__fill { height:100%; background:linear-gradient(90deg, #2563eb, #3b82f6); border-radius: var(--radius-full); width:0%; transition:width 0.4s; }
+        .question__title { font-weight:700; font-size:1.25rem; margin-bottom:0.6rem; }
+        .question__subtitle { color:var(--text-secondary); font-size: 0.9rem; }
+        .options { display:flex; flex-direction:column; gap:0.7rem; }
+        .option {
+            width:100%; padding:0.9rem 1.1rem;
+            background: rgba(255,255,255,0.02); backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border:1.5px solid rgba(255,255,255,0.08); border-radius:var(--radius-lg);
+            text-align:left; cursor:pointer; transition: all 0.2s;
+            font-size: 0.95rem; font-weight:500; min-height:52px;
+            display:flex; align-items:center; gap:0.7rem; color: var(--text-primary);
+        }
+        .option:hover { background: rgba(37,99,235,0.08); border-color: rgba(37,99,235,0.4); }
+        .option--selected { background: rgba(37,99,235,0.15); border-color: var(--color-accent); font-weight:600; }
+
+        .quiz-insight {
+            margin-top: 1.1rem; background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(37,99,235,0.04));
+            border: 1px solid rgba(37,99,235,0.3); border-radius: var(--radius-lg);
+            padding: 0.9rem 1.1rem 0.75rem; position: relative; overflow: hidden; animation: fadeSlideIn 0.3s ease;
+        }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .quiz-insight__bar { position: absolute; top: 0; left: 0; height: 3px; width: 100%; background: var(--color-accent); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+        .quiz-insight__text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; margin: 0; padding-top: 0.25rem; }
+
+        .result-wrapper { padding:2.5rem 0; background: var(--bg-primary); }
+        .result {
+            max-width:620px; margin:0 auto; padding:2.5rem 1.5rem;
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-2xl);
+            box-shadow:var(--shadow-lg); opacity:0; transform:scale(0.95);
+            transition: all 0.4s; text-align:center; width:100%;
+        }
+        .result--visible { opacity:1; transform:scale(1); }
+        .result__icon { font-size:3.5rem; margin-bottom:0.8rem; }
+        .result__risk { font-weight:800; font-size:1.8rem; margin-bottom:0.8rem; }
+        .result__risk--low { color: var(--color-success); }
+        .result__risk--medium { color: var(--color-warning); }
+        .result__risk--high { color: var(--color-danger); }
+        .result__description { font-size: 0.95rem; color:var(--text-secondary); margin-bottom:1.3rem; }
+        .result__recommendation-box { background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); border-left:4px solid var(--color-accent); padding:1rem; border-radius:var(--radius-lg); margin:1.3rem 0; text-align:left; }
+        .result__stats { display:flex; gap:1.5rem; justify-content:center; margin:1.3rem 0; flex-wrap:wrap; }
+        .result__stat-value { font-weight:800; font-size:1.8rem; color: var(--color-accent); }
+        .result__stat-label { font-size: 0.75rem; color: var(--text-tertiary); text-transform:uppercase; letter-spacing:0.04em; }
+        .result__cta { max-width:380px; margin:1.8rem auto 0; display:flex; flex-direction:column; gap:0.8rem; }
+        .result__urgencia { background: rgba(239,68,68,0.08); backdrop-filter: blur(8px); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius-lg); padding: 0.9rem 1.1rem; margin: 1.3rem 0; font-size: 0.88rem; text-align: left; line-height: 1.55; }
+        .result__urgencia--medium { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+        .result__urgencia--low { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.3); }
+
+        .numeros__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 880px; margin: 0 auto; text-align: center; }
+        .numeros__valor { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--color-accent); line-height: 1; margin-bottom: 0.4rem; }
+        .numeros__label { font-size: clamp(0.8rem, 2vw, 0.9rem); color: var(--text-secondary); }
+
+        .cards-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem; max-width:1000px; margin:0 auto; }
+        .card { padding: 1.8rem 1.3rem; text-align: center; }
+        .card__icon { font-size:2.2rem; margin-bottom:0.8rem; }
+        .card__title { font-weight:700; font-size: 1rem; margin-bottom:0.6rem; }
+        .card__text { color:var(--text-secondary); font-size: 0.88rem; line-height: 1.6; }
+
+        .seo-cards-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem;
+            max-width: 1000px; margin: 0 auto;
+        }
+        .seo-card {
+            background: var(--bg-glass); backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-2xl);
+            padding: 2rem 1.8rem; transition: all var(--transition-base);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .seo-card:hover {
+            border-color: rgba(37,99,235,0.35);
+            box-shadow: var(--shadow-lg), 0 0 25px rgba(37,99,235,0.12);
+            transform: translateY(-2px);
+        }
+        .seo-card__title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+        .seo-card__text { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75; }
+        @media (max-width: 768px) { .seo-cards-grid { grid-template-columns: 1fr; gap: 1.2rem; } }
+
+        .foto-institucional {
+            overflow: hidden;
+            line-height: 0;
+            display: block;
+            position: relative;
+        }
+        .foto-institucional__figure {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            display: block;
+            line-height: 0;
         }
-        body {
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            position: fixed;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            transition: background 0.3s, color 0.3s;
-        }
-        body.light {
-            background: var(--bg-light);
-            color: var(--text-dark);
-        }
-        body.light .splash {
-            background: linear-gradient(160deg, #e8f0f5 0%, #ffffff 100%);
-            color: #1e293b;
-        }
-        body.light .splash .subtitle { color: #475569; }
-        body.light .splash .splash-stat-card { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); }
-        body.light .splash .splash-stat-card .label { color: #475569; }
-        body.light .sidebar { background: rgba(255,255,255,0.92); color: #1e293b; }
-        body.light .city-dashboard { background: rgba(255,255,255,0.96); color: #1e293b; }
-        body.light .dash-city-name { color: #b96532; }
-
-        .splash {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(160deg, #060d13 0%, #0d1a24 40%, #0a141c 100%);
-            z-index: 2000;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 20px;
-            transition: opacity 0.5s, visibility 0.5s;
-            color: #eef5f9;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .splash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-        .splash-container {
+        .foto-institucional__img {
             width: 100%;
-            max-width: 960px;
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-            padding: 10px 0 40px;
+            height: 420px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            filter: brightness(0.82);
         }
-        .splash-header { text-align: center; margin-bottom: 4px; }
-        .logo-container { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .logo-svg { width: 48px; height: 48px; filter: drop-shadow(0 0 10px rgba(240,184,70,0.4)); }
-        .logo-text {
-            font-size: 2.8rem; font-weight: 900; letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #f0b846, #e8835a);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .subtitle { font-size: 1rem; font-weight: 600; opacity: 0.8; max-width: 650px; margin: 8px auto 0; line-height: 1.5; }
-        .section-label {
-            display: inline-block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 1.2px; color: var(--accent); margin-bottom: 2px; padding: 4px 12px;
-            border: 1px solid rgba(223,109,67,0.3); border-radius: 20px; align-self: flex-start;
-        }
-        .splash-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
-        .splash-stat-card {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: var(--radius-lg); padding: 16px 14px; text-align: center;
-            backdrop-filter: blur(8px); transition: transform 0.2s, background 0.2s, border-color 0.2s;
-            animation: fadeInUp 0.6s ease both;
-        }
-        .splash-stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .splash-stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .splash-stat-card:nth-child(3) { animation-delay: 0.3s; }
-        .splash-stat-card:nth-child(4) { animation-delay: 0.4s; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .splash-stat-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(240,184,70,0.3); transform: translateY(-2px); }
-        .splash-stat-card .value { font-size: 1.7rem; font-weight: 900; color: var(--gold); line-height: 1.2; }
-        .splash-stat-card .label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.75; margin-top: 4px; }
-
-        .live-consumption-dashboard {
-            background: rgba(240,184,70,0.05); border: 2px solid rgba(240,184,70,0.25);
-            border-radius: var(--radius-xl); padding: 20px 18px; text-align: center; position: relative; overflow: hidden;
-        }
-        .live-title { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; z-index: 1; position: relative; }
-        .live-pulse { display: inline-block; width: 10px; height: 10px; background: #ff6b4a; border-radius: 50%; margin-right: 6px; animation: pulseDot 1.2s ease-in-out infinite; vertical-align: middle; }
-        @keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 0 rgba(255,107,74,0.7); } 50% { box-shadow: 0 0 0 10px rgba(255,107,74,0); } }
-        .live-value-large { font-size: 2.4rem; font-weight: 900; color: var(--gold); z-index: 1; position: relative; font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
-        .live-subtitle { font-size: 0.75rem; font-weight: 600; opacity: 0.65; color: #e0e0e0; z-index: 1; position: relative; }
-
-        .splash-cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-        .splash-info-card {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-lg);
-            padding: 20px 22px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; backdrop-filter: blur(6px); animation: fadeInUp 0.6s ease both;
-        }
-        .splash-info-card:nth-child(1) { animation-delay: 0.2s; }
-        .splash-info-card:nth-child(2) { animation-delay: 0.35s; }
-        .splash-info-card:nth-child(3) { animation-delay: 0.5s; }
-        .splash-info-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(240,184,70,0.25); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-        .splash-info-card h3 { font-weight: 800; margin-bottom: 10px; color: #fff; font-size: 1.05rem; letter-spacing: 0.2px; border-left: 3px solid var(--accent); padding-left: 12px; }
-        .splash-info-card p { color: var(--gold-light); font-weight: 500; font-size: 0.88rem; line-height: 1.6; padding-left: 4px; }
-        .splash-info-card p strong { color: #fff; font-weight: 700; }
-        .card-badge { position: absolute; top: 14px; right: 16px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.3px; background: rgba(240,184,70,0.12); color: var(--gold); }
-
-        [data-tooltip] { position: relative; cursor: help; border-bottom: 1px dotted var(--gold); }
-        [data-tooltip]:hover::after {
-            content: attr(data-tooltip); position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
-            background: #1a2530; color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        .foto-institucional__caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.2rem 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.82));
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            line-height: 1.4;
+            display: block;
+            z-index: 2;
         }
 
-        .calculator-section {
-            background: rgba(240,184,70,0.04); border: 2px solid rgba(240,184,70,0.2); border-radius: var(--radius-xl); padding: 20px; backdrop-filter: blur(10px); animation: fadeInUp 0.6s ease both; animation-delay: 0.6s;
+        .equipamentos__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; max-width: 1080px; margin: 0 auto; }
+        .equip-card {
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-2xl);
+            padding: 1.6rem 1.3rem; text-align: left; transition: all var(--transition-base);
+            display: flex; flex-direction: column; gap: 0.6rem;
         }
-        .calculator-title { font-weight: 800; font-size: 1rem; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        .calc-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
-        .calc-field { flex: 1 1 150px; display: flex; flex-direction: column; gap: 4px; }
-        .calc-field label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; opacity: 0.8; }
-        .calc-field input, .calc-field select {
-            background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2); border-radius: 40px; padding: 10px 14px;
-            color: #fff; font-family: inherit; font-weight: 600; font-size: 0.85rem; width: 100%;
-        }
-        .calc-field select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23f0b846'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 12px center;
-        }
-        .calc-result { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px; background: rgba(0,0,0,0.3); border-radius: var(--radius-md); padding: 14px; }
-        .calc-result-item { flex: 1 1 120px; text-align: center; }
-        .calc-result-item .value { font-size: 1.4rem; font-weight: 900; color: var(--gold); }
-        .calc-result-item .label { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
+        .equip-card:hover { border-color: rgba(37,99,235,0.4); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .equip-card__icon { font-size: 2rem; line-height: 1; }
+        .equip-card__title { font-weight: 700; font-size: 1rem; color: var(--text-primary); line-height: 1.3; }
+        .equip-card__text { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.65; flex: 1; }
+        .equip-card__badge { display: inline-block; background: rgba(37,99,235,0.12); border: 1px solid rgba(37,99,235,0.25); color: #93c5fd; font-size: 0.68rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 2rem; letter-spacing: 0.03em; text-transform: uppercase; align-self: flex-start; margin-top: auto; }
 
-        .energy-table-section {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(240,184,70,0.2); border-radius: var(--radius-xl); padding: 20px; backdrop-filter: blur(10px); animation: fadeInUp 0.6s ease both; animation-delay: 0.65s;
+        .pricing__cards { display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; }
+        .pricing-card {
+            flex:1; min-width:250px; max-width:320px; text-align:center;
+            padding:2rem 1.5rem; background: rgba(255,255,255,0.025); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius-2xl);
+            transition: all var(--transition-base);
         }
-        .energy-table-section h3 { font-weight: 800; color: var(--gold); margin-bottom: 12px; font-size: 1rem; }
-        .energy-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-        .energy-table th { text-align: left; padding: 8px 10px; background: rgba(255,255,255,0.06); font-weight: 700; color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .energy-table td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-        .energy-table tr:hover { background: rgba(255,255,255,0.04); }
+        .pricing-card:hover { border-color: rgba(37,99,235,0.35); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .pricing-card--destaque { border: 2px solid var(--color-accent); position: relative; transform: scale(1.02); box-shadow: 0 0 35px rgba(37,99,235,0.2); }
+        .pricing-card--destaque::before { content: '⭐ Mais escolhido'; position: absolute; top: -1px; left: 50%; transform: translateX(-50%) translateY(-50%); background: var(--color-accent); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0.3rem 0.9rem; border-radius: 2rem; white-space: nowrap; letter-spacing: 0.03em; }
+        .pricing-card__title { font-weight:700; font-size:1.1rem; margin-bottom:0.8rem; }
+        .pricing-card__price { font-weight:800; font-size:2.4rem; color: var(--color-accent); margin:0.8rem 0; }
+        .pricing-card__price-unit { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+        .pricing-card__list { list-style: none; padding: 0; margin: 1.2rem 0; display: flex; flex-direction: column; gap: 0.6rem; text-align: left; }
+        .pricing-card__list li { font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.4; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .pricing-card__list li:last-child { border-bottom: none; }
 
-        /* Responsive table -> cards */
+        .city-card--principal { border-color: var(--color-accent); background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, var(--bg-elevated) 100%); }
+
+        .testimonial { padding: 1.6rem; }
+        .testimonial__stars { color:#fbbf24; margin-bottom:0.6rem; font-size:1.1rem; }
+        .testimonial__text { font-style:italic; font-size: 0.88rem; color: var(--text-secondary); margin-bottom:0.9rem; line-height:1.6; }
+        .testimonial__author { font-weight:600; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .testimonial__date { font-size: 0.75rem; color: var(--text-tertiary); }
+
+        .faq__list { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:0.7rem; }
+        .faq-item {
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius-xl); overflow:hidden;
+            transition: border-color var(--transition-fast);
+        }
+        .faq-item:hover { border-color: rgba(37,99,235,0.25); }
+        .faq-item__trigger { width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.3rem; background:none; border:none; cursor:pointer; font-weight:600; font-size: 0.95rem; color:var(--text-primary); text-align:left; }
+        .faq-item__content { max-height:0; overflow:hidden; transition:max-height 0.4s; }
+        .faq-item--open .faq-item__content { max-height:300px; }
+        .faq-item__content-inner { padding:0 1.3rem 1rem; color:var(--text-secondary); font-size: 0.88rem; line-height:1.6; }
+
+        .cta-banner { padding:3.5rem 1.5rem; text-align:center; background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(0,0,0,0.2)); }
+        .cta-banner__title { font-weight:800; font-size: clamp(1.5rem, 4vw, 2rem); color:#fff; margin-bottom:0.8rem; }
+        .cta-banner__subtitle { color:rgba(255,255,255,0.78); margin-bottom:1.8rem; font-size: clamp(0.9rem, 2.5vw, 1.05rem); }
+        .cta-banner__sub { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-tertiary); text-align: center; }
+
+        .whatsapp-float { position: fixed; bottom: 1.2rem; right: 1.2rem; z-index: 999; background: #25D366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; box-shadow: 0 4px 16px rgba(37,211,102,0.45); text-decoration: none; transition: transform 0.25s; animation: floatPulse 3s ease-in-out infinite; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @keyframes floatPulse { 0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.45); } 50% { box-shadow: 0 4px 28px rgba(37,211,102,0.65); } }
+
+        .footer { background: var(--bg-secondary); border-top:1px solid rgba(255,255,255,0.05); padding: 2.5rem 0 1.5rem; color: var(--text-tertiary); font-size: 0.85rem; }
+        .footer__grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .footer__logo { height: 34px; width: auto; opacity: 0.8; }
+        .footer__brand-text { margin-top: 0.6rem; line-height: 1.5; font-size: 0.8rem; }
+        .footer__info { display: flex; flex-direction: column; gap: 0.4rem; }
+        .footer__social { display: flex; flex-direction: column; gap: 0.4rem; }
+        .footer__social-link { color: var(--text-tertiary); text-decoration: none; transition: color 0.15s; }
+        .footer__social-link:hover { color: var(--color-accent); }
+        .footer__bottom { border-top:1px solid rgba(255,255,255,0.04); padding-top:1.2rem; text-align:center; font-size:0.78rem; }
+
+        .cta-sticky { display: none; }
+        @media (max-width: 768px) {
+            .cta-sticky {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 998;
+                background: linear-gradient(transparent, rgba(0,0,0,0.95));
+                padding: 1rem 1rem 1.25rem;
+                display: none;
+                animation: slideUp 0.3s ease;
+            }
+            @keyframes slideUp {
+                from { transform: translateY(100%); opacity: 0; }
+                to   { transform: translateY(0);    opacity: 1; }
+            }
+            .cta-sticky__btn {
+                width: 100%;
+                background: var(--color-accent);
+                color: #ffffff;
+                border: none;
+                border-radius: var(--radius-full);
+                padding: 0.95rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 700;
+                cursor: pointer;
+                min-height: 52px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root { --space-3xl: 3rem; }
+            .header { padding:0.5rem 1rem; min-height: 56px; }
+            .header__logo-img { height: clamp(36px, 5vw, 44px); max-width: 160px; }
+            .btn { padding:0.7rem 1.2rem; font-size:0.9rem; min-height:44px; }
+            .btn--xl { padding:0.9rem 1.8rem; font-size:1rem; min-height:50px; }
+            .garantias-faixa__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .garantias-faixa__item { flex-direction: column; text-align: center; gap: 0.25rem; }
+            .como-funciona__grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; gap: 0; }
+            .como-funciona__connector { display: flex; justify-content: center; transform: rotate(90deg); padding: 0.25rem 0; font-size: 1.2rem; opacity: 0.4; }
+            .como-funciona__step { min-height: auto; }
+            .equipamentos__grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing__cards { flex-direction:column; align-items:center; }
+            .pricing-card--destaque { transform: none; }
+            .seo-cards-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+            .footer__grid { grid-template-columns: 1fr; gap: 1.2rem; }
+            .whatsapp-float { bottom: 1rem; right: 0.75rem; width: 50px; height: 50px; font-size: 1.35rem; }
+            .quiz-wrapper, #quizSection { padding-bottom: 5rem; }
+            .foto-institucional__img { height: 260px; }
+            .foto-institucional__caption { font-size: 0.8rem; padding: 1rem; }
+            .equip-card, .glass-card, .card.glass-card, .quiz, .result {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
         @media (max-width: 640px) {
-            .energy-table-section { padding: 14px; }
-            .energy-table { display: block; }
-            .energy-table thead { display: none; }
-            .energy-table tbody, .energy-table tr, .energy-table td { display: block; }
-            .energy-table tr { margin-bottom: 12px; background: rgba(255,255,255,0.03); border-radius: var(--radius-md); padding: 10px; }
-            .energy-table td { border-bottom: none; padding: 4px 8px; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; }
-            .energy-table td::before { content: attr(data-label); font-weight: 700; text-transform: uppercase; font-size: 0.65rem; opacity: 0.7; margin-right: 8px; }
+            .garantias-faixa__grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; padding: 0 0.5rem; }
+            .garantias-faixa__item { flex-direction: column; text-align: center; gap: 0.4rem; }
+            .garantias-faixa__icon { font-size: 1.6rem; }
+            .quiz-insight__text { font-size: 1rem; line-height: 1.7; }
+            .quiz-insight { padding: 1rem 1rem 0.85rem; }
+            .whatsapp-float { bottom: 1rem; right: 0.75rem; width: 50px; height: 50px; font-size: 1.35rem; }
+            .quiz-wrapper, #quizSection { padding-bottom: 5rem; }
         }
 
-        .roadmap { background: rgba(255,255,255,0.03); border-radius: var(--radius-md); padding: 14px; font-size: 0.8rem; color: var(--gold-light); animation: fadeInUp 0.6s ease both; animation-delay: 0.7s; }
-        .roadmap h3 { color: #fff; font-size: 0.9rem; margin-bottom: 6px; }
-
-        .splash-btn {
-            align-self: center; background: linear-gradient(135deg, #df6d43 0%, #f0b846 100%);
-            border: none; border-radius: 60px; padding: 16px 40px; font-size: 1.1rem; font-weight: 800;
-            color: #fff; cursor: pointer; transition: all 0.35s; box-shadow: 0 8px 32px rgba(223,109,67,0.5);
-            letter-spacing: 0.5px; text-transform: uppercase; border: 2px solid rgba(255,255,255,0.2);
-            position: relative; overflow: hidden; margin-top: 8px;
-        }
-        .splash-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.6s; }
-        .splash-btn:hover { transform: scale(1.05); box-shadow: 0 12px 40px rgba(223,109,67,0.7); }
-        .splash-btn:hover::before { left: 100%; }
-        .splash-btn:active { transform: scale(0.96); }
-
-        .app { display: flex; width: 100%; height: 100%; visibility: hidden; position: relative; }
-        .app.visible { visibility: visible; }
-
-        .sidebar {
-            width: 370px; min-width: 370px; height: 100%; overflow-y: auto; padding: 20px 18px 100px;
-            backdrop-filter: blur(20px); z-index: 1000; box-shadow: 4px 0 28px rgba(0,0,0,0.3);
-            display: flex; flex-direction: column; gap: 14px;
-            background: var(--surface-dark); color: #f0f0f0; transition: transform var(--transition-smooth);
-        }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .sidebar-header h1 { font-size: 1.5rem; font-weight: 900; }
-        .sidebar-controls { display: flex; gap: 6px; }
-        .sidebar-controls button, .sidebar-controls select {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 40px;
-            padding: 7px 10px; font-weight: 700; cursor: pointer; color: #f0f0f0; font-family: inherit;
-            font-size: 0.8rem; transition: background 0.2s;
-        }
-        .sidebar-controls select {
-            appearance: none; padding-right: 24px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23f0b846'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 8px center;
-        }
-        .sidebar-controls select option { background: #1a2530; color: #f0f0f0; }
-        .sidebar-controls button:hover, .sidebar-controls select:hover { background: rgba(255,255,255,0.2); }
-
-        .search-input {
-            background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); border-radius: 60px;
-            padding: 11px 14px; font-size: 0.85rem; color: white; width: 100%; font-family: inherit; font-weight: 500;
-            transition: border-color 0.2s; flex-shrink: 0;
-        }
-        .search-input:focus { outline: none; border-color: var(--accent); }
-
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex-shrink: 0; }
-        .stat-card { background: rgba(0,0,0,0.35); border-radius: var(--radius-md); padding: 10px 8px; text-align: center; }
-        .stat-card .stat-value { font-size: 1.2rem; font-weight: 800; color: var(--gold); }
-        .stat-card .stat-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; opacity: 0.8; margin-top: 2px; }
-
-        .comparison-panel { background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 10px 12px; flex-shrink: 0; }
-        .comparison-panel .comp-title { font-weight: 800; font-size: 0.8rem; margin-bottom: 8px; color: var(--gold); }
-        .comparison-item {
-            display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem;
-            margin: 4px 0; padding: 6px 8px; border-radius: 8px; cursor: pointer; transition: background 0.2s;
-        }
-        .comparison-item:hover { background: rgba(255,255,255,0.08); }
-        .progress-bar-dual { height: 6px; background: rgba(255,255,255,0.15); border-radius: 6px; margin: 5px 0; overflow: hidden; }
-        .progress-fill-dual { height: 100%; border-radius: 6px; transition: width 0.5s; }
-
-        .tabs { display: flex; flex-wrap: wrap; gap: 5px; flex-shrink: 0; }
-        .tab-btn {
-            background: rgba(255,255,255,0.1); border: none; border-radius: 60px; padding: 8px 13px;
-            font-weight: 700; cursor: pointer; color: inherit; font-family: inherit; font-size: 0.75rem; transition: background 0.2s;
-        }
-        .tab-btn.active { background: var(--accent); color: white; }
-        .tab-panel { display: none; flex: 1; overflow-y: auto; min-height: 100px; }
-        .tab-panel.active { display: block; }
-        .list-item {
-            background: rgba(255,255,255,0.06); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: 6px;
-            cursor: pointer; font-weight: 600; border: none; color: inherit; width: 100%; text-align: left;
-            transition: background 0.2s, transform 0.15s; font-family: inherit; font-size: 0.78rem;
-        }
-        .list-item:hover { background: rgba(255,255,255,0.18); transform: translateX(4px); }
-
-        .map-container { flex: 1; position: relative; min-width: 0; }
-        #map { width: 100%; height: 100%; z-index: 1; }
-
-        .map-legend {
-            position: absolute; bottom: 20px; left: 20px;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border-radius: var(--radius-md);
-            padding: 10px 14px; font-size: 0.7rem; color: #eee; z-index: 500; font-weight: 600;
-            pointer-events: none; line-height: 1.5; transition: opacity 0.3s;
-        }
-        .map-legend.hidden { opacity: 0; pointer-events: none; }
-
-        .legend-toggle {
-            position: absolute; bottom: 20px; left: 20px; z-index: 501;
-            background: rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
-            width: 36px; height: 36px; display: none; align-items: center; justify-content: center;
-            color: #fff; font-size: 1.2rem; cursor: pointer; backdrop-filter: blur(8px);
-        }
-
-        .chip-row {
-            position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.72); backdrop-filter: blur(8px); border-radius: 60px;
-            padding: 5px 8px; display: flex; gap: 5px; z-index: 600;
-        }
-        .chip {
-            background: rgba(0,0,0,0.65); border: 1px solid rgba(255,255,255,0.22); border-radius: 40px;
-            padding: 6px 12px; font-weight: 700; color: white; cursor: pointer; font-family: inherit;
-            font-size: 0.73rem; transition: all 0.2s;
-        }
-        .chip.active { background: var(--accent); border-color: var(--accent); }
-        .chip:hover { background: rgba(255,255,255,0.18); }
-
-        .city-dashboard {
-            position: absolute; bottom: 0; left: 0; right: 0; z-index: 700;
-            background: var(--panel-bg); border-top: 1px solid var(--panel-border); backdrop-filter: blur(20px);
-            transform: translateY(100%); transition: transform var(--transition-smooth);
-            border-radius: var(--radius-xl) var(--radius-xl) 0 0; max-height: 60vh; overflow-y: auto;
-            box-shadow: var(--shadow-lg); padding: 14px 18px 22px; color: #eef5f9;
-        }
-        .city-dashboard.open { transform: translateY(0); }
-        .dash-close {
-            position: absolute; top: 10px; right: 14px; background: rgba(255,255,255,0.12);
-            border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 1.1rem;
-            cursor: pointer; color: #fff; font-weight: 700; transition: background 0.2s; z-index: 2;
-        }
-        .dash-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-right: 36px; }
-        .dash-city-name { font-size: 1.2rem; font-weight: 900; color: var(--gold); }
-        .dash-metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 8px; margin-bottom: 12px; }
-        .dash-metric-box { background: rgba(255,255,255,0.05); border-radius: var(--radius-md); padding: 10px 12px; text-align: center; }
-        .dash-metric-box .metric-value { font-size: 1.1rem; font-weight: 800; color: var(--gold); }
-        .dash-metric-box .metric-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; opacity: 0.65; }
-        .dash-section-title { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px; }
-        .dash-info-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.78rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
-        .info-label { opacity: 0.65; }
-        .info-value { font-weight: 700; color: var(--gold); }
-        .dash-progress { height: 6px; background: rgba(255,255,255,0.15); border-radius: 6px; margin: 6px 0; overflow: hidden; }
-        .dash-progress-fill { height: 100%; border-radius: 6px; transition: width 0.5s; }
-        .dash-badge { display: inline-block; background: var(--accent); color: #fff; padding: 5px 12px; border-radius: 40px; font-weight: 800; font-size: 0.75rem; margin-top: 6px; }
-        .pie-chart-container { display: flex; align-items: center; gap: 14px; margin: 10px 0; flex-wrap: wrap; justify-content: center; }
-        .pie-legend { display: flex; flex-direction: column; gap: 4px; font-size: 0.7rem; }
-        .pie-legend span { display: flex; align-items: center; gap: 6px; }
-        .pie-legend .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
-
-        .menu-toggle { display: none; position: fixed; bottom: 20px; left: 20px; z-index: 1100; background: var(--accent); border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 22px; color: white; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 999; display: none; }
-        .overlay.active { display: block; }
-
-        @media (max-width: 850px) {
-            .sidebar { position: fixed; left: 0; top: 0; width: 85%; max-width: 340px; min-width: auto; transform: translateX(-105%); border-radius: 0 var(--radius-xl) var(--radius-xl) 0; z-index: 1050; height: 100%; }
-            .sidebar.open { transform: translateX(0); }
-            .menu-toggle { display: flex; align-items: center; justify-content: center; }
-            .map-legend { display: none; }
-            .legend-toggle { display: flex; }
-        }
-        @media (max-width: 640px) {
-            .splash-header .logo-text { font-size: 2rem; }
-            .splash-stats-grid { grid-template-columns: 1fr 1fr; }
-            .splash-cards-row { grid-template-columns: 1fr; }
-            .live-value-large { font-size: 1.8rem; }
-            .calc-row { flex-direction: column; }
-            .calc-field { flex: auto; }
-            .splash-btn { padding: 14px 28px; font-size: 1rem; }
+        @media (max-width: 480px) {
+            .hero__cta { flex-direction: column; width: 100%; gap: 0.75rem; }
+            .hero__cta .btn { width: 100%; font-size: 0.95rem; padding: 0.875rem 1rem; }
+            .hero__price-anchor { font-size: 0.8rem; padding: 0.5rem 1rem; text-align: center; }
+            .hero__trust { flex-direction: column; gap: 0.4rem; align-items: center; }
+            .hero__trust span { font-size: 0.8rem; }
+            .garantias-faixa__grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+            .numeros__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .equipamentos__grid { grid-template-columns: 1fr; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .header__actions .btn { padding:0.6rem 1rem; font-size:0.82rem; }
+            .foto-institucional__img { height: 220px; }
+            .pricing-card--destaque::before { font-size: 0.7rem; padding: 0.25rem 0.875rem; top: -1px; }
         }
     </style>
 </head>
-<body class="dark">
-
-    <div id="splash" class="splash">
-        <div class="splash-container">
-            <div class="splash-header">
-                <div class="logo-container">
-                    <svg class="logo-svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f0b846"/><stop offset="100%" stop-color="#df6d43"/></linearGradient></defs><circle cx="50" cy="50" r="45" fill="none" stroke="url(#g)" stroke-width="6"/><path d="M30 60 L50 25 L70 60" fill="none" stroke="url(#g)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><line x1="50" y1="68" x2="50" y2="85" stroke="url(#g)" stroke-width="6" stroke-linecap="round"/></svg>
-                    <span class="logo-text">Infra.BR Hub</span>
-                </div>
-                <p class="subtitle" id="splashSubtitle">Plataforma interativa de monitoramento da infraestrutura energética e de conectividade do Brasil</p>
-            </div>
-            <div class="section-label" id="sectionLabel">⚡ ENERGIA EÓLICA</div>
-            <div class="splash-stats-grid">
-                <div class="splash-stat-card"><div class="value" id="splashValWind">5.930 MW</div><div class="label" id="splashLabelWind">Mapeado (13 parques)</div></div>
-                <div class="splash-stat-card"><div class="value" id="splashValCables">9</div><div class="label" id="splashLabelCables">Cabos Submarinos</div></div>
-                <div class="splash-stat-card"><div class="value" id="splashValCities">12</div><div class="label" id="splashLabelCities">Cidades Monitoradas</div></div>
-                <div class="splash-stat-card"><div class="value" id="splashValNational">33,7 GW</div><div class="label" id="splashLabelNational">Total Nacional 2024</div></div>
-            </div>
-            <div class="live-consumption-dashboard">
-                <div class="live-title"><span class="live-pulse"></span><span id="liveTitle">Consumo Residencial Brasil — Ao Vivo</span></div>
-                <div class="live-value-large" id="liveConsumptionCounter">--</div>
-                <div class="live-subtitle" id="liveSubtitle">kWh consumidos desde o início desta sessão (estimativa)</div>
-            </div>
-            <div class="splash-cards-row">
-                <div class="splash-info-card">
-                    <span class="card-badge" id="badgeWind">🌬️ Energia</span>
-                    <h3 id="cardWindTitle">Energia Eólica no Brasil</h3>
-                    <p id="cardWindText">O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional.</p>
-                </div>
-                <div class="splash-info-card">
-                    <span class="card-badge" id="badgeHubs">🔌 Conectividade</span>
-                    <h3 id="cardHubsTitle">Hubs Estratégicos</h3>
-                    <p id="cardHubsText">Cabos submarinos transformam cidades em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.</p>
-                </div>
-                <div class="splash-info-card">
-                    <span class="card-badge" id="badgeBalneario">📍 Tese Central</span>
-                    <h3 id="cardBalnearioTitle">Balneário Pinhal (RS)</h3>
-                    <p id="cardBalnearioText">Com <strong id="splashBalnearioMW">752 MW</strong> de capacidade eólica, o município gera <strong id="splashBalnearioGWh">2.174,7 GWh/ano</strong> — <strong id="splashBalnearioX">53,6</strong> vezes seu consumo residencial.</p>
-                </div>
-            </div>
-            <div class="energy-table-section">
-                <h3>📊 Capacidade Eólica e Consumo Residencial por Estado</h3>
-                <table class="energy-table" id="energyStateTable">
-                    <thead><tr><th>Estado</th><th>Eólica Total (MW)</th><th>Eólica Mapeada (MW)</th><th>População (M)</th><th>Consumo Resid. (GWh/ano)</th><th>Superávit/Déficit</th></tr></thead>
-                    <tbody id="energyStateTableBody"></tbody>
-                </table>
-            </div>
-            <div class="calculator-section">
-                <div class="calculator-title">🔧 Calculadora de Consumo &amp; Geração (Eletrotécnica)</div>
-                <div class="calc-row">
-                    <div class="calc-field"><label>Potência (W)</label><input type="number" id="calcPower" value="1500"></div>
-                    <div class="calc-field"><label>Horas / dia</label><input type="number" id="calcHours" value="8"></div>
-                    <div class="calc-field"><label>Dias / mês</label><input type="number" id="calcDays" value="30"></div>
-                    <div class="calc-field"><label>Tarifa (R$/kWh)</label><input type="number" id="calcTariff" value="0.85" step="0.01"></div>
-                    <div class="calc-field"><label>Fator de capacidade (%)</label><select id="calcStateCf"><option value="0.38">Nacional (38%)</option><option value="0.47">Maranhão (47%)</option><option value="0.419">Paraíba (41.9%)</option><option value="0.414">Piauí (41.4%)</option><option value="0.409">Bahia (40.9%)</option><option value="0.38">RN/Outros (38%)</option><option value="0.33">RS (33%)</option></select></div>
-                </div>
-                <div class="calc-result" id="calcResult">
-                    <div class="calc-result-item"><div class="value" id="calcConsumo">--</div><div class="label">kWh/mês</div></div>
-                    <div class="calc-result-item"><div class="value" id="calcCusto">--</div><div class="label">R$/mês</div></div>
-                    <div class="calc-result-item"><div class="value" id="calcPotenciaEolica">--</div><div class="label">Potência eólica necessária</div></div>
-                    <div class="calc-result-item"><div class="value" id="calcTurbinas">--</div><div class="label">Turbinas (~3 MW)</div></div>
-                </div>
-            </div>
-            <div class="roadmap">
-                <h3>🚀 Em breve</h3>
-                <p>• Previsão de geração eólica por estado em tempo real. • Alertas de capacidade e integração com dados do ONS. • Comparação lado a lado de múltiplas cidades. • Exportação de relatórios em PDF. • Versão mobile app (PWA).</p>
-            </div>
-            <button id="enterMapBtn" class="splash-btn">🌎 Explorar Mapa Interativo</button>
+<body>
+    <header class="header">
+        <div class="header__logo">
+            <img src="/images/logo-cindapa-dark.png" alt="Cindapa Segurança — Monitoramento 24h em Balneário Pinhal" class="header__logo-img" width="160" height="56" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block';">
+            <span id="logoFallback" style="display:none; font-weight:800; font-size:1.2rem; color:#fff; letter-spacing:0.02em;">CINDAPA</span>
         </div>
-    </div>
-
-    <div id="app" class="app">
-        <aside id="sidebar" class="sidebar">
-            <div class="sidebar-header">
-                <h1>⚡ Infra.BR</h1>
-                <div class="sidebar-controls">
-                    <button id="themeToggle" title="Alternar tema">☀️</button>
-                    <select id="langSelect" title="Idioma">
-                        <option value="pt">🇧🇷 PT</option>
-                        <option value="en">🇺🇸 EN</option>
-                        <option value="es">🇪🇸 ES</option>
-                    </select>
+        <div class="header__actions">
+            <a href="https://wa.me/5551998108817?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." class="btn btn--primary" target="_blank" rel="noopener noreferrer">Orçamento</a>
+        </div>
+    </header>
+    <main>
+        <section class="hero" id="hero">
+            <div class="hero__content">
+                <div class="hero__badge">⭐ 4.9 no Google · 81 avaliações · Atendendo o litoral gaúcho desde 1991</div>
+                <h1 class="hero__title">Sua casa em <span class="hero__title-accent">Balneário Pinhal</span> está segura enquanto você está longe?</h1>
+                <p class="hero__subtitle">A maioria das invasões no litoral gaúcho acontece fora da temporada — quando ninguém está olhando. A Cindapa monitora 24h, responde em até 5 minutos e avisa você em tempo real pelo APP. Atendemos também <strong>Magistério</strong> e <strong>Costa do Sol</strong>.</p>
+                <div class="hero__price-anchor">A partir de <strong>R$ 100/mês</strong> · Instalação inclusa · Sem fidelidade · Sem obra</div>
+                <div class="hero__cta">
+                    <button class="btn btn--primary btn--xl" onclick="startQuiz()">🛡️ Verificar o risco do meu imóvel — grátis</button>
+                    <a href="https://wa.me/5551998108817?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." class="btn btn--secondary btn--xl" target="_blank" rel="noopener noreferrer">💬 Falar com especialista agora</a>
+                </div>
+                <div class="hero__trust">
+                    <span>✓ Funciona sem internet</span>
+                    <span>✓ Instalação inclusa no plano</span>
+                    <span>✓ Sem obra no imóvel</span>
                 </div>
             </div>
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar...">
-            <div class="search-results" id="searchResults"></div>
-            <div class="stats-grid" id="statsGrid"></div>
-            <div class="comparison-panel">
-                <div class="comp-title" id="comparisonTitle">⚡ Matriz Energética por Estado</div>
-                <div id="stateComparisonList"></div>
-            </div>
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="wind">🌬️ Parques</button>
-                <button class="tab-btn" data-tab="cables">🌊 Cabos</button>
-                <button class="tab-btn" data-tab="landing">📍 Aterramentos</button>
-                <button class="tab-btn" data-tab="energy">⚡ Consumo</button>
-            </div>
-            <div id="tab-wind" class="tab-panel active"><div id="windList"></div></div>
-            <div id="tab-cables" class="tab-panel"><div id="cableList"></div></div>
-            <div id="tab-landing" class="tab-panel"><div id="landingList"></div></div>
-            <div id="tab-energy" class="tab-panel"><div id="energyList"></div></div>
-        </aside>
-        <div class="map-container">
-            <div id="map"></div>
-            <div class="map-legend" id="mapLegend">
-                <div class="legend-title">📖 Legenda</div>
-                <div>🟢 Parques eólicos (MW)</div>
-                <div>🔵 Aterramentos de cabos</div>
-                <div>🟠 Consumo urbano</div>
-                <div>✨ Rotas animadas de cabos</div>
-            </div>
-            <div class="legend-toggle" id="legendToggle" title="Mostrar legenda">📖</div>
-            <div class="chip-row" id="chipRow">
-                <button class="chip active" data-focus="all">🌎 Todo Brasil</button>
-                <button class="chip" data-focus="nordeste">🌵 Nordeste</button>
-                <button class="chip" data-focus="sul">❄️ Sul</button>
-            </div>
-            <div class="city-dashboard" id="cityDashboard">
-                <button class="dash-close" id="dashCloseBtn" title="Fechar painel">✕</button>
-                <div id="dashContent"></div>
+        </section>
+        <div class="garantias-faixa">
+            <div class="container">
+                <div class="garantias-faixa__grid">
+                    <div class="garantias-faixa__item"><span class="garantias-faixa__icon">⚡</span><div><strong class="garantias-faixa__valor">5 min</strong><span class="garantias-faixa__label">Tempo de resposta</span></div></div>
+                    <div class="garantias-faixa__item"><span class="garantias-faixa__icon">🛡️</span><div><strong class="garantias-faixa__valor">24h / 7 dias</strong><span class="garantias-faixa__label">Monitoramento ativo</span></div></div>
+                    <div class="garantias-faixa__item"><span class="garantias-faixa__icon">⭐</span><div><strong class="garantias-faixa__valor">4.9 no Google</strong><span class="garantias-faixa__label">81 avaliações reais</span></div></div>
+                    <div class="garantias-faixa__item"><span class="garantias-faixa__icon">📍</span><div><strong class="garantias-faixa__valor">3 cidades</strong><span class="garantias-faixa__label">Atendidas na região</span></div></div>
+                </div>
             </div>
         </div>
-    </div>
-    <button id="menuToggle" class="menu-toggle">☰</button>
-    <div id="overlay" class="overlay"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.js"></script>
+        <section class="como-funciona section section--bg-primary fade-in">
+            <div class="container">
+                <h2 class="section__title">Como funciona o monitoramento Cindapa</h2>
+                <p class="section__subtitle">Em menos de uma semana, seu imóvel está totalmente monitorado</p>
+                <div class="como-funciona__grid">
+                    <div class="como-funciona__step"><span class="como-funciona__number">PASSO 01</span><span class="como-funciona__icon">📋</span><h3 class="como-funciona__title">Avaliação gratuita</h3><p class="como-funciona__text">Faça o quiz e descubra o nível de risco do seu imóvel. Um especialista entra em contato em até 24h.</p></div>
+                    <div class="como-funciona__connector">→</div>
+                    <div class="como-funciona__step"><span class="como-funciona__number">PASSO 02</span><span class="como-funciona__icon">🔧</span><h3 class="como-funciona__title">Instalação profissional</h3><p class="como-funciona__text">Nossa equipe instala todos os equipamentos no seu imóvel. Rápido, sem obras e sem complicação.</p></div>
+                    <div class="como-funciona__connector">→</div>
+                    <div class="como-funciona__step"><span class="como-funciona__number">PASSO 03</span><span class="como-funciona__icon">🛡️</span><h3 class="como-funciona__title">Monitoramento ativo</h3><p class="como-funciona__text">Central monitora 24h. Em caso de ocorrência, nossa equipe atua conforme protocolo operacional.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="quiz-wrapper" id="quizSection">
+            <div class="container">
+                <div class="quiz hidden" id="quiz">
+                    <div class="progress">
+                        <div class="progress__label"><span>Pergunta <strong><span id="currentQuestion">1</span></strong> de <span id="totalQuestions">5</span></span><span id="progressPercentage">0%</span></div>
+                        <div class="progress__bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-live="polite"><div class="progress__fill" id="progressFill"></div></div>
+                    </div>
+                    <div class="question"><h2 class="question__title" id="questionTitle"></h2><p class="question__subtitle" id="questionSubtitle"></p></div>
+                    <div class="options" id="optionsContainer"></div>
+                    <div class="quiz-insight hidden" id="quizInsight"><div class="quiz-insight__bar" id="insightBar"></div><p class="quiz-insight__text" id="insightText"></p></div>
+                </div>
+            </div>
+        </section>
+        <section class="result-wrapper" id="resultSection" style="display:none;">
+            <div class="container">
+                <div class="result hidden" id="result">
+                    <div class="result__icon" id="resultIcon"></div>
+                    <h2 class="result__risk" id="resultRisk"></h2>
+                    <p class="result__description" id="resultDescription"></p>
+                    <div class="result__recommendation-box"><strong>📋 Recomendação:</strong> <span id="resultRecommendation"></span></div>
+                    <div class="result__stats">
+                        <div class="result__stat"><div class="result__stat-value" id="statResponseTime">Ágil</div><div class="result__stat-label">Atendimento</div></div>
+                        <div class="result__stat"><div class="result__stat-value">24/7</div><div class="result__stat-label">Monitoramento</div></div>
+                    </div>
+                    <div class="result__urgencia" id="resultUrgencia"></div>
+                    <div class="result__cta">
+                        <a href="https://wa.me/5551998108817?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." class="btn btn--primary btn--full" target="_blank" rel="noopener noreferrer">💬 Quero monitorar meu imóvel agora</a>
+                        <a href="tel:+5551998108817" class="btn btn--secondary btn--full">📞 Ligar: (51) 99810-8817</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="numeros section section--bg-secondary fade-in">
+            <div class="container">
+                <div class="numeros__grid">
+                    <div class="numeros__item"><div class="numeros__valor" data-target="17000">0</div><div class="numeros__label">Clientes no Grupo Cindapa</div></div>
+                    <div class="numeros__item"><div class="numeros__valor" data-target="34">0</div><div class="numeros__label">Anos de experiência</div></div>
+                    <div class="numeros__item"><div class="numeros__valor" data-target="250">0</div><div class="numeros__label">Municípios atendidos</div></div>
+                    <div class="numeros__item"><div class="numeros__valor" data-target="81">0</div><div class="numeros__label">Avaliações 5★ em Pinhal</div></div>
+                </div>
+            </div>
+        </section>
+        <section class="section section--bg-secondary fade-in">
+            <div class="container">
+                <h2 class="section__title">Serviços Inclusos</h2>
+                <p class="section__subtitle">Tudo incluso na mensalidade para sua tranquilidade.</p>
+                <div class="cards-grid">
+                    <div class="card glass-card"><div class="card__icon">📱</div><h3 class="card__title">APP Exclusivo Cindapa</h3><p class="card__text">Veja seu imóvel em tempo real de onde você estiver. Ative o alarme de Porto Alegre antes de chegar no verão — ou enquanto você está viajando.</p></div>
+                    <div class="card glass-card"><div class="card__icon">🚁</div><h3 class="card__title">Drones Pós-Temporal</h3><p class="card__text">Após temporais no litoral, enviamos drones para vistoriar seu imóvel e documentar danos — antes que você precise fazer a viagem até Pinhal.</p></div>
+                    <div class="card glass-card"><div class="card__icon">📋</div><h3 class="card__title">Ocorrências Documentadas</h3><p class="card__text">Toda ocorrência registrada com hora, data e fotos. Documentação completa disponível para seguro, boletim de ocorrência ou simples conferência.</p></div>
+                    <div class="card glass-card"><div class="card__icon">🔑</div><h3 class="card__title">Gerenciamento de Chaves</h3><p class="card__text">Libere acesso para o encanador, zelador ou prestador sem entregar sua chave. Monitore quem entra e sai pelo APP, de qualquer lugar.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="foto-institucional fade-in">
+            <figure class="foto-institucional__figure">
+                <img src="/images/foto-base-cindapa.jpg" alt="Fachada da Cindapa Balneário Pinhal" class="foto-institucional__img" width="1200" height="500" loading="lazy">
+                <figcaption class="foto-institucional__caption">Tecnologia e equipe especializada para monitorar você 24h por dia</figcaption>
+            </figure>
+        </section>
+        <section class="section section--bg-primary fade-in">
+            <div class="container">
+                <h2 class="section__title">Tecnologia de Monitoramento</h2>
+                <p class="section__subtitle">Equipamentos de última geração instalados por técnicos especializados. Tudo incluso no plano, sem custo adicional.</p>
+                <div class="equipamentos__grid">
+                    <div class="equip-card"><div class="equip-card__icon">🛡️</div><h3 class="equip-card__title">Central de Alarme</h3><p class="equip-card__text">Painel inteligente conectado 24h à nossa central de monitoramento via chip 4G. Funciona mesmo sem internet ou energia elétrica.</p><div class="equip-card__badge">Incluso no plano</div></div>
+                    <div class="equip-card"><div class="equip-card__icon">📡</div><h3 class="equip-card__title">Sensores de Movimento</h3><p class="equip-card__text">Detectores de alta precisão que identificam intrusos antes mesmo de entrarem no imóvel. Compatíveis com pets.</p><div class="equip-card__badge">Incluso no plano</div></div>
+                    <div class="equip-card"><div class="equip-card__icon">📸</div><h3 class="equip-card__title">Câmeras HD Noturnas</h3><p class="equip-card__text">Câmeras com visão noturna e gravação contínua. Acesse as imagens em tempo real pelo APP de qualquer lugar do mundo.</p><div class="equip-card__badge">Plano câmeras</div></div>
+                    <div class="equip-card"><div class="equip-card__icon">📱</div><h3 class="equip-card__title">APP Exclusivo Cindapa</h3><p class="equip-card__text">Ative, desative e acompanhe seu alarme pelo celular. Receba notificações instantâneas de qualquer ocorrência em tempo real.</p><div class="equip-card__badge">Incluso no plano</div></div>
+                    <div class="equip-card"><div class="equip-card__icon">🔑</div><h3 class="equip-card__title">Gerenciamento de Chaves</h3><p class="equip-card__text">Controle quem acessa seu imóvel. Libere e monitore o acesso de prestadores com segurança e rastreabilidade total.</p><div class="equip-card__badge">Incluso no plano</div></div>
+                    <div class="equip-card"><div class="equip-card__icon">🚁</div><h3 class="equip-card__title">Drones Pós-Temporal</h3><p class="equip-card__text">Após eventos climáticos, enviamos drones para vistoriar seu imóvel e documentar possíveis danos. Serviço exclusivo Cindapa.</p><div class="equip-card__badge">Diferencial exclusivo</div></div>
+                </div>
+            </div>
+        </section>
+        <section class="section section--bg-primary fade-in">
+            <div class="container">
+                <h2 class="section__title">Planos a partir de R$ 100/mês</h2>
+                <p class="section__subtitle">Incluindo todos os serviços Cindapa</p>
+                <div class="pricing__cards">
+                    <div class="pricing-card"><h3 class="pricing-card__title">Monitoramento de Alarme</h3><div class="pricing-card__price">R$100<span class="pricing-card__price-unit">/mês</span></div><ul class="pricing-card__list"><li>✓ APP Exclusivo</li><li>✓ Drones</li><li>✓ Documentação</li><li>✓ Gerenciamento de Chaves</li></ul><a href="https://wa.me/5551998108817?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." class="btn btn--primary btn--full" target="_blank" rel="noopener noreferrer">Assinar</a></div>
+                    <div class="pricing-card pricing-card--destaque"><h3 class="pricing-card__title">Alarme + 2 Câmeras</h3><div class="pricing-card__price">R$150<span class="pricing-card__price-unit">/mês</span></div><ul class="pricing-card__list"><li>✓ Tudo do plano anterior</li><li>✓ 2 Câmeras HD</li><li>✓ Visão Noturna</li><li>✓ Gravação Contínua</li></ul><a href="https://wa.me/5551998108817?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." class="btn btn--primary btn--full" target="_blank" rel="noopener noreferrer">Assinar</a></div>
+                </div>
+            </div>
+        </section>
+        <section class="section section--bg-secondary fade-in">
+            <div class="container">
+                <h2 class="section__title">Atendemos Balneário Pinhal, Magistério e Costa do Sol (Cidreira)</h2>
+                <div class="cards-grid">
+                    <div class="card glass-card city-card--principal"><h3 class="card__title" style="color:var(--color-accent);">📍 Balneário Pinhal</h3><p class="card__text">Sede da Cindapa na região. Cobertura completa em todos os bairros, com equipe local e tempo de resposta de até 5 minutos.</p></div>
+                    <div class="card glass-card"><h3 class="card__title" style="color:var(--color-accent);">📍 Magistério</h3><p class="card__text">Atendimento especializado para residências e comércios. Monitoramento 24h com a mesma tecnologia e qualidade de Balneário Pinhal.</p></div>
+                    <div class="card glass-card"><h3 class="card__title" style="color:var(--color-accent);">📍 Cidreira (Costa do Sol)</h3><p class="card__text">Proteção ideal para casas de veraneio que ficam vazias a maior parte do ano. Monitoramos 24h mesmo quando você está em outra cidade.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="section section--bg-primary fade-in">
+            <div class="container">
+                <h2 class="section__title">Quem confia na Cindapa</h2>
+                <div class="cards-grid">
+                    <div class="testimonial glass-card"><div class="testimonial__stars">★★★★★</div><p class="testimonial__text">"Tenho casa de veraneio em Balneário Pinhal e ficava preocupado o ano inteiro. Com a Cindapa consigo ver a casa pelo celular e sei que tem alguém monitorando quando não estou. O APP avisou uma tentativa de invasão em março — a equipe chegou em minutos."</p><p class="testimonial__author">— Carlos M., Balneário Pinhal</p><p class="testimonial__date">Março de 2026</p></div>
+                    <div class="testimonial glass-card"><div class="testimonial__stars">★★★★★</div><p class="testimonial__text">"Moro em Porto Alegre e tenho comércio em Magistério. Antes ficava sem dormir pensando no estabelecimento. A Cindapa instalou em um dia, sem obra nenhuma. Hoje acompanho tudo pelo celular e o atendimento é sempre rápido quando preciso."</p><p class="testimonial__author">— Roberto S., Magistério</p><p class="testimonial__date">Fevereiro de 2026</p></div>
+                    <div class="testimonial glass-card"><div class="testimonial__stars">★★★★★</div><p class="testimonial__text">"Depois que a casa do vizinho foi arrombada em Cidreira, decidi contratar a Cindapa. Em 8 meses o sistema já identificou duas situações suspeitas e a equipe agiu antes de qualquer coisa acontecer. Não fico mais preocupada fora da temporada."</p><p class="testimonial__author">— Fernanda L., Cidreira</p><p class="testimonial__date">Janeiro de 2026</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="section section--bg-secondary fade-in" id="sobre-regiao">
+            <div class="container">
+                <h2 class="section__title">Por que Balneário Pinhal precisa de monitoramento profissional?</h2>
+                <div class="seo-cards-grid">
+                    <div class="seo-card">
+                        <h3 class="seo-card__title">🏖️ O desafio das casas de veraneio no litoral gaúcho</h3>
+                        <p class="seo-card__text">Balneário Pinhal, Magistério e Costa do Sol concentram milhares de casas de veraneio que ficam vazias por até 10 meses ao ano. Imóveis desocupados no litoral gaúcho têm risco de invasão significativamente maior que residências urbanas — especialmente entre abril e novembro, quando as ruas ficam desertas e o movimento de pessoas desconhecidas é mais difícil de identificar.</p>
+                    </div>
+                    <div class="seo-card">
+                        <h3 class="seo-card__title">🛡️ Monitoramento local faz a diferença</h3>
+                        <p class="seo-card__text">Diferente de empresas de fora da região, a Cindapa atua em Balneário Pinhal desde 1991. Nossa equipe conhece cada bairro — de Magistério a Cidreira — e garante resposta em até 5 minutos com chip 4G independente de internet ou energia elétrica. São mais de 34 anos protegendo famílias no litoral norte gaúcho.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section--bg-secondary fade-in">
+            <div class="container">
+                <h2 class="section__title">Dúvidas Frequentes</h2>
+                <div class="faq__list">
+                    <div class="faq-item"><button class="faq-item__trigger" onclick="toggleFaq(this)">💰 Quanto custa um alarme em Balneário Pinhal? <span>+</span></button><div class="faq-item__content"><div class="faq-item__content-inner">Planos a partir de R$100/mês para alarme e R$150/mês com 2 câmeras, incluindo APP, drones e gerenciamento de chaves.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" onclick="toggleFaq(this)">⏰ O monitoramento funciona 24h? <span>+</span></button><div class="faq-item__content"><div class="faq-item__content-inner">Sim, nossa central monitora 24 horas por dia, 7 dias por semana.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" onclick="toggleFaq(this)">📍 Atende Magistério e Cidreira? <span>+</span></button><div class="faq-item__content"><div class="faq-item__content-inner">Sim, atendemos Balneário Pinhal, Magistério e Cidreira (Costa do Sol) com a mesma qualidade e tecnologia.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" onclick="toggleFaq(this)">📡 Funciona sem internet? <span>+</span></button><div class="faq-item__content"><div class="faq-item__content-inner">Sim, o sistema conta com chip de dados 4G integrado que garante funcionamento contínuo mesmo sem internet ou em caso de queda de energia.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" onclick="toggleFaq(this)">🔧 Como é feita a instalação do alarme? <span>+</span></button><div class="faq-item__content"><div class="faq-item__content-inner">Um técnico especializado vai até seu imóvel, instala e configura todos os equipamentos sem necessidade de obras. O processo é rápido e incluso no plano.</div></div></div>
+                </div>
+            </div>
+        </section>
+        <section class="cta-banner fade-in">
+            <h2 class="cta-banner__title">Solicite seu orçamento agora</h2>
+            <p class="cta-banner__subtitle">Fale com um especialista em Balneário Pinhal, Magistério ou Cidreira.</p>
+            <div class="hero__cta" style="justify-content:center;">
+                <a href="https://wa.me/5551998108817?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." class="btn btn--primary btn--xl" target="_blank" rel="noopener noreferrer">💬 Falar com especialista agora</a>
+            </div>
+            <p class="cta-banner__sub">Resposta em até 30 minutos no WhatsApp</p>
+        </section>
+        <div class="cta-sticky" id="ctaSticky">
+            <button class="cta-sticky__btn" onclick="startQuiz(); document.getElementById('ctaSticky').style.display='none';">🛡️ Verificar meu imóvel — grátis</button>
+        </div>
+        <a href="https://wa.me/5551998108817?text=Ol%C3%A1%2C%20vim%20do%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div><img src="/images/logo-cindapa-dark.png" alt="Cindapa" class="footer__logo" loading="lazy"><p class="footer__brand-text">Franquia autorizada Cindapa.<br>Grupo Cindapa — desde 1991.</p></div>
+                <div class="footer__info"><p>📍 Av. Nei Luiz Zang, 812 — Centro</p><p>Balneário Pinhal — RS</p><p>📞 (51) 99810-8817</p><p>Atendemos: Pinhal · Magistério · Cidreira</p></div>
+                <div class="footer__social"><a href="https://instagram.com/cindapapinhal" class="footer__social-link" target="_blank" rel="noopener noreferrer">📸 Instagram</a><a href="https://facebook.com/cindapapinhal" class="footer__social-link" target="_blank" rel="noopener noreferrer">👍 Facebook</a></div>
+            </div>
+            <div class="footer__bottom"><p>© <span id="currentYear"></span> Cindapa Balneário Pinhal — Todos os direitos reservados. Franquia Autorizada.</p></div>
+        </div>
+    </footer>
     <script>
-    (function() {
-        // Dados (mantidos integralmente)
-        const WIND_FARMS = [
-            { name: "Lagoa dos Ventos", state: "PI", lat: -8.8531, lon: -41.5597, cap: 716.5, op: "Enel Green Power" },
-            { name: "Complexo Chuí", state: "RS", lat: -33.1233, lon: -53.4458, cap: 582.8, op: "Omega Energia" },
-            { name: "Complexo Campo Largo", state: "BA", lat: -9.7629, lon: -41.3014, cap: 687.9, op: "Engie" },
-            { name: "Complexo Oitis", state: "PI/BA", lat: -8.8737, lon: -41.6339, cap: 517, op: "Neoenergia" },
-            { name: "Complexo Rio do Vento", state: "RN", lat: -5.7014, lon: -35.8522, cap: 504, op: "Casa dos Ventos" },
-            { name: "Complexo Chafariz", state: "PB", lat: -6.8444, lon: -36.0141, cap: 471.2, op: "Neoenergia" },
-            { name: "Complexo Chapada do Piauí", state: "PI", lat: -7.6348, lon: -40.9627, cap: 438, op: "ContourGlobal" },
-            { name: "Complexo Alto Sertão", state: "BA", lat: -13.8317, lon: -42.2387, cap: 438, op: "Renova Energia" },
-            { name: "Complexo Delta do Maranhão", state: "MA", lat: -2.8087, lon: -42.8599, cap: 426, op: "Omega Energia" },
-            { name: "Complexo Ventos de São Roque", state: "PI", lat: -8.8531, lon: -41.5597, cap: 396, op: "Enel Green Power" },
-            { name: "Complexo Eólico Farroupilha", state: "RS", lat: -30.2469, lon: -50.2336, cap: 570.6, op: "Sete Geração" },
-            { name: "Parque Eólico Honda Energy", state: "RS", lat: -30.2469, lon: -50.2336, cap: 31.7, op: "Honda" },
-            { name: "Complexo Eólico Osório", state: "RS", lat: -30.2469, lon: -50.2336, cap: 150, op: "AES Brasil" }
-        ];
-        const CABLES = [
-            { name: "Malbec", land: "Balneário Pinhal (RS), Rio de Janeiro (RJ), Las Toninas (Argentina)", len: 2880, year: 2025, owner: "V.tal / GlobeNet", status: "Operacional" },
-            { name: "Firmina", land: "Praia Grande (SP), Punta del Este (UY), Las Toninas (AR)", len: 14517, year: 2024, owner: "Google / Telxius", status: "Operacional" },
-            { name: "Tannat", land: "Santos (SP), Praia Grande (SP), Maldonado (UY)", len: 2000, year: 2022, owner: "Google / Antel", status: "Operacional" },
-            { name: "EllaLink", land: "Fortaleza (CE), Sines (Portugal)", len: 5900, year: 2021, owner: "EllaLink Group", status: "Operacional" },
-            { name: "Monet", land: "Santos (SP), Fortaleza (CE), Boca Raton (EUA)", len: 10000, year: 2017, owner: "Google / Algar", status: "Operacional" },
-            { name: "Seabras-1", land: "Praia Grande (SP), Wall Township (EUA)", len: 10000, year: 2017, owner: "Seaborn Networks", status: "Operacional" },
-            { name: "AMX-1", land: "Fortaleza (CE), Rio de Janeiro (RJ), San Juan (Porto Rico)", len: null, year: 2001, owner: "AMX", status: "Operacional" },
-            { name: "GlobeNet", land: "Rio de Janeiro (RJ), Fortaleza (CE), Tuckerton (EUA)", len: 23500, year: 2000, owner: "GlobeNet", status: "Operacional" },
-            { name: "Brazilian Festoon", land: "Praia Grande (SP), Rio de Janeiro (RJ), Salvador (BA), Recife (PE), Natal (RN)", len: 2552, year: 1996, owner: "Embratel", status: "Operacional" }
-        ];
-        const LANDING_POINTS = {
-            "Balneário Pinhal (RS)": [-30.2469, -50.2336], "Fortaleza (CE)": [-3.7319, -38.5267],
-            "Praia Grande (SP)": [-24.0058, -46.4024], "Rio de Janeiro (RJ)": [-22.9068, -43.1729],
-            "Santos (SP)": [-23.9537, -46.3324], "Salvador (BA)": [-12.9714, -38.5014],
-            "Recife (PE)": [-8.0578, -34.8829], "Natal (RN)": [-5.7945, -35.211],
-            "Vitória (ES)": [-20.3195, -40.3378], "Aracaju (SE)": [-10.9162, -37.0629],
-            "Maceió (AL)": [-9.6656, -35.7355], "João Pessoa (PB)": [-7.1195, -34.845]
-        };
-        const POP_EST = { "Balneário Pinhal (RS)":15413,"Fortaleza (CE)":2578483,"Praia Grande (SP)":349935,"Rio de Janeiro (RJ)":6730729,"Santos (SP)":418608,"Salvador (BA)":2564204,"Recife (PE)":1488920,"Natal (RN)":751300,"Vitória (ES)":322869,"Aracaju (SE)":630932,"Maceió (AL)":994952,"João Pessoa (PB)":833932 };
-        const BRAZIL_POPULATION = 203100000;
-        const KWH_CAPITA = 2630;
-        const CAPACITY_FACTOR_NATIONAL = 0.38;
-        const STATE_POPULATION = { "PI":3273227,"RS":10882850,"BA":14136154,"RN":3302727,"PB":4039277,"MA":6776997,"SP":44411238,"RJ":16054524,"MG":20538718,"PR":11444380,"CE":8794448 };
-        const STATE_CAPACITY_FACTOR = { "MA":0.47,"PB":0.419,"PI":0.414,"BA":0.409,"RN":0.38,"RS":0.33,"SP":0.38,"RJ":0.38,"MG":0.38,"PR":0.38,"CE":0.38 };
-        const STATE_WIND_TOTAL = { "PI":4030,"RS":1830,"BA":9310,"RN":9740,"PB":992,"MA":426,"SP":18,"RJ":28,"MG":850,"PR":38,"CE":2570 };
-        const STATE_MATRIX = {
-            "PI":{hydro:5,wind:68,solar:22,biomass:2,nuclear:0,thermal:3},
-            "RS":{hydro:45,wind:22,solar:12,biomass:8,nuclear:0,thermal:13},
-            "BA":{hydro:38,wind:35,solar:16,biomass:5,nuclear:0,thermal:6},
-            "RN":{hydro:5,wind:72,solar:14,biomass:3,nuclear:0,thermal:6},
-            "PB":{hydro:15,wind:42,solar:20,biomass:10,nuclear:0,thermal:13},
-            "MA":{hydro:30,wind:28,solar:18,biomass:8,nuclear:0,thermal:16},
-            "SP":{hydro:58,wind:1,solar:8,biomass:18,nuclear:0,thermal:15},
-            "RJ":{hydro:28,wind:2,solar:6,biomass:4,nuclear:18,thermal:42},
-            "MG":{hydro:62,wind:5,solar:18,biomass:8,nuclear:0,thermal:7},
-            "PR":{hydro:68,wind:1,solar:10,biomass:12,nuclear:0,thermal:9},
-            "CE":{hydro:10,wind:58,solar:22,biomass:4,nuclear:0,thermal:6}
-        };
-        const cityCapacityMW = {};
-        WIND_FARMS.forEach(f => {
-            Object.entries(LANDING_POINTS).forEach(([city,coords]) => {
-                if (f.lat===coords[0] && f.lon===coords[1]) cityCapacityMW[city]=(cityCapacityMW[city]||0)+f.cap;
+        (function() {
+            const WHATSAPP_NUMBER = '5551998108817';
+            const WHATSAPP_MESSAGE = 'Olá, vim do site e gostaria de um orçamento.';
+            const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+            document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.setAttribute('href', WHATSAPP_LINK));
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            function animateCounters() {
+                const counters = document.querySelectorAll('.numeros__valor');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !entry.target.dataset.done) {
+                            entry.target.dataset.done = true;
+                            const target = parseInt(entry.target.dataset.target);
+                            const duration = 2000;
+                            const step = target / (duration / 16);
+                            let current = 0;
+                            const timer = setInterval(() => {
+                                current += step;
+                                if (current >= target) { current = target; clearInterval(timer); }
+                                entry.target.textContent = Math.floor(current).toLocaleString('pt-BR') + (target >= 1000 ? '+' : '');
+                            }, 16);
+                        }
+                    });
+                }, { threshold: 0.3 });
+                counters.forEach(c => observer.observe(c));
+            }
+            animateCounters();
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('fade-in--visible'); observer.unobserve(entry.target); } });
+                }, { threshold: 0.15 });
+                observer.observe(el);
             });
-        });
-        const esc = s => String(s).replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;');
-        const fmtNum = (v,d) => Number(v).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
-        const landingStats = Object.entries(LANDING_POINTS).map(([city,coords]) => {
-            const cableCount = CABLES.filter(c=>c.land.includes(city)).length;
-            const pop = POP_EST[city]||50000;
-            const annual = pop*KWH_CAPITA/1e6;
-            return {city,lat:coords[0],lon:coords[1],cables:cableCount,pop,annual};
-        });
-        const energyCities = [...landingStats].sort((a,b)=>b.annual-a.annual);
-        const stateCapacity = {};
-        WIND_FARMS.forEach(f=>{const st=f.state.split('/')[0];stateCapacity[st]=(stateCapacity[st]||0)+f.cap;});
-        const stateConsumption = {};
-        Object.entries(STATE_POPULATION).forEach(([st,pop])=>{stateConsumption[st]=pop*KWH_CAPITA/1e6;});
 
-        const balnearioCapacidade = cityCapacityMW["Balneário Pinhal (RS)"]||0;
-        const balnearioCf = STATE_CAPACITY_FACTOR["RS"]||CAPACITY_FACTOR_NATIONAL;
-        const balnearioGeracaoAnual = balnearioCapacidade*8760*balnearioCf/1000;
-        const balnearioConsumo = (POP_EST["Balneário Pinhal (RS)"]*KWH_CAPITA)/1e6;
-        const balnearioVezes = balnearioConsumo>0?balnearioGeracaoAnual/balnearioConsumo:0;
+            const quizData = [
+                { title: 'O que você quer proteger?', subtitle: 'Cada tipo de imóvel tem necessidades específicas de proteção.', options: [ { text: '🏠 Casa residencial', score: 3, insight: '🏠 Casas são responsáveis por 67% das ocorrências de invasão no litoral gaúcho. Monitoramento profissional reduz esse risco em até 80%.' }, { text: '🏖️ Casa de veraneio', score: 5, insight: '🏖️ Casas de veraneio ficam vazias até 10 meses por ano e têm 4x mais risco de invasão. A maioria dos casos ocorre entre abril e novembro, fora da temporada.' }, { text: '🏢 Apartamento', score: 1, insight: '🏢 Apartamentos com portaria têm menor risco, mas andares baixos e garagens sem câmera ainda são pontos vulneráveis.' }, { text: '🏪 Comércio ou empresa', score: 4, insight: '🏪 Comércios são o principal alvo de arrombamento na região. 80% dos casos ocorrem à noite ou nos fins de semana, quando o local está vazio.' } ] },
+                { title: 'Em qual região fica o imóvel?', subtitle: 'A localização influencia diretamente no tempo de resposta e no nível de risco.', options: [ { text: '📍 Balneário Pinhal', score: 2, insight: '📍 Balneário Pinhal é nossa sede na região. Nossa equipe local garante resposta em até 5 minutos em qualquer bairro da cidade.' }, { text: '📍 Magistério', score: 3, insight: '📍 Magistério registrou aumento de ocorrências nos últimos 2 anos. Monitoramento profissional com equipe local faz diferença nessa região.' }, { text: '📍 Cidreira / Costa do Sol', score: 3, insight: '📍 Cidreira tem alta concentração de casas de veraneio — um dos perfis de maior risco no litoral norte gaúcho, especialmente fora da temporada.' }, { text: '📍 Outra região próxima', score: 2, insight: '📍 Atendemos toda a região do litoral norte gaúcho. Um especialista vai avaliar a cobertura exata para o seu endereço.' } ] },
+                { title: 'Quantas portas e janelas tem o imóvel?', subtitle: 'Cada entrada é um ponto de vulnerabilidade que precisa de proteção.', options: [ { text: '🚪 Até 3 (apartamento ou quitinete)', score: 1, insight: '✅ Ótimo — menos pontos a proteger facilita a instalação e mantém o custo do plano mais acessível.' }, { text: '🚪🚪 De 4 a 6 (casa padrão)', score: 2, insight: '🚪🚪 Perfil padrão de casa no litoral. Recomendamos sensores em todos os acessos principais e ao menos uma câmera externa.' }, { text: '🚪🚪🚪 7 ou mais (casa grande ou comércio)', score: 3, insight: '🚪🚪🚪 Múltiplos acessos exigem proteção perimetral completa. Nosso plano avançado cobre todos os pontos sem custo adicional por ponto.' } ] },
+                { title: 'Como está a proteção do seu imóvel hoje?', subtitle: 'Entender sua situação atual nos ajuda a recomendar o plano mais adequado.', options: [ { text: '🔐 Tenho alarme com monitoramento ativo', score: 0, insight: '✅ Você está no caminho certo. Podemos verificar se seu plano atual cobre todos os riscos específicos da sua região no litoral gaúcho.' }, { text: '⚠️ Tenho alarme mas sem monitoramento', score: 2, insight: '⚠️ Alarme sem monitoramento é como ter um cofre com a porta aberta. O barulho pode assustar, mas sem equipe respondendo, o invasor tem tempo de agir.' }, { text: '🔒 Só tranca, grade ou câmera simples', score: 3, insight: '🔒 Grades e fechaduras retardam em média 3 minutos uma invasão. Um arrombamento profissional leva menos de 2 minutos. Monitoramento 24h é a diferença.' }, { text: '🚫 Nenhuma proteção ainda', score: 4, insight: '🚫 Imóveis sem proteção são identificados como alvo mais facilmente. A instalação da Cindapa leva menos de 1 dia e não exige nenhuma obra.' } ] },
+                { title: 'Com que frequência o imóvel fica sem ninguém?', subtitle: 'Imóveis desocupados são os alvos favoritos — especialmente no litoral.', options: [ { text: '👨‍👩‍👧 Sempre tem alguém (moradia principal)', score: 1, insight: '👨‍👩‍👧 Imóveis ocupados têm menor risco de invasão. Monitoramento 24h garante proteção mesmo nos momentos em que você está em casa dormindo.' }, { text: '🌙 Fica vazio apenas à noite', score: 2, insight: '🌙 A maioria das invasões residenciais ocorre entre 22h e 5h da manhã — exatamente o período em que o imóvel está vazio e sem ninguém por perto.' }, { text: '📅 Fica vazio por dias ou semanas', score: 3, insight: '📅 Cada dia sem monitoramento é uma janela aberta para invasores que mapeiam a rotina do imóvel antes de agir. Detecção remota é essencial nesse caso.' }, { text: '🏖️ Casa de veraneio (vazia a maior parte do ano)', score: 5, insight: '🏖️ Casas de veraneio ficam vulneráveis por até 10 meses por ano. A Cindapa monitora 24h mesmo quando você está em Porto Alegre — e avisa na hora pelo APP.' } ] }
+            ];
+            let state = { currentQuestion: 0, totalScore: 0 };
 
-        const totalMW = Object.values(stateCapacity).reduce((a,b)=>a+b,0);
-        const totalCables = CABLES.length;
-        const totalCities = Object.keys(LANDING_POINTS).length;
-        const consumoBrasilAnual = BRAZIL_POPULATION*KWH_CAPITA/1e6;
-        const consumoBrasilPorMinutoKwh = (consumoBrasilAnual*1e6)/(365*24*60);
-        const consumoBrasilPorSegundoKwh = consumoBrasilPorMinutoKwh/60;
+            window.startQuiz = function() {
+                document.dispatchEvent(new Event('quizStarted'));
+                state = { currentQuestion: 0, totalScore: 0 };
+                document.getElementById('hero').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'none';
+                const quizEl = document.getElementById('quiz');
+                quizEl.classList.remove('hidden');
+                requestAnimationFrame(() => quizEl.classList.add('quiz--visible'));
+                document.getElementById('totalQuestions').textContent = quizData.length;
+                loadQuestion();
+            };
 
-        function updateSplashData() {
-            document.getElementById('splashValWind').textContent = fmtNum(totalMW,0)+' MW';
-            document.getElementById('splashValCables').textContent = totalCables;
-            document.getElementById('splashValCities').textContent = totalCities;
-            document.getElementById('splashBalnearioMW').textContent = fmtNum(balnearioCapacidade,0)+' MW';
-            document.getElementById('splashBalnearioGWh').textContent = fmtNum(balnearioGeracaoAnual,1)+' GWh/ano';
-            document.getElementById('splashBalnearioX').textContent = fmtNum(balnearioVezes,1);
-        }
-        updateSplashData();
+            function loadQuestion() {
+                const q = quizData[state.currentQuestion];
+                document.getElementById('currentQuestion').textContent = state.currentQuestion + 1;
+                const progress = ((state.currentQuestion + 1) / quizData.length) * 100;
+                document.getElementById('progressPercentage').textContent = Math.round(progress) + '%';
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.querySelector('.progress__bar').setAttribute('aria-valuenow', Math.round(progress));
+                document.getElementById('questionTitle').textContent = q.title;
+                document.getElementById('questionSubtitle').textContent = q.subtitle;
+                const container = document.getElementById('optionsContainer');
+                container.innerHTML = '';
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option';
+                    btn.textContent = opt.text;
+                    btn.addEventListener('click', function() { selectOption(opt, btn); });
+                    container.appendChild(btn);
+                });
+                setTimeout(() => { const first = container.querySelector('.option'); if (first) first.focus(); }, 100);
+            }
 
-        function buildEnergyTable() {
-            const tbody = document.getElementById('energyStateTableBody');
-            if (!tbody) return;
-            const allStates = Object.keys(STATE_POPULATION).filter(st => STATE_MATRIX[st]);
-            allStates.sort((a, b) => (STATE_WIND_TOTAL[b] || 0) - (STATE_WIND_TOTAL[a] || 0));
-            let html = '';
-            allStates.forEach(st => {
-                const windTotal = STATE_WIND_TOTAL[st] || 0;
-                const mappedCap = stateCapacity[st] || 0;
-                const pop = STATE_POPULATION[st] || 5000000;
-                const cons = stateConsumption[st] || 0;
-                const cf = STATE_CAPACITY_FACTOR[st] || CAPACITY_FACTOR_NATIONAL;
-                const gen = windTotal * 8760 * cf / 1000;
-                const surplus = cons > 0 ? ((gen - cons) / cons * 100) : 0;
-                const statusEmoji = surplus > 5 ? '🟢' : surplus > -5 ? '🟡' : '🔴';
-                html += `<tr>
-                    <td data-label="Estado"><strong>${st}</strong></td>
-                    <td data-label="Eólica Total">${fmtNum(windTotal, 0)} MW</td>
-                    <td data-label="Eólica Mapeada">${mappedCap > 0 ? fmtNum(mappedCap, 0)+' MW' : '—'}</td>
-                    <td data-label="População">${(pop/1e6).toFixed(1)} M</td>
-                    <td data-label="Consumo">${fmtNum(cons, 0)} GWh</td>
-                    <td data-label="Balanço">${statusEmoji} ${surplus > 0 ? '+' : ''}${surplus.toFixed(1)}%</td>
-                </tr>`;
-            });
-            tbody.innerHTML = html;
-        }
-        buildEnergyTable();
-
-        let accumulatedKwh=0;
-        const startTime=Date.now();
-        const liveCounter=document.getElementById('liveConsumptionCounter');
-        function updateLiveCounter(){
-            const elapsed=(Date.now()-startTime)/1000;
-            accumulatedKwh=consumoBrasilPorSegundoKwh*elapsed;
-            liveCounter.textContent=fmtNum(accumulatedKwh,0)+' kWh';
-            requestAnimationFrame(()=>setTimeout(updateLiveCounter,950));
-        }
-        updateLiveCounter();
-
-        function updateCalculator() {
-            const power = parseFloat(document.getElementById('calcPower').value)||0;
-            const hours = parseFloat(document.getElementById('calcHours').value)||0;
-            const days = parseFloat(document.getElementById('calcDays').value)||0;
-            const tariff = parseFloat(document.getElementById('calcTariff').value)||0;
-            const cf = parseFloat(document.getElementById('calcStateCf').value)||0.38;
-            const consumoMensal = (power*hours*days)/1000;
-            const custo = consumoMensal*tariff;
-            const potenciaEolicaNecessaria = consumoMensal/(30*24*cf);
-            const turbinas = Math.ceil(potenciaEolicaNecessaria/3000);
-            document.getElementById('calcConsumo').textContent = fmtNum(consumoMensal,1)+' kWh';
-            document.getElementById('calcCusto').textContent = 'R$ '+fmtNum(custo,2);
-            document.getElementById('calcPotenciaEolica').textContent = fmtNum(potenciaEolicaNecessaria,2)+' kW';
-            document.getElementById('calcTurbinas').textContent = turbinas+' turbinas (~3 MW)';
-        }
-        document.getElementById('calcPower').addEventListener('input',updateCalculator);
-        document.getElementById('calcHours').addEventListener('input',updateCalculator);
-        document.getElementById('calcDays').addEventListener('input',updateCalculator);
-        document.getElementById('calcTariff').addEventListener('input',updateCalculator);
-        document.getElementById('calcStateCf').addEventListener('change',updateCalculator);
-        updateCalculator();
-
-        // Mapa com globo completo (worldCopyJump para navegação contínua)
-        const map = L.map('map', {
-            zoomControl: true,
-            zoomAnimation: true,
-            worldCopyJump: true,
-            minZoom: 2,
-            maxBounds: [[-90, -180], [90, 180]],
-            maxBoundsViscosity: 1.0
-        }).setView([-14.2, -51.9], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors',
-            noWrap: false
-        }).addTo(map);
-
-        const windLayer = L.featureGroup();
-        const landingLayer = L.featureGroup();
-        const energyLayer = L.featureGroup();
-        const cableLineLayer = L.featureGroup();
-        const markers = {wind:[],landing:[],energy:[]};
-        const searchable = [];
-        const searchKeySet = new Set();
-
-        function precomputeMetrics(annualGwh){return {annual:annualGwh,monthly:annualGwh/12,dailyMwh:(annualGwh/365)*1000,minuteKwh:(annualGwh/(365*24*60))*1e6};}
-        function getCityStatus(cityName){
-            const localCap=cityCapacityMW[cityName]||0;
-            const stateMatch=cityName.match(/\(([A-Z]{2})\)/);
-            const state=stateMatch?stateMatch[1]:'';
-            const cf=STATE_CAPACITY_FACTOR[state]||CAPACITY_FACTOR_NATIONAL;
-            const gen=localCap*8760*cf/1000;
-            const cons=(POP_EST[cityName]*KWH_CAPITA)/1e6;
-            if(!localCap||cons===0) return 'neutral';
-            return gen>cons?'surplus':'deficit';
-        }
-
-        WIND_FARMS.forEach(f=>{
-            const rad=Math.max(6,Math.min(22,f.cap/45));
-            const m=L.circleMarker([f.lat,f.lon],{radius:rad,color:'#fff',weight:1.8,fillColor:'#12766c',fillOpacity:0.85});
-            m.bindPopup(`<div style="padding:6px;"><b>${esc(f.name)}</b><hr style="margin:4px 0;border-color:rgba(255,255,255,0.2);"><div>⚡ ${fmtNum(f.cap,1)} MW</div><div>📍 ${f.state}</div><div>🏢 ${esc(f.op)}</div></div>`);
-            m.bindTooltip(`${f.name} | ${fmtNum(f.cap,1)} MW`,{sticky:true});
-            m.on('click',(e)=>{L.DomEvent.stopPropagation(e);openCityDashboardForWind(f);});
-            m.addTo(windLayer);
-            markers.wind.push({m,item:f});
-            const key=f.name+f.lat+f.lon;
-            if(!searchKeySet.has(key)){searchKeySet.add(key);searchable.push({title:f.name,type:'Parque',meta:`${f.state} · ${f.cap} MW`,lat:f.lat,lon:f.lon,marker:m});}
-        });
-
-        landingStats.forEach(p=>{
-            const status=getCityStatus(p.city);
-            const rad=8+p.cables*1.2;
-            const m=L.circleMarker([p.lat,p.lon],{radius:rad,color:'#3b9dc4',weight:2.5,fillColor:'#3b9dc4',fillOpacity:0.7});
-            m.bindTooltip(`${p.city} | ${p.cables} cabos | ${status==='surplus'?'⬆️ Superávit':status==='deficit'?'⬇️ Déficit':'⚖️ Neutro'}`,{sticky:true});
-            m.on('click',(e)=>{L.DomEvent.stopPropagation(e);openCityDashboard(p.city);});
-            m.addTo(landingLayer);
-            markers.landing.push({m,item:p});
-            const key=p.city+p.lat+p.lon;
-            if(!searchKeySet.has(key)){searchKeySet.add(key);searchable.push({title:p.city,type:'Aterramento',meta:`${p.cables} cabos`,lat:p.lat,lon:p.lon,marker:m});}
-        });
-
-        energyCities.forEach(c=>{
-            const rad=Math.max(10,Math.min(26,8+c.annual/700));
-            const m=L.circleMarker([c.lat,c.lon],{radius:rad,color:'#d4854a',weight:2,dashArray:'4 4',fillColor:'#d4854a',fillOpacity:0.2});
-            m.bindTooltip(`${c.city} | ${fmtNum(c.annual,1)} GWh/ano`,{sticky:true});
-            m.on('click',(e)=>{L.DomEvent.stopPropagation(e);openCityDashboard(c.city);});
-            m.addTo(energyLayer);
-            markers.energy.push({m,item:c});
-            const key=c.city+c.lat+c.lon;
-            if(!searchKeySet.has(key)){searchKeySet.add(key);searchable.push({title:c.city,type:'Consumo',meta:fmtNum(c.annual,1)+' GWh/ano',lat:c.lat,lon:c.lon,marker:m});}
-        });
-
-        CABLES.forEach(cable=>{
-            const cities=cable.land.split(',').map(s=>s.trim()).filter(c=>LANDING_POINTS[c]);
-            const coords=cities.map(c=>LANDING_POINTS[c]).filter(c=>c);
-            if(coords.length>=2) L.polyline.antPath(coords,{color:'#ffaa44',weight:2.5,delay:300,dashArray:[10,20],pulseColor:'#fff'}).addTo(cableLineLayer);
-        });
-
-        windLayer.addTo(map); landingLayer.addTo(map); energyLayer.addTo(map); cableLineLayer.addTo(map);
-        L.control.layers(null,{"🌬️ Parques eólicos":windLayer,"📍 Aterramentos":landingLayer,"⚡ Consumo urbano":energyLayer,"✨ Rotas de cabos":cableLineLayer},{position:'topright',collapsed:false}).addTo(map);
-
-        const defaultVisibility={wind:true,landing:true,energy:true,cables:true};
-        const savedVisibility=(()=>{try{return JSON.parse(localStorage.getItem('infraBrLayersV8'))||defaultVisibility;}catch{return defaultVisibility;}})();
-        if(!savedVisibility.wind) map.removeLayer(windLayer);
-        if(!savedVisibility.landing) map.removeLayer(landingLayer);
-        if(!savedVisibility.energy) map.removeLayer(energyLayer);
-        if(!savedVisibility.cables) map.removeLayer(cableLineLayer);
-        function saveLayerState(){localStorage.setItem('infraBrLayersV8',JSON.stringify({wind:map.hasLayer(windLayer),landing:map.hasLayer(landingLayer),energy:map.hasLayer(energyLayer),cables:map.hasLayer(cableLineLayer)}));}
-        map.on('overlayadd',saveLayerState); map.on('overlayremove',saveLayerState);
-
-        // Legenda toggle para mobile
-        const legendEl = document.getElementById('mapLegend');
-        const legendToggle = document.getElementById('legendToggle');
-        legendToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            legendEl.classList.toggle('hidden');
-            this.textContent = legendEl.classList.contains('hidden') ? '📖' : '✕';
-        });
-        if (window.innerWidth <= 850) {
-            legendEl.classList.add('hidden');
-            legendToggle.style.display = 'flex';
-        }
-        window.addEventListener('resize', () => {
-            if (window.innerWidth <= 850) {
-                legendToggle.style.display = 'flex';
-                if (!legendEl.classList.contains('hidden')) {
-                    legendEl.classList.add('hidden');
-                    legendToggle.textContent = '📖';
+            function selectOption(opt, btn) {
+                btn.classList.add('option--selected');
+                document.querySelectorAll('.option').forEach(b => b.disabled = true);
+                state.totalScore += opt.score;
+                if (opt.insight) {
+                    const insightEl = document.getElementById('quizInsight');
+                    const insightText = document.getElementById('insightText');
+                    const insightBar = document.getElementById('insightBar');
+                    insightText.textContent = opt.insight;
+                    insightEl.classList.remove('hidden');
+                    insightBar.style.transition = 'none';
+                    insightBar.style.width = '100%';
+                    requestAnimationFrame(() => { insightBar.style.transition = 'width 3.6s linear'; insightBar.style.width = '0%'; });
+                    setTimeout(() => { insightEl.classList.add('hidden'); state.currentQuestion++; state.currentQuestion < quizData.length ? loadQuestion() : showResult(); }, 3800);
+                } else {
+                    setTimeout(() => { state.currentQuestion++; state.currentQuestion < quizData.length ? loadQuestion() : showResult(); }, 400);
                 }
-            } else {
-                legendToggle.style.display = 'none';
-                legendEl.classList.remove('hidden');
             }
-        });
 
-        const cityDashboard=document.getElementById('cityDashboard');
-        const dashContent=document.getElementById('dashContent');
-        const dashCloseBtn=document.getElementById('dashCloseBtn');
-
-        function drawPieChart(canvasId,matrix){
-            const canvas=document.getElementById(canvasId);
-            if(!canvas) return;
-            const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,r=Math.min(cx,cy)-4;
-            ctx.clearRect(0,0,w,h);
-            const colors={hydro:'#3b9dc4',wind:'#1a9e91',solar:'#f0b846',biomass:'#2ecc71',nuclear:'#e74c3c',thermal:'#b0b8c1'};
-            let startAngle=-Math.PI/2;
-            Object.entries(matrix).forEach(([key,val])=>{
-                if(val<=0) return;
-                const sliceAngle=(val/100)*2*Math.PI;
-                ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,startAngle,startAngle+sliceAngle); ctx.closePath();
-                ctx.fillStyle=colors[key]||'#888'; ctx.fill(); ctx.strokeStyle='#0a0f14'; ctx.lineWidth=1; ctx.stroke();
-                const midAngle=startAngle+sliceAngle/2;
-                const labelR=r*0.65;
-                const lx=cx+Math.cos(midAngle)*labelR,ly=cy+Math.sin(midAngle)*labelR;
-                if(val>8){ctx.fillStyle='#fff';ctx.font='bold 9px Montserrat';ctx.textAlign='center';ctx.fillText(val+'%',lx,ly);}
-                startAngle+=sliceAngle;
-            });
-        }
-
-        function openStateMatrixDashboard(state){
-            const matrix=STATE_MATRIX[state];
-            const windTotal=STATE_WIND_TOTAL[state]||0;
-            const popState=STATE_POPULATION[state]||5000000;
-            const consState=popState*KWH_CAPITA/1e6;
-            const metrics=precomputeMetrics(consState);
-            const mappedCap=stateCapacity[state]||0;
-            const colors={hydro:'#3b9dc4',wind:'#1a9e91',solar:'#f0b846',biomass:'#2ecc71',nuclear:'#e74c3c',thermal:'#b0b8c1'};
-            const labels={hydro:'Hidrelétrica',wind:'Eólica',solar:'Solar',biomass:'Biomassa',nuclear:'Nuclear',thermal:'Térmica'};
-            let legendHtml='';
-            Object.entries(matrix).forEach(([k,v])=>{if(v>0) legendHtml+=`<span><span class="dot" style="background:${colors[k]}"></span> ${labels[k]}: <strong>${v}%</strong></span>`;});
-            dashContent.innerHTML=`
-            <div class="dash-header"><div class="dash-icon">🗺️</div><div><div class="dash-city-name">${state} — Matriz Energética</div><div style="font-size:0.75rem;opacity:0.65;">Pop. ${fmtNum(popState,0)} hab. · Consumo resid. ${fmtNum(consState,0)} GWh/ano</div></div></div>
-            <div class="dash-section-title">📊 Consumo Residencial Estimado</div>
-            <div class="dash-metrics-row">
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.annual,1)} GWh</div><div class="metric-label">Anual</div></div>
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.monthly,1)} GWh</div><div class="metric-label">Mensal</div></div>
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.dailyMwh,0)} MWh</div><div class="metric-label">Diário</div></div>
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.minuteKwh,0)} kWh</div><div class="metric-label">Por minuto</div></div>
-            </div>
-            <div class="dash-section-title">🥧 Matriz Elétrica (% da capacidade instalada)</div>
-            <div class="pie-chart-container"><canvas id="pieChartCanvas" width="160" height="160"></canvas><div class="pie-legend">${legendHtml}</div></div>
-            <div class="dash-info-row"><span class="info-label">⚡ Eólica total no estado</span><span class="info-value">${fmtNum(windTotal,0)} MW (real)</span></div>
-            <div class="dash-info-row"><span class="info-label">⚡ Eólica mapeada</span><span class="info-value">${fmtNum(mappedCap,0)} MW (13 parques)</span></div>
-            `;
-            cityDashboard.classList.add('open');
-            setTimeout(()=>drawPieChart('pieChartCanvas',matrix),200);
-        }
-
-        function openCityDashboard(cityName){
-            const landing=landingStats.find(l=>l.city===cityName);
-            const energy=energyCities.find(e=>e.city===cityName);
-            const cityData=landing||energy;
-            if(!cityData) return;
-            const metrics=precomputeMetrics(cityData.annual);
-            const stateMatch=cityName.match(/\(([A-Z]{2})\)/);
-            const state=stateMatch?stateMatch[1]:'';
-            const stateWindCap=STATE_WIND_TOTAL[state]||(stateCapacity[state]||0);
-            const localCap=cityCapacityMW[cityName]||0;
-            const cf=STATE_CAPACITY_FACTOR[state]||CAPACITY_FACTOR_NATIONAL;
-            const localGenGwh=localCap*8760*cf/1000;
-            const excessPercLocal=metrics.annual>0?(localGenGwh/metrics.annual)*100:0;
-            const isBalneario=cityName==="Balneário Pinhal (RS)";
-            const cablesList=CABLES.filter(c=>c.land.includes(cityName));
-            const status=getCityStatus(cityName);
-            const statusText=status==='surplus'?'⬆️ Superávit':status==='deficit'?'⬇️ Déficit':'⚖️ Neutro';
-            const statusBadge=status==='surplus'?'🟢':status==='deficit'?'🔴':'🟡';
-            dashContent.innerHTML=`
-            <div class="dash-header"><div class="dash-icon">🏙️</div><div><div class="dash-city-name">${statusBadge} ${esc(cityName)} <span style="font-size:0.7rem;opacity:0.7;">(${statusText})</span></div><div style="font-size:0.75rem;opacity:0.65;">${state?'Estado: '+state:''} · Pop. IBGE: ${fmtNum(cityData.pop,0)} hab.</div></div></div>
-            <div class="dash-section-title">📊 Consumo Residencial Estimado</div>
-            <div class="dash-metrics-row">
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.annual,1)} GWh</div><div class="metric-label">Anual</div></div>
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.monthly,1)} GWh</div><div class="metric-label">Mensal</div></div>
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.dailyMwh,0)} MWh</div><div class="metric-label">Diário</div></div>
-                <div class="dash-metric-box"><div class="metric-value">${fmtNum(metrics.minuteKwh,0)} kWh</div><div class="metric-label">Por minuto</div></div>
-            </div>
-            <div class="dash-section-title">⚡ Energia Eólica</div>
-            <div class="dash-info-row"><span class="info-label">Capacidade no município</span><span class="info-value">${localCap>0?fmtNum(localCap,1)+' MW':'—'}</span></div>
-            <div class="dash-info-row"><span class="info-label">Geração local estimada (CF ${(cf*100).toFixed(0)}%)</span><span class="info-value">${localCap>0?fmtNum(localGenGwh,1)+' GWh/ano':'—'}</span></div>
-            <div class="dash-info-row"><span class="info-label">Capacidade eólica do estado (${state})</span><span class="info-value">${fmtNum(stateWindCap,0)} MW</span></div>
-            ${localCap>0?`<div class="dash-progress"><div class="dash-progress-fill" style="width:${Math.min(100,excessPercLocal)}%;background:${excessPercLocal>=100?'#2ecc71':'#e74c3c'}"></div></div><div class="dash-info-row"><span class="info-label">Produção local / Consumo</span><span class="info-value">${excessPercLocal.toFixed(1)}%</span></div>`:''}
-            ${isBalneario?`<div class="dash-badge">✨ Gera ${fmtNum(balnearioVezes,1)}× o próprio consumo residencial — Hub exportador</div>`:''}
-            <div class="dash-section-title" style="margin-top:12px;">🔌 Conectividade Submarina</div>
-            <div class="dash-info-row"><span class="info-label">Cabos que aterram aqui</span><span class="info-value">${cablesList.length}</span></div>
-            ${cablesList.length>0?cablesList.map(c=>`<div class="dash-info-row"><span class="info-label">🔗 ${esc(c.name)} ${c.status==='Em construção'?'🚧':'✅'}</span><span class="info-value">${c.len?fmtNum(c.len,0)+' km':'N/A'} · ${c.owner} · ${c.status}</span></div>`).join(''):'<div class="dash-info-row"><span class="info-label">Nenhum cabo mapeado</span><span class="info-value">—</span></div>'}
-            `;
-            cityDashboard.classList.add('open');
-            map.flyTo([cityData.lat,cityData.lon],9,{animate:true,duration:0.6});
-        }
-
-        function openCityDashboardForWind(farm){
-            const state=farm.state.split('/')[0];
-            const cf=STATE_CAPACITY_FACTOR[state]||CAPACITY_FACTOR_NATIONAL;
-            const genGwh=farm.cap*8760*cf/1000;
-            const popState=STATE_POPULATION[state]||5000000;
-            const consState=popState*KWH_CAPITA/1e6;
-            const excessPercState=consState>0?(genGwh/consState)*100:0;
-            const windTotal=STATE_WIND_TOTAL[state]||0;
-            document.getElementById('dashContent').innerHTML=`
-            <div class="dash-header"><div class="dash-icon">🌬️</div><div><div class="dash-city-name">${esc(farm.name)}</div><div style="font-size:0.75rem;opacity:0.65;">${farm.state} · ${fmtNum(farm.cap,1)} MW</div></div></div>
-            <div class="dash-section-title">⚡ Dados do Parque</div>
-            <div class="dash-metrics-row">
-              <div class="dash-metric-box"><div class="metric-value">${fmtNum(farm.cap,1)} MW</div><div class="metric-label">Capacidade</div></div>
-              <div class="dash-metric-box"><div class="metric-value">${fmtNum(genGwh,1)} GWh/ano</div><div class="metric-label">Geração est. (CF ${(cf*100).toFixed(0)}%)</div></div>
-            </div>
-            <div class="dash-info-row"><span class="info-label">Operador</span><span class="info-value">${esc(farm.op)}</span></div>
-            <div class="dash-info-row"><span class="info-label">Estado</span><span class="info-value">${state} (pop. ${fmtNum(popState,0)} hab.)</span></div>
-            <div class="dash-info-row"><span class="info-label">Eólica total do estado</span><span class="info-value">${fmtNum(windTotal,0)} MW</span></div>
-            <div class="dash-info-row"><span class="info-label">Consumo residencial do estado</span><span class="info-value">${fmtNum(consState,1)} GWh/ano</span></div>
-            <div class="dash-progress"><div class="dash-progress-fill" style="width:${Math.min(100,excessPercState)}%;background:${excessPercState>=100?'#2ecc71':'#e74c3c'}"></div></div>
-            <div class="dash-info-row"><span class="info-label">Geração parque / Consumo estado</span><span class="info-value">${excessPercState.toFixed(2)}%</span></div>
-          `;
-            cityDashboard.classList.add('open');
-            map.flyTo([farm.lat,farm.lon],10,{animate:true,duration:0.6});
-        }
-
-        function closeCityDashboard(){cityDashboard.classList.remove('open');}
-        dashCloseBtn.addEventListener('click',closeCityDashboard);
-        document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&cityDashboard.classList.contains('open')) closeCityDashboard();});
-
-        function focusCityInDashboard(cityName){const landing=landingStats.find(l=>l.city===cityName);if(landing) openCityDashboard(cityName);}
-        function attachList(containerId,items,titleFn,metaFn,onClickFn){
-            const div=document.getElementById(containerId);
-            if(!div) return;
-            div.innerHTML=items.map((item,i)=>`<button class="list-item"><b>${esc(titleFn(item))}</b><br><small>${esc(metaFn(item))}</small></button>`).join('');
-            div.querySelectorAll('.list-item').forEach((btn,i)=>btn.addEventListener('click',()=>onClickFn(items[i])));
-        }
-        attachList('windList',WIND_FARMS,f=>f.name,f=>`${f.state} · ${f.cap} MW`,f=>{openCityDashboardForWind(f);});
-        attachList('cableList',CABLES,c=>c.name,c=>`${c.year||'N/A'} · ${c.owner} · ${c.status}`,c=>{const first=c.land.split(',')[0].trim();const pt=landingStats.find(l=>l.city===first);if(pt)focusCityInDashboard(pt.city);else map.flyTo([-14,-51],5);});
-        attachList('landingList',landingStats,l=>l.city,l=>`${l.cables} cabos · ${fmtNum(l.annual,1)} GWh/ano`,p=>focusCityInDashboard(p.city));
-        attachList('energyList',energyCities,e=>e.city,e=>fmtNum(e.annual,1)+' GWh/ano',e=>focusCityInDashboard(e.city));
-
-        let searchTimer;
-        function performSearch(q){
-            const term=q.trim().toLowerCase();
-            const container=document.getElementById('searchResults');
-            if(!term){container.innerHTML='';return;}
-            const matches=searchable.filter(s=>s.title.toLowerCase().includes(term)||s.meta.toLowerCase().includes(term)).slice(0,6);
-            if(!matches.length){container.innerHTML='<div style="padding:8px;opacity:0.6;">Nada encontrado</div>';return;}
-            container.innerHTML=matches.map(m=>`<button class="list-item"><b>${esc(m.title)}</b> <small>${esc(m.type)} · ${esc(m.meta)}</small></button>`).join('');
-            container.querySelectorAll('.list-item').forEach((btn,i)=>btn.addEventListener('click',()=>{
-                const e=matches[i];
-                if(e.type==='Consumo'||e.type==='Aterramento') focusCityInDashboard(e.title);
-                else if(e.type==='Parque'){const farm=WIND_FARMS.find(f=>f.name===e.title);if(farm) openCityDashboardForWind(farm);}
-                container.innerHTML='';document.getElementById('searchInput').value='';
-            }));
-        }
-        document.getElementById('searchInput').addEventListener('input',e=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>performSearch(e.target.value),250);});
-
-        document.querySelectorAll('.tab-btn').forEach(btn=>btn.addEventListener('click',()=>{
-            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-            document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
-        }));
-
-        const focusMap={all:()=>map.fitBounds(landingLayer.getBounds().isValid()?landingLayer.getBounds().pad(0.15):[[-33,-74],[5,-34]]),nordeste:()=>map.flyTo([-7.4,-38.8],6),sul:()=>map.flyTo([-29.8,-51.2],6)};
-        document.querySelectorAll('.chip').forEach(chip=>chip.addEventListener('click',function(){
-            document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-            this.classList.add('active');
-            if(focusMap[this.dataset.focus]) focusMap[this.dataset.focus]();
-        }));
-
-        function updateStatCards(){
-            document.getElementById('statsGrid').innerHTML=`
-            <div class="stat-card"><div class="stat-value">${fmtNum(totalMW,0)} MW</div><div class="stat-label" data-i18n-stats="wind_capacity">Eólica mapeada</div></div>
-            <div class="stat-card"><div class="stat-value">${totalCables}</div><div class="stat-label" data-i18n-stats="intl_cables">Cabos submarinos</div></div>
-            <div class="stat-card"><div class="stat-value">${totalCities}</div><div class="stat-label" data-i18n-stats="landings_br">Aterramentos BR</div></div>
-            <div class="stat-card"><div class="stat-value">${fmtNum(consumoBrasilPorMinutoKwh,0)}</div><div class="stat-label" data-i18n-stats="br_min_consumption">kWh/min BR</div></div>
-          `;
-        }
-        updateStatCards();
-
-        function renderComparison(){
-            let html='';
-            const allStates=Object.keys(STATE_POPULATION).filter(st=>STATE_MATRIX[st]);
-            allStates.sort((a,b)=>(STATE_WIND_TOTAL[b]||0)-(STATE_WIND_TOTAL[a]||0));
-            allStates.forEach(st=>{
-                const windTotal=STATE_WIND_TOTAL[st]||0;
-                const cons=stateConsumption[st]||0;
-                const mappedCap=stateCapacity[st]||0;
-                html+=`
-              <div class="comparison-item" onclick="document.__openMatrix('${st}')" title="Clique para ver matriz energética de ${st}">
-                <span>${st}</span><span><strong>${fmtNum(windTotal,0)} MW</strong> / ${fmtNum(cons,0)} GWh</span>
-              </div>
-              <div class="progress-bar-dual"><div class="progress-fill-dual" style="width:${Math.min(100,(mappedCap/Math.max(windTotal,1))*100)}%; background:#3b9dc4;"></div></div>
-              <div style="font-size:0.6rem;opacity:0.7;margin-bottom:4px;">Mapeado: ${fmtNum(mappedCap,0)} MW de ${fmtNum(windTotal,0)} MW total</div>
-            `;
-            });
-            document.getElementById('stateComparisonList').innerHTML=html||'<div style="opacity:0.6;">Sem dados</div>';
-            document.__openMatrix=function(st){openStateMatrixDashboard(st);};
-        }
-        renderComparison();
-
-        // Tema
-        const themeToggle=document.getElementById('themeToggle');
-        let isDark=localStorage.getItem('theme')==='dark' || !localStorage.getItem('theme');
-        function applyTheme(dark){
-            if(dark){
-                document.body.classList.add('dark');
-                document.body.classList.remove('light');
-                themeToggle.textContent='☀️';
-            } else {
-                document.body.classList.add('light');
-                document.body.classList.remove('dark');
-                themeToggle.textContent='🌙';
+            function showResult() {
+                document.getElementById('quiz').classList.remove('quiz--visible');
+                setTimeout(() => document.getElementById('quiz').classList.add('hidden'), 300);
+                document.getElementById('resultSection').style.display = 'block';
+                const resEl = document.getElementById('result');
+                resEl.classList.remove('hidden');
+                requestAnimationFrame(() => resEl.classList.add('result--visible'));
+                const score = state.totalScore;
+                let icon, text, cls, desc, rec, atd;
+                if (score <= 6) { icon = '🟢'; text = 'Risco Baixo'; cls = 'result__risk--low'; desc = 'Baixo risco, mas monitoramento é sempre recomendado.'; rec = 'Sistema básico com sensores de porta e alarme sonoro.'; atd = 'Ágil'; }
+                else if (score <= 12) { icon = '🟡'; text = 'Risco Médio'; cls = 'result__risk--medium'; desc = 'Atenção necessária. Monitoramento profissional reduz riscos.'; rec = 'Sistema intermediário com sensores de movimento e câmeras IP.'; atd = 'Rápido'; }
+                else { icon = '🔴'; text = 'Risco Alto'; cls = 'result__risk--high'; desc = 'Vulnerabilidade elevada. Monitoramento imediato é essencial.'; rec = 'Sistema completo com câmeras HD, sensores em todos os acessos e monitoramento contínuo.'; atd = 'Prioritário'; }
+                document.getElementById('resultIcon').textContent = icon;
+                const riskEl = document.getElementById('resultRisk'); riskEl.textContent = text; riskEl.className = 'result__risk ' + cls;
+                document.getElementById('resultDescription').textContent = desc;
+                document.getElementById('resultRecommendation').textContent = rec;
+                document.getElementById('statResponseTime').textContent = atd;
+                const urgenciaEl = document.getElementById('resultUrgencia');
+                if (urgenciaEl) {
+                    let urgenciaHtml = '';
+                    if (score > 12) { urgenciaHtml = `<strong>⚠️ Atenção:</strong> Imóveis com risco alto são <strong>3x mais visados</strong>. Nossa equipe tem disponibilidade para instalação ainda essa semana em Balneário Pinhal.`; urgenciaEl.className = 'result__urgencia'; }
+                    else if (score > 6) { urgenciaHtml = `<strong>💡 Recomendação:</strong> Com monitoramento ativo, você reduz significativamente o risco de ocorrências. Solicite uma visita técnica gratuita.`; urgenciaEl.className = 'result__urgencia result__urgencia--medium'; }
+                    else { urgenciaHtml = `<strong>✅ Boa notícia:</strong> Seu imóvel tem baixo risco, mas o monitoramento básico garante <strong>tranquilidade total</strong> para sua família.`; urgenciaEl.className = 'result__urgencia result__urgencia--low'; }
+                    urgenciaEl.innerHTML = urgenciaHtml;
+                }
             }
-        }
-        applyTheme(isDark);
-        themeToggle.addEventListener('click',()=>{
-            const darkNow=document.body.classList.contains('dark');
-            const newTheme=!darkNow;
-            applyTheme(newTheme);
-            localStorage.setItem('theme',newTheme?'dark':'light');
-        });
 
-        // i18n completo
-        const i18n={
-            pt:{
-                splashSubtitle:"Plataforma interativa de monitoramento da infraestrutura energética e de conectividade do Brasil",
-                sectionLabel:"⚡ ENERGIA EÓLICA",
-                splashLabelWind:"Mapeado (13 parques)",splashLabelCables:"Cabos Submarinos",splashLabelCities:"Cidades Monitoradas",splashLabelNational:"Total Nacional 2024",
-                liveTitle:"Consumo Residencial Brasil — Ao Vivo",liveSubtitle:"kWh consumidos desde o início desta sessão (estimativa)",
-                badgeWind:"🌬️ Energia",cardWindTitle:"Energia Eólica no Brasil",
-                cardWindText:"O Brasil fechou 2024 com <strong>33,7 GW</strong> de capacidade eólica (1.103 parques) e geração de <strong>107,7 TWh</strong>. A fonte já representa <strong>16,1% da matriz elétrica</strong> nacional.",
-                badgeHubs:"🔌 Conectividade",cardHubsTitle:"Hubs Estratégicos",
-                cardHubsText:"Cabos submarinos transformam cidades em portais digitais. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> e <strong>Rio de Janeiro (RJ)</strong> são os principais pontos de entrada de dados da América do Sul.",
-                badgeBalneario:"📍 Tese Central",cardBalnearioTitle:"Balneário Pinhal (RS)",
-                cardBalnearioText:"Com <strong id='splashBalnearioMW'>752 MW</strong> de capacidade eólica, o município gera <strong id='splashBalnearioGWh'>2.174,7 GWh/ano</strong> — <strong id='splashBalnearioX'>53,6</strong> vezes seu consumo residencial.",
-                enterMapBtnText:"🌎 Explorar Mapa Interativo",searchPlaceholder:"🔍 Buscar parque, cabo, cidade...",
-                compTitle:"⚡ Matriz Energética por Estado",
-                legendTitle:"📖 Legenda",legendWind:"🟢 Parques eólicos (MW)",legendCable:"🔵 Aterramentos de cabos",legendEnergy:"🟠 Consumo urbano",legendRoute:"✨ Rotas animadas de cabos",
-                chipAll:"🌎 Todo Brasil",chipNE:"🌵 Nordeste",chipSul:"❄️ Sul",tabWind:"🌬️ Parques",tabCables:"🌊 Cabos",tabLanding:"📍 Aterramentos",tabEnergy:"⚡ Consumo",
-                stats:{wind_capacity:"Eólica mapeada",intl_cables:"Cabos submarinos",landings_br:"Aterramentos BR",br_min_consumption:"kWh/min BR"}
-            },
-            en:{
-                splashSubtitle:"Interactive platform for monitoring Brazil's energy and connectivity infrastructure",
-                sectionLabel:"⚡ WIND ENERGY",
-                splashLabelWind:"Mapped (13 farms)",splashLabelCables:"Submarine Cables",splashLabelCities:"Monitored Cities",splashLabelNational:"National Total 2024",
-                liveTitle:"Brazil Residential Consumption — Live",liveSubtitle:"kWh consumed since session start (estimated)",
-                badgeWind:"🌬️ Energy",cardWindTitle:"Wind Energy in Brazil",
-                cardWindText:"Brazil ended 2024 with <strong>33.7 GW</strong> of wind capacity (1,103 farms) and generation of <strong>107.7 TWh</strong>. Wind accounts for <strong>16.1% of the electricity mix</strong>.",
-                badgeHubs:"🔌 Connectivity",cardHubsTitle:"Strategic Hubs",
-                cardHubsText:"Submarine cables turn coastal cities into digital portals. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> and <strong>Rio de Janeiro (RJ)</strong> are South America's main data entry points.",
-                badgeBalneario:"📍 Core Thesis",cardBalnearioTitle:"Balneário Pinhal (RS)",
-                cardBalnearioText:"With <strong id='splashBalnearioMW'>752 MW</strong> of wind capacity, the municipality generates <strong id='splashBalnearioGWh'>2,174.7 GWh/year</strong> — <strong id='splashBalnearioX'>53.6</strong> times its residential consumption.",
-                enterMapBtnText:"🌎 Explore Interactive Map",searchPlaceholder:"🔍 Search wind farm, cable, city...",
-                compTitle:"⚡ Energy Matrix by State",
-                legendTitle:"📖 Legend",legendWind:"🟢 Wind farms (MW)",legendCable:"🔵 Cable landings",legendEnergy:"🟠 Urban consumption",legendRoute:"✨ Animated cable routes",
-                chipAll:"🌎 All Brazil",chipNE:"🌵 Northeast",chipSul:"❄️ South",tabWind:"🌬️ Wind farms",tabCables:"🌊 Cables",tabLanding:"📍 Landings",tabEnergy:"⚡ Consumption",
-                stats:{wind_capacity:"Mapped wind",intl_cables:"Submarine cables",landings_br:"BR landings",br_min_consumption:"kWh/min BR"}
-            },
-            es:{
-                splashSubtitle:"Plataforma interactiva de monitoreo de la infraestructura energética y de conectividad de Brasil",
-                sectionLabel:"⚡ ENERGÍA EÓLICA",
-                splashLabelWind:"Mapeado (13 parques)",splashLabelCables:"Cables Submarinos",splashLabelCities:"Ciudades Monitoreadas",splashLabelNational:"Total Nacional 2024",
-                liveTitle:"Consumo Residencial Brasil — En Vivo",liveSubtitle:"kWh consumidos desde el inicio de esta sesión (estimado)",
-                badgeWind:"🌬️ Energía",cardWindTitle:"Energía Eólica en Brasil",
-                cardWindText:"Brasil cerró 2024 con <strong>33,7 GW</strong> de capacidad eólica (1.103 parques) y generación de <strong>107,7 TWh</strong>. La fuente representa el <strong>16,1% de la matriz eléctrica</strong>.",
-                badgeHubs:"🔌 Conectividad",cardHubsTitle:"Hubs Estratégicos",
-                cardHubsText:"Los cables submarinos convierten ciudades costeras en portales digitales. <strong>Fortaleza (CE)</strong>, <strong>Praia Grande (SP)</strong> y <strong>Rio de Janeiro (RJ)</strong> son los principales puntos de entrada de datos de Sudamérica.",
-                badgeBalneario:"📍 Tesis Central",cardBalnearioTitle:"Balneário Pinhal (RS)",
-                cardBalnearioText:"Con <strong id='splashBalnearioMW'>752 MW</strong> de capacidad eólica, el municipio genera <strong id='splashBalnearioGWh'>2.174,7 GWh/año</strong> — <strong id='splashBalnearioX'>53,6</strong> veces su consumo residencial.",
-                enterMapBtnText:"🌎 Explorar Mapa Interactivo",searchPlaceholder:"🔍 Buscar parque, cable, ciudad...",
-                compTitle:"⚡ Matriz Energética por Estado",
-                legendTitle:"📖 Leyenda",legendWind:"🟢 Parques eólicos (MW)",legendCable:"🔵 Puntos de amarre",legendEnergy:"🟠 Consumo urbano",legendRoute:"✨ Rutas animadas de cables",
-                chipAll:"🌎 Todo Brasil",chipNE:"🌵 Nordeste",chipSul:"❄️ Sur",tabWind:"🌬️ Parques",tabCables:"🌊 Cables",tabLanding:"📍 Amarre",tabEnergy:"⚡ Consumo",
-                stats:{wind_capacity:"Eólica mapeada",intl_cables:"Cables submarinos",landings_br:"Amarres BR",br_min_consumption:"kWh/min BR"}
-            }
-        };
+            window.toggleFaq = function(trigger) {
+                const item = trigger.closest('.faq-item');
+                if (!item) return;
+                const isOpen = item.classList.contains('faq-item--open');
+                document.querySelectorAll('.faq-item--open').forEach(openItem => { if (openItem !== item) { openItem.classList.remove('faq-item--open'); const otherTrigger = openItem.querySelector('.faq-item__trigger'); if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false'); } });
+                item.classList.toggle('faq-item--open', !isOpen);
+                trigger.setAttribute('aria-expanded', !isOpen);
+                if (!isOpen) {
+                    setTimeout(() => { item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 150);
+                }
+            };
 
-        function setLang(lang){
-            const t=i18n[lang]||i18n.pt;
-            document.getElementById('splashSubtitle').textContent=t.splashSubtitle;
-            document.getElementById('sectionLabel').textContent=t.sectionLabel;
-            document.getElementById('splashLabelWind').textContent=t.splashLabelWind;
-            document.getElementById('splashLabelCables').textContent=t.splashLabelCables;
-            document.getElementById('splashLabelCities').textContent=t.splashLabelCities;
-            document.getElementById('splashLabelNational').textContent=t.splashLabelNational;
-            document.getElementById('liveTitle').innerHTML='<span class="live-pulse"></span>'+t.liveTitle;
-            document.getElementById('liveSubtitle').textContent=t.liveSubtitle;
-            document.getElementById('badgeWind').textContent=t.badgeWind;
-            document.getElementById('cardWindTitle').textContent=t.cardWindTitle;
-            document.getElementById('cardWindText').innerHTML=t.cardWindText;
-            document.getElementById('badgeHubs').textContent=t.badgeHubs;
-            document.getElementById('cardHubsTitle').textContent=t.cardHubsTitle;
-            document.getElementById('cardHubsText').innerHTML=t.cardHubsText;
-            document.getElementById('badgeBalneario').textContent=t.badgeBalneario;
-            document.getElementById('cardBalnearioTitle').textContent=t.cardBalnearioTitle;
-            document.getElementById('cardBalnearioText').innerHTML=t.cardBalnearioText;
-            document.getElementById('enterMapBtn').textContent=t.enterMapBtnText;
-            document.getElementById('searchInput').placeholder=t.searchPlaceholder;
-            document.getElementById('comparisonTitle').innerText=t.compTitle;
-            const leg=document.querySelectorAll('.map-legend div');
-            if(leg[0]) leg[0].innerText=t.legendTitle;
-            if(leg[1]) leg[1].innerText=t.legendWind;
-            if(leg[2]) leg[2].innerText=t.legendCable;
-            if(leg[3]) leg[3].innerText=t.legendEnergy;
-            if(leg[4]) leg[4].innerText=t.legendRoute;
-            const chips=document.querySelectorAll('.chip');
-            if(chips[0]) chips[0].innerHTML=t.chipAll;
-            if(chips[1]) chips[1].innerHTML=t.chipNE;
-            if(chips[2]) chips[2].innerHTML=t.chipSul;
-            const tabs=document.querySelectorAll('.tab-btn');
-            if(tabs[0]) tabs[0].innerHTML=t.tabWind;
-            if(tabs[1]) tabs[1].innerHTML=t.tabCables;
-            if(tabs[2]) tabs[2].innerHTML=t.tabLanding;
-            if(tabs[3]) tabs[3].innerHTML=t.tabEnergy;
-            document.querySelectorAll('[data-i18n-stats]').forEach(el=>{
-                const k=el.getAttribute('data-i18n-stats');
-                if(t.stats[k]) el.innerText=t.stats[k];
-            });
-            localStorage.setItem('lang',lang);
-            updateSplashData();
-        }
-        document.getElementById('langSelect').addEventListener('change',e=>setLang(e.target.value));
-        setLang(localStorage.getItem('lang')||'pt');
-
-        const menuBtn=document.getElementById('menuToggle'),sidebar=document.getElementById('sidebar'),overlayDiv=document.getElementById('overlay');
-        function closeMenu(){sidebar.classList.remove('open');overlayDiv.classList.remove('active');}
-        function openMenu(){sidebar.classList.add('open');overlayDiv.classList.add('active');}
-        menuBtn.addEventListener('click',e=>{e.stopPropagation();sidebar.classList.contains('open')?closeMenu():openMenu();});
-        overlayDiv.addEventListener('click',closeMenu);
-        function handleResize(){if(window.innerWidth>850){sidebar.classList.add('open');overlayDiv.classList.remove('active');}}
-        window.addEventListener('resize',handleResize);
-        handleResize();
-
-        const splash=document.getElementById('splash'),appDiv=document.getElementById('app');
-        document.getElementById('enterMapBtn').addEventListener('click',()=>{
-            splash.classList.add('hide');
-            setTimeout(()=>{splash.style.display='none';appDiv.classList.add('visible');map.invalidateSize();if(landingLayer.getBounds().isValid())map.fitBounds(landingLayer.getBounds().pad(0.15));},500);
-        });
-        setTimeout(()=>{map.invalidateSize();if(landingLayer.getBounds().isValid())map.fitBounds(landingLayer.getBounds().pad(0.15));},400);
-    })();
+            (function initStickyCtaMobile() {
+                if (window.innerWidth > 768) return;
+                const sticky = document.getElementById('ctaSticky');
+                const hero = document.querySelector('.hero');
+                if (!sticky || !hero) return;
+                let shown = false;
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting && !shown) {
+                            shown = true;
+                            sticky.style.display = 'block';
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(hero);
+                document.addEventListener('quizStarted', () => { sticky.style.display = 'none'; });
+            })();
+        })();
     </script>
 </body>
 </html>
